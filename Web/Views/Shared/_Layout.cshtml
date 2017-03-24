@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
+
+    @Styles.Render("~/Bundles/Themes/Finance-1/css")
+    
+</head>
+<body>
+    <div class="notification"></div>
+    
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 nopadding"><img src="~/Themes/finance-1/img/logo.png"></div>
+                <div class="col-sm-6 nopadding">
+                   
+                                                @* <ul class="notificatios"><li><a href="#"><img src="img/notification.png"><span class="badge">2</span></a></li>
+    <li><a href="#"><img src="img/message.png"><span class="badge">8</span></a></li>
+    <li><a href="#"><img src="img/downloads.png"></a></li>
+                <li><a href="#"><img src="img/profile.png"></a></li>   </ul>      *@
+                      
+                        
+                   
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <section>
+
+        <div class="container body-content">
+
+            <div class="row">
+                <div class="col-sm-3 nopadding">
+                    <h2 class="dgray">EOB Extended</h2>
+                    <ul class="nav">
+                        <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i>Home</a></li>
+                        <li class="dropdown active">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                               href="#">
+                                <i class="fa fa-dashboard"></i>Finance <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>
+                                <li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>
+                                <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>
+                                <li><a href="#">AMEX Management</a></li>
+                                <li><a href="#">Report</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                               href="#">
+                                <i class="fa fa-dashboard"></i>Consulting <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="fa fa-dashboard"></i>EOB</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>Calculator</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>WC</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>Reports</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>Payments</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>Payroll</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>AR</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>Expenses</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard"></i>Timesheet</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+                @RenderBody()
+
+                <div class="ajax-loader">
+                </div>
+                <input id="hdnUniqueSetUpRecord" type="hidden" />
+
+               
+            </div>
+        </div>
+
+        <div class="loader">
+            <center>
+                <img class="loading-image" src="~/Content/img/loading.gif" alt="loading..">
+            </center>
+        </div>
+
+    </section>
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Consulting And Finance - Arthur Lawrence</p>
+    </footer>
+           
+
+            @Scripts.Render("~/Bundles/Themes/Finance-1/Javascript")
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/Bundles/jquery-admin-custom")
+
+            @RenderSection("scripts", required: false)
+</body>
+</html>

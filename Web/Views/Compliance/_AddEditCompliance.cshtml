@@ -1,0 +1,216 @@
+﻿@model CorporateAndFinance.Core.Model.CompanyCompliance
+
+@using (Html.BeginForm("AddEdit", "Compliance", FormMethod.Post, new { @class = "data_form", autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add Company Compliance</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.CompanyID, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+
+                        @Html.DropDownListFor(model => model.CompanyID, Model.Companies.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.Companies.Select(
+     x => new SelectListItem()
+     {
+         Value = x.CompanyID.ToString(),
+         Text = x.Name,
+         Selected = x.CompanyID == Model.CompanyID
+     }), new { @class = "form-control", @placeholder = "Select a company" })
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger field-validation-valid" })
+                </div>
+
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.LegalAuthorityName, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.LegalAuthorityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-building"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        <select id="Status" name="Status" class="form-control" aria-describedby="basic-addon2">
+                           <option value="Pending" @(Model.Status == "Pending" ? "selected=selected" : "") >Pending</option>
+                            <option value="Complete" @(Model.Status == "Complete" ? "selected=selected" : "") >Complete</option>
+                        </select> <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @placeholder = "Select Date : MM/DD/YYYY" } })
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", @style = "resize: none" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.GeneralRemarks, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.TextAreaFor(model => model.GeneralRemarks, new { @class = "form-control", @placeholder = "General Remarks", @style = "resize: none" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.GeneralRemarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Remarks1, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.TextAreaFor(model => model.Remarks1, new { @class = "form-control", @placeholder = "Remarks1", @style = "resize: none" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Remarks1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Remarks2, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.TextAreaFor(model => model.Remarks2, new { @class = "form-control", @placeholder = "Remarks2", @style = "resize: none" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Remarks2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "" })
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @style = "resize: none" } })
+                        <span class="input-group-addon" id="basic-addon3"><i class="fa fa-dollar"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "" })
+                    @if (!string.IsNullOrWhiteSpace(Model.FilePath))
+                    {
+                        <span id="uploadedfile">
+                            Resume:<a href="@Html.DisplayFor(item => item.FilePath)" target="_blank">Link </a>
+                        </span>
+                    }
+                    else
+                    {  <span id="uploadedfile"></span>
+                    }
+
+                        <div class="input-group">
+                            <input type="file" class="form-control" placeholder="File Path" id="FileAttachment" name="upload">
+                            <span class="input-group-addon" id="basic-addon2"><i class="fa fa-upload"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
+</div>
+            </div>
+            @Html.HiddenFor(model => model.FilePath)
+            @Html.HiddenFor(model => model.CompanyComplianceID)
+        </div>
+        <div class="form-group text-center">
+            <div class="col-sm-10">
+                <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+                <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+            </div>
+            <br /><br /><br /><br />
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+
+    //@@ sourceURL=_AddEditPettyCash.cshtml
+    $(document).ready(function () {
+
+     
+        $(this).find('.datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:+10',
+            setDate: new Date()
+        });
+        if ($(".datepicker").val() == "")
+        $(".datepicker").datepicker().datepicker("setDate", new Date());
+
+        $("#btnSave").click(function (evt) {
+            var $form = $('.data_form');
+
+            if ($form.valid()) {
+                AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
+            }
+        })
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+
+
+
+        $('#FileAttachment').fileupload({
+            add: function (e, data) {
+                var uploadErrors = [];
+                //var acceptFileTypes = /(\.|\/)(vnd.openxmlformats-officedocument.wordprocessingml.document|msword|pdf)$/i;
+                //if (data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                //    uploadErrors.push('Not an accepted file type');
+                //}
+                //if (data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 5000000) {
+                //    uploadErrors.push('Filesize is too big');
+                //}
+                if (uploadErrors.length > 0) {
+                 
+                } else {
+                    data.submit();
+                }
+            },
+            url: "/Compliance/Uploader",
+            dataType: 'json',
+            maxNumberOfFiles: 1,
+            accept: 'application/json',
+            start: function (e, data) {
+              //  $('.loading-spinner').fadeIn();
+            },
+            done: function (e, data) {
+             
+
+                if(data.result != "")
+                {
+                    $('#uploadedfile').html('Resume: <a href="' + data.result + '" target="_blank" >Link</a>');
+                    $('#FilePath').val(data.result);
+                }
+            }
+        }).on('fileuploadprocessalways', function (e, data) {
+            var currentFile = data.files[data.index];
+            if (data.files.error && currentFile.error) {
+                // there was an error, do something about it
+                console.log(currentFile.error);
+            }
+        }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+ 
+    });
+
+    function OnSuccess(response) {
+
+        DTToggler(); $("#divOperations").empty();
+        oTable.fnDraw(false);
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>

@@ -1,0 +1,135 @@
+.da_nopadding
+{
+    padding: 5px ! important;
+}
+.dab_red
+{
+    background: #EB5464;
+    color: #DE4353;
+}
+
+.dat_red
+{
+    background: #DE4353;
+}
+
+
+.dab_blue
+{
+    background: #6598d1;
+    color: #1c6ab4;
+}
+
+.dat_blue
+{
+    background: #1c6ab4;
+}
+
+
+.dab_black
+{
+    background: #646e7a;
+    color: #252e37;
+}
+
+.dat_black
+{
+    background: #252e37;
+
+}
+
+
+.dab_yellow
+{
+    background: #fecc59;
+    color: #f1a126;
+}
+
+.dat_yellow
+{
+    background: #f1a126;
+}
+
+
+.dab_cyan
+{
+    background: #5ac2a9;
+    color: #00ad78;
+}
+
+.dat_cyan
+{
+    background: #00ad78;
+}
+
+
+.dab_purpal
+{
+    background: #a492c6;
+    color: #6e59a6;
+}
+
+.dat_purpal
+{
+    background: #6e59a6;
+}
+
+
+.dab_green
+{
+    background: #a2d16b;
+    color: #4fb44c;
+}
+
+.dat_green
+{
+    background: #4fb44c;
+}
+
+
+.dab_sky
+{
+    background: #48c3ed;
+    color: #3ea1be;
+}
+
+.dat_sky
+{
+    background: #3ea1be;
+}
+
+
+
+.dab_gary
+{
+    background: #ced2de;
+    color: #9ca6b0;
+}
+
+.dat_gary
+{
+    background: #9ca6b0;
+}
+
+
+
+.dab_orange
+{
+    background: #f46c54;
+    color: #EA5740;
+}
+
+.dat_orange
+{
+    background: #EA5740;
+}
+
+.metro .imgdouble i
+{
+    font-size: 32pt;
+}
+
+.metro-panel a, .metro-panel a:hover, .metro-panel a:focus
+{
+    color: inherit;
+}

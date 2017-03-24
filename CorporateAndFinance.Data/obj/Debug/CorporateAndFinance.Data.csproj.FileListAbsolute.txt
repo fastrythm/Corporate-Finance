@@ -1,0 +1,10 @@
+D:\tutorials\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csprojResolveAssemblyReference.cache
+D:\tutorials\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.testing.resources
+D:\tutorials\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.addbankbranch.resources
+D:\tutorials\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.companycomplianceamountfield.resources
+D:\tutorials\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csproj.GenerateResource.Cache
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csprojResolveAssemblyReference.cache
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.testing.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.addbankbranch.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.companycomplianceamountfield.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csproj.GenerateResource.Cache

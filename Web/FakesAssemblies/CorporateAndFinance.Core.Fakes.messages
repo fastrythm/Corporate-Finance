@@ -1,0 +1,8 @@
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate stub for CorporateAndFinance.Core.Helper.Structure.MessageClass: type is a value type.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate stub for CorporateAndFinance.Core.Helper.Extension.PagedListExtensions: type is sealed.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate stub for CorporateAndFinance.Core.Helper.Extension.PageListFiterOrderExtension: type is sealed.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate stub for CorporateAndFinance.Core.Helper.Extension.PredicateBuilder: type is sealed.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate shim for CorporateAndFinance.Core.Model.ApplicationUser+<GenerateUserIdentityAsync>d__0: type is not supported because of internal limitations.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate shim for CorporateAndFinance.Core.Helper.Extension.IPagedList: type is an interface.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate shim for CorporateAndFinance.Core.Helper.Extension.PageListFiterOrderExtension+<>c__1`1: type is not supported because of internal limitations.
+D:\tutorials\CorporateAndFinance\Web\Fakes\CorporateAndFinance.Core.fakes : warning : Cannot generate shim for CorporateAndFinance.Core.Helper.Extension.PageListFiterOrderExtension+<>c__2`1: type is not supported because of internal limitations.

@@ -1,0 +1,32 @@
+﻿
+using CorporateAndFinance.Core.Model;
+using CorporateAndFinance.Data.Infrastructure;
+using System;
+using System.Linq;
+
+namespace CorporateAndFinance.Data.Repositories
+{
+    public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
+    {
+        public CategoryRepository(IDbFactory dbFactory)
+            : base(dbFactory) { }
+
+        public Category GetCategoryByName(string categoryName)
+        {
+            var category = this.DbContext.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
+
+            return category;
+        }
+
+        public override bool Update(Category entity)
+        {
+            entity.DateUpdated = DateTime.Now;
+            return base.Update(entity);
+        }
+    }
+
+    public interface ICategoryRepository : IRepository<Category>
+    {
+        Category GetCategoryByName(string categoryName);
+    }
+}

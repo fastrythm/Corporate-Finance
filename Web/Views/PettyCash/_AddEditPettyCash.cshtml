@@ -1,0 +1,107 @@
+﻿@model CorporateAndFinance.Core.Model.PettyCash
+
+@using (Html.BeginForm("AddEdit", "PettyCash", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>PettyCash</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                <div class="input-group">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description" } })
+                    <span class="input-group-addon" id="basic-addon4"><i class="fa fa-file"></i></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransactionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                <div class="input-group">
+                    @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control datepicker", @placeholder = "Select Date : MM/DD/YYYY" } })
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransactionType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                <div class="input-group">
+                    <select class="form-control" data-val="true" data-val-required="Required" name="TransactionType">
+                        <option value="Debit">Debit</option>
+                        <option value="Credit">Credit</option>
+                    </select>
+                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-chevron-down"></i></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-8">
+                <div class="input-group">
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount" } })
+                    <span class="input-group-addon" id="basic-addon3"><i class="fa fa-dollar"></i></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group text-center">
+
+            <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+            <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+        </div>
+
+
+
+    </div>
+}
+<script type="text/javascript">
+
+    //@@ sourceURL=_AddEditPettyCash.cshtml
+    $(document).ready(function () {
+
+     
+        var dateYesterday = GetYesterdayDate();
+        var dateTomorrow = GetYesterdayDate();
+
+        $(this).find('.datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: -1,
+            maxDate: 0,
+            yearRange: '1900:+10'
+        });
+
+        $("#btnSave").click(function (evt) {
+            var $form = $('.data_form');
+
+              if ($form.valid()) {
+                  AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
+              }
+        })
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+    });
+
+    function OnSuccess(response)
+    {
+        DTToggler(); $("#divOperations").empty();
+        oTable.fnDraw(false);
+        GetOpeningClosingBalance();
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>
