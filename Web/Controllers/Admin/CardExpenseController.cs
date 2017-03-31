@@ -109,7 +109,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         [HttpPost]
         [Route("UserCardExpenseList")]
-        [HasPermission(,"PermissionA")]
+        [HasPermission("PermissionA")]
         public ActionResult UserCardExpenseList(DataTablesViewModel param, string fromDate, string toDate)
         {
 
