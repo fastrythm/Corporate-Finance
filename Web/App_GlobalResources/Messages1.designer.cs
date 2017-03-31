@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File does&apos;t contain {0} column, Please make sure all column exist in sheet..
+        /// </summary>
+        internal static string MSG_GENERIC_COLUMN_MISSING {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_COLUMN_MISSING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Record couldn&apos;t be delete. Please try again or contact your site Administrator..
         /// </summary>
         internal static string MSG_GENERIC_DELETE_FAILED {
@@ -147,6 +156,42 @@ namespace Resources {
         internal static string MSG_GENERIC_UPDATE_SUCCESS {
             get {
                 return ResourceManager.GetString("MSG_GENERIC_UPDATE_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, System couldn&apos;t upload new {0} file. Please try again or contact your site Administrator..
+        /// </summary>
+        internal static string MSG_GENERIC_UPLOAD_ERROR {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_UPLOAD_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New {0} uploaded successfully..
+        /// </summary>
+        internal static string MSG_GENERIC_UPLOAD_SUCCESS {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_UPLOAD_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Number {0} is not assigned to user {1} in system. please contact your site Administrator.
+        /// </summary>
+        internal static string MSG_GENERIC_UPLOAD_USERCARD_ERROR {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_UPLOAD_USERCARD_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mandatory column {0} does not contain value at row number {1}..
+        /// </summary>
+        internal static string MSG_GENERIC_UPLOAD_VALIDATION_ERROR {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_UPLOAD_VALIDATION_ERROR", resourceCulture);
             }
         }
         

@@ -12,14 +12,20 @@ namespace CorporateAndFinance.Data.Repositoreis
     {
         public CompanyRepository(IDbFactory dbFactory) : base(dbFactory) { }
 
-        public IEnumerable<Company> GetAllCompanies()
+      
+
+        public override bool Add(Company entity)
         {
-            throw new NotImplementedException();
+            entity.IsActive = true;
+            entity.CreatedOn = DateTime.Now;
+            entity.LastModified = DateTime.Now;
+            return base.Add(entity);
+
         }
     }
     public interface ICompanyRepository : IRepository<Company>
     {
-        IEnumerable<Company> GetAllCompanies();
+         
     }
 
 }

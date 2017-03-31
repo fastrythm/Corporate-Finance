@@ -19,19 +19,19 @@ namespace CorporateAndFinance.Core.Model
 
         public Guid ConsultantID { get; set; }
 
+        public int ConsultantNumber { get; set; }
+
         [Required]
         [StringLength(128)]
         public string FirstName { get; set; }
 
-        [Required]
+        
         [StringLength(128)]
         public string LastName { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string Gender { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Email { get; set; }
 

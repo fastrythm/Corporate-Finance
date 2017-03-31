@@ -95,11 +95,6 @@ namespace CorporateAndFinance.Data
             //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Company>()
-                .HasMany(e => e.UserCardExpenses)
-                .WithOptional(e => e.Company)
-                .HasForeignKey(e => e.CompanyReferenceID);
-
-            modelBuilder.Entity<Company>()
                 .HasMany(e => e.UserCompanies)
                 .WithRequired(e => e.Company)
                 .WillCascadeOnDelete(false);

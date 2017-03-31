@@ -25,5 +25,20 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return companyRepository.GetMany(comp => comp.IsActive == true);
         }
+
+        public Company GetCompanyByNumber(long number)
+        {
+            return companyRepository.Get(x => x.CompanyNumber == number);
+        }
+
+        public void SaveCompany()
+        {
+            unitOfWork.Commit();
+        }
+
+        public bool Add(Company model)
+        {
+            return companyRepository.Add(model);
+        }
     }
 }

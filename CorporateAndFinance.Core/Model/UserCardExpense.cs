@@ -37,10 +37,8 @@ namespace CorporateAndFinance.Core.Model
         [StringLength(512)]
         public string Remarks { get; set; }
 
-        [StringLength(50)]
-        public string CompanyReferenceType { get; set; }
-
-        public Guid? CompanyReferenceID { get; set; }
+        [StringLength(512)]
+        public string PaymentDetail { get; set; }
 
         [StringLength(50)]
         public string ExpenseHead { get; set; }
@@ -54,8 +52,6 @@ namespace CorporateAndFinance.Core.Model
         public DateTime CreatedOn { get; set; }
 
         public DateTime LastModified { get; set; }
-
-        public virtual Company Company { get; set; }
 
         public virtual Consultant Consultant { get; set; }
 

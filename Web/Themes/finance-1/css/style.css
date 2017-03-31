@@ -364,7 +364,7 @@ footer
 
 table
 {
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -600,4 +600,31 @@ table-layout: fixed;
 .ui-button .ui-icon {
     background-image: url(images/ui-icons_777777_256x240.png);
 }
+
+.rowstrip1{
+    background-color:#ececec !important;
+}
+.rowstrip2{
+    background-color:#fff !important;
+}
+ 
+
+.my_data_table {
+        border: 1px solid #E8E8E8 !important;
+        border-collapse : collapse; 
+         
+    }
+
+
+.my_data_table thead>tr>th {
+    vertical-align: bottom;
+   // border: 1px solid #888888 !important;
+    border-spacing: 0;
+    text-align:center;
+    border-collapse: collapse;
+    background : #fff;
+    color:black;
+    font-size:10pt;
+}
+
   /* Sohail Work End */

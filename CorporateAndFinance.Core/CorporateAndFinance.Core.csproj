@@ -89,6 +89,7 @@
     <Compile Include="Model\VendorConsultant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\PettyCashOpenCloseBalance.cs" />
+    <Compile Include="ViewModel\UserCardExpenseVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

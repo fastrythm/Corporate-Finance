@@ -79,8 +79,23 @@
     <Compile Include="Migrations\201703210845017_companycompliance-amount-field.Designer.cs">
       <DependentUpon>201703210845017_companycompliance-amount-field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703290805200_CompanyNumber-ConsultantNumber-UserCardExpense.cs" />
+    <Compile Include="Migrations\201703290805200_CompanyNumber-ConsultantNumber-UserCardExpense.Designer.cs">
+      <DependentUpon>201703290805200_CompanyNumber-ConsultantNumber-UserCardExpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703291447315_companytype-field.cs" />
+    <Compile Include="Migrations\201703291447315_companytype-field.Designer.cs">
+      <DependentUpon>201703291447315_companytype-field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703291525330_consultant-change-requiredfields.cs" />
+    <Compile Include="Migrations\201703291525330_consultant-change-requiredfields.Designer.cs">
+      <DependentUpon>201703291525330_consultant-change-requiredfields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositoreis\ConsultantRepository.cs" />
+    <Compile Include="Repositoreis\UserCardRepository.cs" />
+    <Compile Include="Repositoreis\UserCardExpenseRepository.cs" />
     <Compile Include="Repositoreis\BankPositionRepository.cs" />
     <Compile Include="Repositoreis\CompanyRepository.cs" />
     <Compile Include="Repositoreis\ComplianceRepository.cs" />
@@ -101,6 +116,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703210845017_companycompliance-amount-field.resx">
       <DependentUpon>201703210845017_companycompliance-amount-field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290805200_CompanyNumber-ConsultantNumber-UserCardExpense.resx">
+      <DependentUpon>201703290805200_CompanyNumber-ConsultantNumber-UserCardExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703291447315_companytype-field.resx">
+      <DependentUpon>201703291447315_companytype-field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703291525330_consultant-change-requiredfields.resx">
+      <DependentUpon>201703291525330_consultant-change-requiredfields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

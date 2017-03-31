@@ -21,8 +21,6 @@ namespace CorporateAndFinance.Web.App_Start
 {
     public static class Bootstrapper
     {
-  
-
         public static void Run(IAppBuilder app)
         {
             SetAutofacContainer(app);
@@ -50,6 +48,12 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(CompanyManagement).Assembly)
            .Where(t => t.Name.EndsWith("Management"))
            .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserCardExpenseManagement).Assembly)
+          .Where(t => t.Name.EndsWith("Management"))
+          .AsImplementedInterfaces().InstancePerRequest();
+           builder.RegisterAssemblyTypes(typeof(UserCardManagement).Assembly)
+        .Where(t => t.Name.EndsWith("Management"))
+        .AsImplementedInterfaces().InstancePerRequest();
 
             // Repositories
             builder.RegisterAssemblyTypes(typeof(PettyCashRepository).Assembly)
@@ -64,7 +68,12 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(CompanyRepository).Assembly)
              .Where(t => t.Name.EndsWith("Repository"))
              .AsImplementedInterfaces().InstancePerRequest();
-
+            builder.RegisterAssemblyTypes(typeof(UserCardExpenseRepository).Assembly)
+            .Where(t => t.Name.EndsWith("Repository"))
+            .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserCardRepository).Assembly)
+          .Where(t => t.Name.EndsWith("Repository"))
+          .AsImplementedInterfaces().InstancePerRequest();
 
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

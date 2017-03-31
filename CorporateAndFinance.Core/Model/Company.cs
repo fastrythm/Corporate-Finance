@@ -25,7 +25,12 @@ namespace CorporateAndFinance.Core.Model
         [StringLength(128)]
         public string Name { get; set; }
 
-        public long CodeID { get; set; }
+        [StringLength(50)]
+        public string ShortName { get; set; }
+       
+        public long CompanyNumber { get; set; }
+
+        public string CompanyType { get; set; }
 
         [StringLength(512)]
         public string Description { get; set; }
@@ -36,7 +41,6 @@ namespace CorporateAndFinance.Core.Model
 
         public DateTime LastModified { get; set; }
 
-        public Code Code { get; set; }
  
         public virtual ICollection<CompanyBank> CompanyBanks { get; set; }
  

@@ -126,6 +126,9 @@
   <data name="MSG_GENERIC_ADD_SUCCESS" xml:space="preserve">
     <value>New {0} added successfully.</value>
   </data>
+  <data name="MSG_GENERIC_COLUMN_MISSING" xml:space="preserve">
+    <value>File does't contain {0} column, Please make sure all column exist in sheet.</value>
+  </data>
   <data name="MSG_GENERIC_DELETE_FAILED" xml:space="preserve">
     <value>Record couldn't be delete. Please try again or contact your site Administrator.</value>
   </data>
@@ -146,6 +149,18 @@
   </data>
   <data name="MSG_GENERIC_UPDATE_SUCCESS" xml:space="preserve">
     <value>Update {0} successfully.</value>
+  </data>
+  <data name="MSG_GENERIC_UPLOAD_ERROR" xml:space="preserve">
+    <value>Sorry, System couldn't upload new {0} file. Please try again or contact your site Administrator.</value>
+  </data>
+  <data name="MSG_GENERIC_UPLOAD_SUCCESS" xml:space="preserve">
+    <value>New {0} uploaded successfully.</value>
+  </data>
+  <data name="MSG_GENERIC_UPLOAD_USERCARD_ERROR" xml:space="preserve">
+    <value>Card Number {0} is not assigned to user {1} in system. please contact your site Administrator</value>
+  </data>
+  <data name="MSG_GENERIC_UPLOAD_VALIDATION_ERROR" xml:space="preserve">
+    <value>Mandatory column {0} does not contain value at row number {1}.</value>
   </data>
   <data name="MSG_LOGIN_ERROR" xml:space="preserve">
     <value>Your request can't be fulfil at this time. Please try again later or your software vendor.</value>

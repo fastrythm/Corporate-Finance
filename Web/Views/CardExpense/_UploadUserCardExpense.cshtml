@@ -1,0 +1,73 @@
+﻿<div class="row">
+    <div class="col-sm-12">
+        <h1 class="red list-inline"><span class="gray"></span> Upload Card Expense Sheet</h1>
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-sm-12">
+        <span class="gray"></span><a href="~/Template/Excel/Card Expense Sheet.xlsx" target="_blank">Download Expense Sheet</a>
+        <div class="clearfix"></div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-sm-6">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <label>Add File</label>
+                    <div class="input-group">
+                        <input type="file" name="file" id="file" class="form-control" placeholder="Expense Sheet" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"><i class="fa fa-upload"></i></span>
+                    </div>
+                    <br /><br /><br /><br />
+
+                    <div class="form-group text-center">
+
+                        <button class="btn btn-theme btn-blue" id="btnUpload" type="submit"  >Upload</button>
+                        <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#btnUpload').click(function () {
+            var data = new FormData();
+            var files = $("#file").get(0).files;
+
+            if (files.length > 0) { data.append("expenseSheet", files[0]); }
+            else {
+                ALGritter('', "Please select file to upload.", false, false, "alert-error error");
+                return false;
+            }
+            var extension = $("#file").val().split('.').pop().toUpperCase();
+            if (extension != "XLSX" && extension != "xlsx" && extension != "xls" && extension != "XLS") {
+                ALGritter('', "Invalid file format.", false, false, "alert-error error");
+                return false;
+            }
+            $.ajax({
+                url: '/CardExpense/Uploader', type: "POST", processData: false,
+                data: data, dataType: 'json',
+                contentType: false,
+                success: OnSuccess,
+                error: function (er) { }
+
+            });
+            return false;
+        });
+
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+    });
+
+    function OnSuccess(response) {
+        if (response.Response) {
+            DTToggler(); $("#divOperations").empty();
+            oTable.fnDraw(false);
+            $("#file").val('');
+        }
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>

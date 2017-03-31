@@ -64,6 +64,14 @@
       <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -222,7 +230,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Messages.Designer.cs">
+    <Compile Include="App_GlobalResources\Messages1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
@@ -241,10 +249,13 @@
     <Compile Include="Controllers\Admin\HomeController.cs" />
     <Compile Include="Controllers\Admin\ManageController.cs" />
     <Compile Include="Controllers\Admin\PettyCashController.cs" />
+    <Compile Include="Controllers\Admin\CardExpenseController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ExcelFileReader.cs" />
+    <Compile Include="Helper\HasPermissionAttribute.cs" />
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />
     <Compile Include="Mapping\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mapping\ViewModelToDomainMappingProfile.cs" />
@@ -540,7 +551,6 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
-    <Fakes Include="Fakes\CorporateAndFinance.Core.fakes" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
@@ -674,6 +684,10 @@
     <Content Include="Views\BankPosition\_AddEditBankPosition.cshtml" />
     <Content Include="Views\Compliance\Index.cshtml" />
     <Content Include="Views\Compliance\_AddEditCompliance.cshtml" />
+    <Content Include="Views\CardExpense\Index.cshtml" />
+    <Content Include="Views\CardExpense\_UploadUserCardExpense.cshtml" />
+    <Content Include="Template\Excel\Card Expense Sheet.xlsx" />
+    <Content Include="Views\Home\Restricted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -703,7 +717,7 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\Messages.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <LastGenOutput>Messages1.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>

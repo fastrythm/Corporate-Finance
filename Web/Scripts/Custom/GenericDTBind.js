@@ -97,8 +97,12 @@ function GenerateDTVersion1(selector, aoColumns, servicePath, otherParams) {
     var defaultParam = {
         "bInfo": _DTGlobalConfig.bInfo,
         "bLengthChange": _DTGlobalConfig.bLengthChange,
+         
+         scrollX: '100%',
+         scrollXInner: '100%',
         "bProcessing": _DTGlobalConfig.bProcessing,
         "bServerSide": _DTGlobalConfig.bServerSide,
+        "stripeClasses": ['rowstrip1', 'rowstrip2'],
         //initComplete: DataTableInitComplete,
         'ajax': {
             url: servicePath,
@@ -108,9 +112,9 @@ function GenerateDTVersion1(selector, aoColumns, servicePath, otherParams) {
                 return data = JSON.stringify(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                //if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
-                //    window.location.href = '/Login';
-                //}
+                 if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
+                     window.location.href = '/account/Login';
+                 }
             }
         },
         "sDom": _DTGlobalConfig.sDom,
@@ -150,8 +154,12 @@ function GenerateDTManual(selector, aoColumns, servicePath, otherParams,isRowGro
     var defaultParam = {
         "bInfo": _DTGlobalManualConfig.bInfo,
         "bLengthChange": _DTGlobalManualConfig.bLengthChange,
+        autoWidth: false,
+        scrollX: '100%',
+        scrollXInner: '100%',
         "bProcessing": _DTGlobalManualConfig.bProcessing,
         "bServerSide": _DTGlobalManualConfig.bServerSide,
+        "stripeClasses": ['rowstrip1', 'rowstrip2'],
         //initComplete: DataTableInitComplete,
         'ajax': {
             url: servicePath,
@@ -161,9 +169,9 @@ function GenerateDTManual(selector, aoColumns, servicePath, otherParams,isRowGro
                 return data = JSON.stringify(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                //if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
-                //    window.location.href = '/Login';
-                //}
+                if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
+                    window.location.href = '/account/Login';
+                }
             }
         },
         "sDom": _DTGlobalManualConfig.sDom,

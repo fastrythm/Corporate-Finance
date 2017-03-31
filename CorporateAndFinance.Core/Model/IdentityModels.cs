@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System;
 
 namespace CorporateAndFinance.Core.Model
 {
@@ -18,6 +19,8 @@ namespace CorporateAndFinance.Core.Model
             // Add custom user claims here
             return userIdentity;
         }
+
+        public override string Id { get; set; }
 
         [Required]
         [StringLength(128)]
