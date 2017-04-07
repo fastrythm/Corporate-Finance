@@ -187,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mandatory column {0} does not contain value at row number {1}..
+        ///   Looks up a localized string similar to Mandatory column {0} does not contain value at row number {1} . &lt;br /&gt;.
         /// </summary>
         internal static string MSG_GENERIC_UPLOAD_VALIDATION_ERROR {
             get {
@@ -259,6 +259,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restricted Access.
+        /// </summary>
+        internal static string MSG_RESTRICTED_ACCESS {
+            get {
+                return ResourceManager.GetString("MSG_RESTRICTED_ACCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction couldn&apos;t be saved. Please try again or contact your site Administrator..
         /// </summary>
         internal static string MSG_TRANSACTION_FAILED {
@@ -273,6 +282,42 @@ namespace Resources {
         internal static string MSG_TRANSACTION_SUCCESS {
             get {
                 return ResourceManager.GetString("MSG_TRANSACTION_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to account number {0} not assigned to any user at row number {1} . &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_ACCOUNT_NUMBER_NOTASSIGN {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_ACCOUNT_NUMBER_NOTASSIGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid date format exist on column {0} at row number {1}.  &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_INVALID_DATE_FORMAT {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_INVALID_DATE_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid amount format exist on column {0} at row number {1} . &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_INVALID_DECIMAL_FORMAT {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_INVALID_DECIMAL_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid number format exist on column {0} at row number {1} . &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_INVALID_NUMBER_FORMAT {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_INVALID_NUMBER_FORMAT", resourceCulture);
             }
         }
     }

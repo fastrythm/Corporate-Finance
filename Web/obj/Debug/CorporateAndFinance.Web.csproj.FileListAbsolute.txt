@@ -63,7 +63,6 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Web.WebPages.Razor.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\WebGrease.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Core.pdb
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Data.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Service.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.Integration.Mvc.xml
@@ -107,3 +106,4 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\o
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ICSharpCode.SharpZipLib.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.pdb
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Data.pdb

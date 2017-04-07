@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Web.Models;
 using CorporateAndFinance.Core.Model;
+using CorporateAndFinance.Service.Interface;
 
 namespace Web.Controllers
 {
@@ -18,7 +19,7 @@ namespace Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+   
         public AccountController()
         {
         }
@@ -80,7 +81,9 @@ namespace Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        return RedirectToLocal("/Home/");
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -393,6 +396,9 @@ namespace Web.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session["PermissionList"] = null;
+            Session.Remove("PermissionList");
+            Session.Abandon();
             return RedirectToAction("Login", "Account");
         }
 

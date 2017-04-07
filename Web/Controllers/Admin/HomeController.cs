@@ -16,6 +16,7 @@ namespace Web.Controllers
 
         public ActionResult Restricted()
         {
+            ViewBag.Message = "Restricted Page Access";
             return View();
         }
         public ActionResult About()

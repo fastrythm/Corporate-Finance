@@ -247,6 +247,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-Web/obj/Debug
+/Web/obj/Debug
 Web/UploadFiles/
 *.dll

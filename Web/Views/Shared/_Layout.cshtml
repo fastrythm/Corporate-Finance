@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using CorporateAndFinance.Web.Helper
+@using CorporateAndFinance.Core.Helper.Structure
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -48,14 +50,20 @@
                                 <i class="fa fa-dashboard"></i>Finance <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>
-                                <li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>
-                                <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>
-                                <li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>
-                                <li><a href="#">Report</a></li>
+                                @if (PermissionControl.CheckPermission(UserAppPermissions.User_View))
+                                {<li><a href="@Url.Action("Index", "User")">User Managment</a></li>}
+                                @if (PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
+                                {  <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>}
+                                 @if (PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
+                                 {<li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>}
+                                 @if (PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
+                                 {<li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>}
+                                 @if (PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
+                                 {<li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>}
+                                @*<li><a href="#">Report</a></li>*@
                             </ul>
                         </li>
-                        <li class="dropdown">
+                        @*<li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
                                href="#">
                                 <i class="fa fa-dashboard"></i>Consulting <span class="caret"></span>
@@ -71,7 +79,7 @@
                                 <li><a href="#"><i class="fa fa-dashboard"></i>Expenses</a></li>
                                 <li><a href="#"><i class="fa fa-dashboard"></i>Timesheet</a></li>
                             </ul>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
 

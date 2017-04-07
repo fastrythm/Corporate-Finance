@@ -50,16 +50,17 @@ namespace CorporateAndFinance.Data.Infrastructure
 
         public virtual bool Update(T entity)
         {
-            try {
+            try
+            {
                 dbSet.Attach(entity);
                 dataContext.Entry(entity).State = EntityState.Modified;
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
-           
+
         }
 
         public virtual bool Delete(T entity)
@@ -75,11 +76,20 @@ namespace CorporateAndFinance.Data.Infrastructure
             }
         }
 
-        public virtual void Delete(Expression<Func<T, bool>> where)
+        public virtual bool Delete(Expression<Func<T, bool>> where)
         {
-            IEnumerable<T> objects = dbSet.Where<T>(where).AsEnumerable();
-            foreach (T obj in objects)
-                dbSet.Remove(obj);
+            try
+            {
+                IEnumerable<T> objects = dbSet.Where<T>(where).AsEnumerable();
+                foreach (T obj in objects)
+                    dbSet.Remove(obj);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public virtual T GetById(long id)

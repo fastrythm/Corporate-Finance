@@ -54,5 +54,9 @@ namespace CorporateAndFinance.Service.Implementation
             throw new NotImplementedException();
         }
 
+        public IEnumerable<UserCard> GetAllUserCards()
+        {
+            return userCardRepository.GetMany(x => x.IsActive && x.IsDeleted == false);
+        }
     }
 }

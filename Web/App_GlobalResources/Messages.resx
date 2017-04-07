@@ -160,7 +160,7 @@
     <value>Card Number {0} is not assigned to user {1} in system. please contact your site Administrator</value>
   </data>
   <data name="MSG_GENERIC_UPLOAD_VALIDATION_ERROR" xml:space="preserve">
-    <value>Mandatory column {0} does not contain value at row number {1}.</value>
+    <value>Mandatory column {0} does not contain value at row number {1} . &lt;br /&gt;</value>
   </data>
   <data name="MSG_LOGIN_ERROR" xml:space="preserve">
     <value>Your request can't be fulfil at this time. Please try again later or your software vendor.</value>
@@ -183,10 +183,25 @@
   <data name="MSG_PASSWORD_RESET_REQUEST_SUCCESS" xml:space="preserve">
     <value>Password reset link has been sent to your email address.</value>
   </data>
+  <data name="MSG_RESTRICTED_ACCESS" xml:space="preserve">
+    <value>Restricted Access</value>
+  </data>
   <data name="MSG_TRANSACTION_FAILED" xml:space="preserve">
     <value>Transaction couldn't be saved. Please try again or contact your site Administrator.</value>
   </data>
   <data name="MSG_TRANSACTION_SUCCESS" xml:space="preserve">
     <value>Transaction saved successfully.</value>
+  </data>
+  <data name="MSG_UPLOAD_ACCOUNT_NUMBER_NOTASSIGN" xml:space="preserve">
+    <value>account number {0} not assigned to any user at row number {1} . &lt;br /&gt;</value>
+  </data>
+  <data name="MSG_UPLOAD_INVALID_DATE_FORMAT" xml:space="preserve">
+    <value>Invalid date format exist on column {0} at row number {1}.  &lt;br /&gt;</value>
+  </data>
+  <data name="MSG_UPLOAD_INVALID_DECIMAL_FORMAT" xml:space="preserve">
+    <value>Invalid amount format exist on column {0} at row number {1} . &lt;br /&gt;</value>
+  </data>
+  <data name="MSG_UPLOAD_INVALID_NUMBER_FORMAT" xml:space="preserve">
+    <value>Invalid number format exist on column {0} at row number {1} . &lt;br /&gt;</value>
   </data>
 </root>

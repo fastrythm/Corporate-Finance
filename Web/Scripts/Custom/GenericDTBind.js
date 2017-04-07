@@ -112,9 +112,10 @@ function GenerateDTVersion1(selector, aoColumns, servicePath, otherParams) {
                 return data = JSON.stringify(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                 if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
-                     window.location.href = '/account/Login';
-                 }
+                if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
+                    ALGritter('', "UnAuthorized Access", false, false, "alert-error error");
+                }
+
             }
         },
         "sDom": _DTGlobalConfig.sDom,
@@ -170,8 +171,9 @@ function GenerateDTManual(selector, aoColumns, servicePath, otherParams,isRowGro
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (thrownError.message.lastIndexOf('Unexpected token') != -1) {
-                    window.location.href = '/account/Login';
+                    ALGritter('', "UnAuthorized Access", false, false, "alert-error error");
                 }
+ 
             }
         },
         "sDom": _DTGlobalManualConfig.sDom,

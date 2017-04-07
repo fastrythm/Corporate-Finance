@@ -35,6 +35,12 @@ namespace CorporateAndFinance.Core.Model
         [StringLength(50)]
         public string Mobile { get; set; }
 
+        public string Designation { get; set;}
+
+        public string Department { get; set; }
+
+        public bool IsDeleted { get; set; }
+
         public virtual ICollection<UserCard> UserCards { get; set; }
  
         public virtual ICollection<UserCompany> UserCompanies { get; set; }
@@ -42,6 +48,9 @@ namespace CorporateAndFinance.Core.Model
       //  public virtual ICollection<UserInRole> UserInRoles { get; set; }
  
         public virtual ICollection<VendorConsultant> VendorConsultants { get; set; }
+
+        public virtual ICollection<UserPermission> UserPermissions { get; set; }
+         
 
     }
 

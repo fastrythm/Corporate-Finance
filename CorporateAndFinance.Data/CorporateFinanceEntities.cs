@@ -40,6 +40,7 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<UserCardExpense> UserCardExpenses { get; set; }
         public virtual DbSet<UserCompany> UserCompanies { get; set; }
         public virtual DbSet<VendorConsultant> VendorConsultants { get; set; }
+       public virtual DbSet<UserPermission> UserPermissions { get; set; }
 
         [NotMapped]
         public virtual DbSet<ApplicationUser> Users { get; set; }

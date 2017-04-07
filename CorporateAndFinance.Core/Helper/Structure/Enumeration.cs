@@ -50,4 +50,34 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Client = "Client";
     }
 
+    public enum UserAppPermissions
+    {
+        PettyCash_View = 1,
+        PettyCash_Add = 2,
+        PettyCash_Edit = 3,
+        PettyCash_Delete = 4,
+
+        BankPosition_View = 5,
+        BankPosition_Add = 6,
+        BankPosition_Edit = 7,
+        BankPosition_Delete = 8,
+
+        UserCardExpense_View = 9,
+        UserCardExpense_Add = 10,
+        UserCardExpense_Edit = 11,
+        UserCardExpense_Delete = 12,
+
+        Compliance_View = 13,
+        Compliance_Add = 14,
+        Compliance_Edit = 15,
+        Compliance_Delete = 16,
+
+        User_View = 17,
+        User_Add = 18,
+        User_Edit = 19,
+        User_Delete = 20,
+    }
+
+   
+
 }

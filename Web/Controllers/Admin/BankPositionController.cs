@@ -3,6 +3,7 @@ using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Implementation;
 using CorporateAndFinance.Service.Interface;
+using CorporateAndFinance.Web.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -58,6 +59,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: PettyCash
         public ActionResult Index()
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
+            { return RedirectToAction("Restricted", "Home"); }
+
             return View();
             
         }
@@ -67,6 +71,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("BankPositionList")]
         public ActionResult BankPositionList(string fromDate)
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
+            { return RedirectToAction("Restricted", "Home"); }
+
             DateTime frdate = DateTime.Now;
             if (!string.IsNullOrWhiteSpace(fromDate))
                 frdate = DateTime.Parse(fromDate);
@@ -82,15 +89,20 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(long id,string number,long cbid,string date)
         {
+
             var companyBankPosition = new CompanyBankPosition();
             if (id != 0)
             {
+               
+
                 companyBankPosition = bankPositionManagement.GetBankPosition(id);
                 if (companyBankPosition != null)
                     companyBankPosition.AccountNumber = number;
             }
             else
             {
+              
+
                 companyBankPosition.AccountNumber = number;
                 companyBankPosition.CompanyBankID = cbid;
                 companyBankPosition.Date = DateTime.Parse(date);
@@ -112,6 +124,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 {
                     if (model.CompanyBankPositionID == 0)
                     {
+                        if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_Add))
+                        {
+                            return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                        }
+
                         if (bankPositionManagement.Add(model))
                         {
                             bankPositionManagement.SaveBankPosition();
@@ -124,6 +141,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     }
                     else
                     {
+                        if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_Edit))
+                        {
+                            return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                        }
+
                         if (bankPositionManagement.Update(model))
                         {
                             bankPositionManagement.SaveBankPosition();

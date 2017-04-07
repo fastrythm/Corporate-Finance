@@ -3,6 +3,7 @@ using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Implementation;
 using CorporateAndFinance.Service.Interface;
+using CorporateAndFinance.Web.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -58,7 +59,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: PettyCash
         public ActionResult Index()
         {
-           return View();
+            if (!PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
+            { return RedirectToAction("Restricted", "Home"); }
+
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            return View();
             
         }
 
@@ -67,6 +72,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("PettyCashList")]
         public ActionResult PettyCashList(DataTablesViewModel param,string fromDate,string toDate )
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
+            { return RedirectToAction("Restricted", "Home"); }
 
             DateTime frdate = DateTime.Now;
             if (!string.IsNullOrWhiteSpace(fromDate))
@@ -114,8 +121,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                if (!PermissionControl.CheckPermission(UserAppPermissions.PettyCash_Delete))
+                {   return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                }
 
-                    PettyCash pettyCash = pettyCashManagement.GetPettyCash(id);
+                PettyCash pettyCash = pettyCashManagement.GetPettyCash(id);
 
                      
                    if(pettyCash.TransactionDate.Date < DateTime.Now.AddDays(-1).Date)
@@ -155,7 +165,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
-              
+                if (!PermissionControl.CheckPermission(UserAppPermissions.PettyCash_Add))
+                {
+                    return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                }
+
                 if (ModelState.IsValid)
                 {
                     model.UserID = new Guid(User.Identity.GetUserId());

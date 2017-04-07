@@ -15,7 +15,7 @@ namespace CorporateAndFinance.Data.Infrastructure
         bool Update(T entity);
         // Marks an entity to be removed
         bool Delete(T entity);
-        void Delete(Expression<Func<T, bool>> where);
+        bool Delete(Expression<Func<T, bool>> where);
         // Get an entity by int id
         T GetById(long id);
         // Get an entity using delegate

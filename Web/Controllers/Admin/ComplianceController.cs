@@ -2,6 +2,7 @@
 using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Interface;
+using CorporateAndFinance.Web.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -57,6 +58,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: Compliance
         public ActionResult Index()
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
+            { return RedirectToAction("Restricted", "Home"); }
+
             return View();
         }
 
@@ -64,6 +68,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("ComplianceList")]
         public ActionResult ComplianceList(DataTablesViewModel param, string fromDate, string toDate)
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
+            { return RedirectToAction("Restricted", "Home"); }
 
             DateTime frdate = DateTime.Now;
             if (!string.IsNullOrWhiteSpace(fromDate))
@@ -92,6 +98,10 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Delete))
+                {
+                    return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                }
 
                 CompanyCompliance compliance = complianceManagement.GetCompliance(id);
 
@@ -138,7 +148,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     model.Remarks1UserID = new Guid(User.Identity.GetUserId());
                     if (model.CompanyComplianceID == 0)
                     {
-                       
+                        if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Add))
+                        {
+                            return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                        }
+
                         if (complianceManagement.Add(model))
                         {
                             complianceManagement.SaveCompliance();
@@ -153,6 +167,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     }
                     else
                     {
+                        if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Edit))
+                        {
+                            return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                        }
+
                         if (complianceManagement.Update(model))
                         {
                             complianceManagement.SaveCompliance();
@@ -184,7 +203,10 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult Uploader()
         {
-
+            if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Edit) || !PermissionControl.CheckPermission(UserAppPermissions.Compliance_Add))
+            {
+                return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+            }
 
             string fname = string.Empty;
             string tempFname = string.Empty;

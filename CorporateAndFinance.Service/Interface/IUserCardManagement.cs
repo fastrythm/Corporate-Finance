@@ -16,6 +16,6 @@ namespace CorporateAndFinance.Service.Interface
         bool Delete(UserCard model);
         bool Add(UserCard model);
         bool Update(UserCard model);
-
+        IEnumerable<UserCard> GetAllUserCards();
     }
 }

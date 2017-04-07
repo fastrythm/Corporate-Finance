@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Web;
@@ -24,6 +25,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private readonly IUserCardManagement userCardManagement;
         private readonly ICompanyManagement companyManagement;
         private readonly IConsultantManagement consultantManagement;
+
+
 
         private static readonly List<string> ColumnList = new List<string>() { UserCardExpenseEnum.Date,UserCardExpenseEnum.Receipt_Number, UserCardExpenseEnum.Account_Number,
             UserCardExpenseEnum.Description, UserCardExpenseEnum.Card_Member, UserCardExpenseEnum.Payment_Detail, UserCardExpenseEnum.Expense_Head, UserCardExpenseEnum.BE_NBE,
@@ -66,6 +69,10 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult Index()
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
+            { return RedirectToAction("Restricted", "Home"); }
+
+
             return View();
 
         }
@@ -73,11 +80,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         [Route("Delete")]
         [HttpPost]
-        [HasPermission("PermissionC")]
+        
         public JsonResult Delete(long id)
         {
             try
             {
+                if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_Delete))
+                { return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false }); }
 
                 var userCard = userCardExpenseManagement.GetUserCardExpense(id);
 
@@ -100,18 +109,23 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         }
 
         [Route("UploadNew")]
-        [HasPermission("PermissionB")]
+       
         public ActionResult UploadNew()
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_Add))
+            { return RedirectToAction("Restricted", "Home"); }
+
             return PartialView("_UploadUserCardExpense");
         }
 
 
         [HttpPost]
         [Route("UserCardExpenseList")]
-        [HasPermission("PermissionA")]
+     
         public ActionResult UserCardExpenseList(DataTablesViewModel param, string fromDate, string toDate)
         {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
+            { return RedirectToAction("Restricted", "Home"); }
 
             DateTime frdate = DateTime.Now;
             if (!string.IsNullOrWhiteSpace(fromDate))
@@ -135,15 +149,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         }
 
         [HttpPost]
-        [HasPermission("PermissionB")]
+        
         // use IEnumerable<HttpPostedFileBase> files if you want to post multiple files
         public ActionResult Uploader(HttpPostedFileBase expenseSheet)
         {
             var fileName = string.Empty;
             try
             {
+                if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_Add))
+                { return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false }); }
 
-              
                 var fileExtension = string.Empty;
                 if (expenseSheet.ContentLength > 0)
                 {
@@ -186,19 +201,33 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return new ExcelFileProcess { Message = info, Response = false, MessageType = MessageClass.Error };
             }
 
-            ExcelFileProcess process =  InsertData(ds.Tables[0], fileName);
+            string errors =  ExcelFileReader.ValidateDataFormat(ds.Tables[0]);
+            if (!string.IsNullOrWhiteSpace(errors))
+            {
+                return new ExcelFileProcess { Message = errors, Response = false, MessageType = MessageClass.Error };
+            }
+
+            var userCards =  userCardManagement.GetAllUserCards();
+            string accNumberError = ExcelFileReader.ValidateAccountNumber(ds.Tables[0], userCards);
+            if (!string.IsNullOrWhiteSpace(accNumberError))
+            {
+                return new ExcelFileProcess { Message = accNumberError, Response = false, MessageType = MessageClass.Error };
+            }
+
+            ExcelFileProcess process =  InsertData(ds.Tables[0], fileName, userCards);
 
             return process;
         }
 
-        private ExcelFileProcess InsertData(DataTable dt, string fileName)
+        private ExcelFileProcess InsertData(DataTable dt, string fileName,IEnumerable<UserCard> userCards)
         {
             foreach (DataRow row in dt.Rows)
             {
                 UserCardExpense userCardExp = new UserCardExpense();
 
-                UserCard userCard = userCardManagement.GetUserCardByAccountNumber(Convert.ToString(row[UserCardExpenseEnum.Account_Number]));
-                if(userCard == null)
+               // UserCard userCard = userCardManagement.GetUserCardByAccountNumber(Convert.ToString(row[UserCardExpenseEnum.Account_Number]));
+                UserCard userCard = userCards.Where(x => x.CardNumber.ToLower() == Convert.ToString(row[UserCardExpenseEnum.Account_Number]).ToLower()).FirstOrDefault();
+                if (userCard == null)
                 {
                     return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_UPLOAD_USERCARD_ERROR, Convert.ToString(row[UserCardExpenseEnum.Account_Number]), Convert.ToString(row[UserCardExpenseEnum.Card_Member])), Response = true, MessageType = MessageClass.Error };
                 }

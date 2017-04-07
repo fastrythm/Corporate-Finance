@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@using CorporateAndFinance.Web.Helper
+@using CorporateAndFinance.Core.Helper.Structure
 <div class="col-sm-9 nopadding">
     <div class="row">
         <h1 class="red text-center">Corporate Finance Modules<br><span style="font-size: 8pt;">Lets Get Startted, the New Experience of Corporate Finance</span></h1>
@@ -9,21 +11,35 @@
     </div>
     </div>
     @section Scripts{
+
+       
         <script type="text/javascript">
+            var pettyCash = '@PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View)';
+            var bankPosition = '@PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View)';
+            var compliance = '@PermissionControl.CheckPermission(UserAppPermissions.Compliance_View)';
+            var userCard = '@PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View)';
+
+
             $(document).ready(function () {
+
+                if (pettyCash == 'True')
                 $("#metroaqui").AddBtnMy('bt4', '12', 'blue', 'money', 'Petty Cash', '@Url.Action("Index", "PettyCash")');
+
                 // $("#metroaqui").AddBtnMy('bt4', '4', 'black', 'file-text', 'ACH/Wire Log Sheeet', '#');
+                if (bankPosition == 'True')
                 $("#metroaqui").AddBtnMy('bt4', '6', 'yellow', 'address-book', 'Bank Position', '@Url.Action("Index", "BankPosition")');
                 // $("#metroaqui").AddBtnMy('bt4', '4', 'cyan', 'pie-chart', 'Collection And Payments Reports', '#');
                 //   $("#metroaqui").AddBtnMy('bt4', '3', 'purpal', 'sitemap', 'Intercompany Recon Sheet ', '#');
                 //  $("#metroaqui").AddBtnMy('bt4', '3', 'red', 'line-chart', 'AMEX', '#');
                 //  $("#metroaqui").AddBtnMy('bt4', '3', 'green', 'bank', 'Bank Recon Sheet', '#');
-                $("#metroaqui").AddBtnMy('bt4', '6', 'sky', 'chain', 'Compliance Management', '@Url.Action("Index", "Compliance")');
+                if (compliance == 'True')
+                    $("#metroaqui").AddBtnMy('bt4', '6', 'sky', 'chain', 'Compliance Management', '@Url.Action("Index", "Compliance")');
+                if (userCard == 'True')
                 $("#metroaqui").AddBtnMy('bt4', '6', 'red', 'line-chart', 'AMEX Management', '@Url.Action("Index", "CardExpense")');
-                $("#metroaqui").AddBtnMy('bt4', '6', 'gary', 'bar-chart', 'Report', '#');
-                //   $("#metroaqui").AddBtnMy('bt4', '4', 'orange', 'check-square-o ', 'Check Inventory / Check Log Sheet', '#');
+                //$("#metroaqui").AddBtnMy('bt4', '6', 'gary', 'bar-chart', 'Report', '#');
+                    //   $("#metroaqui").AddBtnMy('bt4', '4', 'orange', 'check-square-o ', 'Check Inventory / Check Log Sheet', '#');
 
 
-            });
+                });
         </script>
     }

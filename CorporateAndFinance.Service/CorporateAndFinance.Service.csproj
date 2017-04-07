@@ -49,6 +49,8 @@
     <Compile Include="Implementation\GadgetManagement.cs" />
     <Compile Include="Implementation\BankPositionManagement.cs" />
     <Compile Include="Implementation\PettyCashManagement.cs" />
+    <Compile Include="Implementation\UserManagement.cs" />
+    <Compile Include="Implementation\UserPermissionManagement.cs" />
     <Compile Include="Interface\IConsultantManagement.cs" />
     <Compile Include="Interface\IUserCardManagement.cs" />
     <Compile Include="Interface\IUserCardExpenseManagement.cs" />
@@ -58,7 +60,8 @@
     <Compile Include="Interface\IGadgetManagement.cs" />
     <Compile Include="Interface\IBankPositionManagement.cs" />
     <Compile Include="Interface\IPettyCashManagement.cs" />
-    <Compile Include="Interface\IUserPermission.cs" />
+    <Compile Include="Interface\IUserManagement.cs" />
+    <Compile Include="Interface\IUserPermissionManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
