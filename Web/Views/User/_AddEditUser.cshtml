@@ -1,0 +1,146 @@
+﻿@model CorporateAndFinance.Core.ViewModel.UserVM
+ 
+@using (Html.BeginForm("AddEdit", "User", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add New User </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @if (Model.Id != null && Model.Id != "0")
+                {
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", data_val = false })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                }
+              
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmployeeNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @foreach (CorporateAndFinance.Core.Helper.Structure.UserAppPermissions permission in Enum.GetValues(typeof(CorporateAndFinance.Core.Helper.Structure.UserAppPermissions)))
+            {
+                <div class="col-md-4">
+                    <label>@permission.ToString()</label>
+                    @if (Model.UserPermissions != null && Model.UserPermissions.Contains(permission))
+                    {
+                        <input type="checkbox" style="-webkit-appearance: checkbox; !important" checked name="UserPermissions" value="@(permission.ToString())" id="@((int)permission)" />
+                    }
+                    else
+                    {
+                    <input type="checkbox" style="-webkit-appearance: checkbox; !important" name="UserPermissions" value="@(permission.ToString())" id="@((int)permission)" />
+                    }
+                </div>
+            }
+        </div>
+        <div class="form-group text-center">
+
+            <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+            <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+        </div>
+    </div>
+}
+ 
+<script type="text/javascript">
+
+    
+    $(document).ready(function () {
+
+        $("#btnSave").click(function (evt) {
+            var $form = $('.data_form');
+              if ($form.valid()) {
+                  AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccessUser);
+              }
+        })
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+    });
+
+    function OnSuccessUser(response)
+    {
+        if (response.Response) {
+            DTToggler(); $("#divOperations").empty();
+            oTable.fnDestroy();
+            InitializeUserList();
+         
+        }
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>
+
+ 
