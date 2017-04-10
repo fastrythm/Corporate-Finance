@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CorporateAndFinance.Core.Helper.Structure
 {
-   
+
     public struct MessageClass
     {
         public static string Success = "alert-success success";
@@ -20,7 +20,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public bool Response { get; set; }
         public string MessageType { get; set; }
     }
- 
+
     public struct UserCardExpenseEnum
     {
         public static string Date = "Date";
@@ -78,6 +78,97 @@ namespace CorporateAndFinance.Core.Helper.Structure
         User_Delete = 20,
     }
 
-   
+    public class ChartOfAccount
+    {
+        public static List<string> Titles = new List<string>(){
+         "Cash and Bank Balances:Petty Imprest",
+        "Advertising",
+        "Communication Expense",
+        "Cost of Marketing",
+        "Cost of Marketing:Advertising",
+        "Dues & Subscription",
+        "Dues & Subscription:Accounting Software Fee",
+        "Dues & Subscription:Membership/Professional Dues",
+        "Dues & Subscription:Newspaper/Magazine Subscription",
+        "Dues and subscriptions",
+        "Electricity",
+        "Entertainments",
+        "Equipment rental",
+        "Gas Charges",
+        "General Insurance",
+        "Generator Fuel",
+        "Groceries/Kitchenware",
+        "Incentives",
+        "Internet / DSL",
+        "IT Accessories",
+        "Janitorial Services",
+        "Legal and professional fees",
+        "Lodging",
+        "Loss on discontinued operations, net of tax",
+        "Management compensation",
+        "Management Fee",
+        "Management Fee:Intercompany Management Fee",
+        "Meals & Entertainment",
+        "Meals and entertainment",
+        "Miscelleaneous",
+        "Mobile Allowance",
+        "Mobile communication",
+        "Office expenses",
+        "Office Supplies",
+        "Other Admin & OPEX",
+        "Other Expenses",
+        "Other Expenses:Amortization of Goodwill",
+        "Other Expenses:Donation / Charity",
+        "Other Expenses:Miscellaneous",
+        "Other Expenses:Office Expenses",
+        "Other Expenses:PO Box Rental",
+        "Other Expenses:Security Services Expense",
+        "Other General and Admin Expenses",
+        "Other general and administrative expenses",
+        "Other Interest Expense",
+        "Other selling expenses",
+        "Other Types of Expenses-Advertising Expenses",
+        "Parking/Toll",
+        "Payroll - Contract staff Wages",
+        "Payroll - Fuel reimbursement",
+        "Payroll - Leave Encashment",
+        "Payroll - Mobile Allowance",
+        "Postage / Shipping expense",
+        "Promotional",
+        "Purchases",
+        "Rent or Lease",
+        "Repairs and Maintenance",
+        "Repairs and Maintenance:Repair & Maintenance",
+        "Repairs and Maintenance:Repair & Maintenance:Fuel Reimbursement (Others)",
+        "Salaries - Permanent",
+        "Security Expense",
+        "Shipping and delivery expense",
+        "Software/System Maintenance",
+        "Staff Welfare & Gifts",
+        "Stationery & Printing",
+        "Stationery and printing",
+        "Supplies / Stationaries",
+        "Telephone",
+        "Training & Development",
+        "Training & Development:Conference/Trainings",
+        "Transportation",
+        "Transportation & Conveyance",
+        "Travel expenses - general and admin expenses",
+        "Travel expenses - selling expense",
+        "Travel expenses - selling expenses",
+        "Travel Meals",
+        "Travelling & Lodging",
+        "Travelling - Management",
+        "Utilities:Building Maintenance Charges",
+        "Utilities:Generator Rent",
+        "Utilities:Parking",
+        "Utilities:Telephone - Cell",
+        "Wage expenses",
+        "Water Tanker / Maintenance"
+
+    };
+
+    }
+
 
 }

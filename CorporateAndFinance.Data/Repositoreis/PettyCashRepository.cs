@@ -33,6 +33,7 @@ namespace CorporateAndFinance.Data.Repositories
                 PettyCashID = index.PettyCashID,
                 Description = index.Description,
                 Amount = index.Amount,
+                ChartOfAccountTitle = index.ChartOfAccountTitle,
                 TransactionType = index.TransactionType,
                 TransactionDate = index.TransactionDate,
 

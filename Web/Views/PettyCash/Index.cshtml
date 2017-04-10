@@ -52,6 +52,7 @@
                         <tr>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>Starting Balance : <span  id="tblPettyCash_OpeningBal"   class="numericCol">0.000</span></th>
                             <th>Close Balance : <span id="tblPettyCash_ClosingBal" class="numericCol">0.000</span></th>
                             <th></th>
@@ -112,6 +113,7 @@
                               return DateFormat(full.TransactionDate);
                           }
                       },
+                      { "data": "ChartOfAccountTitle", "sTitle": "Title" },
                       { "data": "Description", "sTitle": "Description" },
                       {
                           "data": "Amount",
@@ -153,7 +155,7 @@
                     footer: true,
                     
                     exportOptions: {
-                        columns: [0,1, 2,3]
+                        columns: [0,1, 2,3,4]
                     }
                 }]
             });

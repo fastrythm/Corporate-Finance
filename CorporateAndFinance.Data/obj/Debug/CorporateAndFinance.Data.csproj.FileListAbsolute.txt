@@ -28,3 +28,4 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.consultantchangerequiredfields.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.AddUserFields.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserPermissionTable.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.pettycashChartOfAccountTitleField.resources

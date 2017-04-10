@@ -14,6 +14,10 @@ namespace CorporateAndFinance.Core.Model
         public long PettyCashID { get; set; }
 
         [StringLength(128)]
+        [Display(Name = "Title")]
+        public string ChartOfAccountTitle { get; set; }
+
+        [StringLength(128)]
         [Display(Name = "Description")]
         public string Description { get; set; }
 

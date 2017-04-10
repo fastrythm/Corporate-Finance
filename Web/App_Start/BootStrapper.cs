@@ -51,7 +51,10 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(UserCardExpenseManagement).Assembly)
           .Where(t => t.Name.EndsWith("Management"))
           .AsImplementedInterfaces().InstancePerRequest();
-           builder.RegisterAssemblyTypes(typeof(UserCardManagement).Assembly)
+            builder.RegisterAssemblyTypes(typeof(UserCardManagement).Assembly)
+         .Where(t => t.Name.EndsWith("Management"))
+         .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserManagement).Assembly)
         .Where(t => t.Name.EndsWith("Management"))
         .AsImplementedInterfaces().InstancePerRequest();
 
@@ -74,6 +77,9 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(UserCardRepository).Assembly)
           .Where(t => t.Name.EndsWith("Repository"))
           .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
+       .Where(t => t.Name.EndsWith("Repository"))
+       .AsImplementedInterfaces().InstancePerRequest();
 
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
