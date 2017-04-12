@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\BankTransactionManagement.cs" />
     <Compile Include="Implementation\ConsultantManagement.cs" />
     <Compile Include="Implementation\UserCardManagement.cs" />
     <Compile Include="Implementation\UserCardExpenseManagement.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Implementation\PettyCashManagement.cs" />
     <Compile Include="Implementation\UserManagement.cs" />
     <Compile Include="Implementation\UserPermissionManagement.cs" />
+    <Compile Include="Interface\IBankTransactionManagement.cs" />
     <Compile Include="Interface\IConsultantManagement.cs" />
     <Compile Include="Interface\IUserCardManagement.cs" />
     <Compile Include="Interface\IUserCardExpenseManagement.cs" />

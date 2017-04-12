@@ -1,5 +1,4 @@
 D:\tutorials\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.csprojResolveAssemblyReference.cache
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\CorporateAndFinance.Service.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\CorporateAndFinance.Service.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\CorporateAndFinance.Core.dll
@@ -12,5 +11,6 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\EntityFramework.xml
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.pdb

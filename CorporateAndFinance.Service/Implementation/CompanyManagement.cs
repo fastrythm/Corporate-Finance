@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CorporateAndFinance.Core.ViewModel;
 
 namespace CorporateAndFinance.Service.Implementation
 {
@@ -39,6 +40,11 @@ namespace CorporateAndFinance.Service.Implementation
         public bool Add(Company model)
         {
             return companyRepository.Add(model);
+        }
+
+        public IEnumerable<CompanyBankVM> GetCompanyBankAccounts()
+        {
+            return companyRepository.GetCompanyBankAccounts();
         }
     }
 }

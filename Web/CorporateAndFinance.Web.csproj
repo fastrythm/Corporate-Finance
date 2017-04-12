@@ -245,6 +245,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\AccountController.cs" />
     <Compile Include="Controllers\Admin\BankPositionController.cs" />
+    <Compile Include="Controllers\Admin\BankTransactionController.cs" />
     <Compile Include="Controllers\Admin\ComplianceController.cs" />
     <Compile Include="Controllers\Admin\HomeController.cs" />
     <Compile Include="Controllers\Admin\ManageController.cs" />
@@ -695,6 +696,8 @@
     <Content Include="Views\Home\Restricted.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_AddEditUser.cshtml" />
+    <Content Include="Views\BankTransaction\Index.cshtml" />
+    <Content Include="Views\BankTransaction\_AddEditBankTransaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
