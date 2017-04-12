@@ -93,16 +93,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             var companyBankPosition = new CompanyBankPosition();
             if (id != 0)
             {
-               
-
                 companyBankPosition = bankPositionManagement.GetBankPosition(id);
                 if (companyBankPosition != null)
                     companyBankPosition.AccountNumber = number;
             }
             else
             {
-              
-
                 companyBankPosition.AccountNumber = number;
                 companyBankPosition.CompanyBankID = cbid;
                 companyBankPosition.Date = DateTime.Parse(date);

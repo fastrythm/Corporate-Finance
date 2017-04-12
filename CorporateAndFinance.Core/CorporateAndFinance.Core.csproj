@@ -79,6 +79,8 @@
     <Compile Include="Model\ConsultantPlacement.cs" />
     <Compile Include="Model\UserPermission.cs" />
     <Compile Include="ViewModel\CompanyBankPositionVM.cs" />
+    <Compile Include="ViewModel\CompanyBankTransactionVM.cs" />
+    <Compile Include="ViewModel\CompanyBankVM.cs" />
     <Compile Include="ViewModel\CompanyComplianceVM.cs" />
     <Compile Include="ViewModel\DataTableModel.cs" />
     <Compile Include="Model\Gadget.cs" />

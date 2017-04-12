@@ -1,4 +1,5 @@
 ﻿using CorporateAndFinance.Core.Model;
+using CorporateAndFinance.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace CorporateAndFinance.Service.Interface
     {
         IEnumerable<Company> GetAllCompanies();
         Company GetCompanyByNumber(long number);
+        IEnumerable<CompanyBankVM> GetCompanyBankAccounts();
         bool Add(Company model);
         void SaveCompany();
     }

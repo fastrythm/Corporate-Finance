@@ -1,0 +1,218 @@
+﻿@model CorporateAndFinance.Core.Model.CompanyBankTransaction
+
+@using (Html.BeginForm("AddEdit", "BankTransaction", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div id="someinner">
+            <div class="row">
+
+                <h1 class="red list-inline"><span class="gray"></span> Add New Transaction </h1>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.TransactionDate)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "datepicker form-control", @placeholder = "Date" } })
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.CompanyBankID)
+                        <div class="input-group">
+                         
+                            @Html.DropDownListFor(model => model.CompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+                             x => new SelectListItem()
+                             {
+                                 Value = x.CompanyBankID.ToString(),
+                                 Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
+                                 Selected = x.CompanyBankID == Model.CompanyBankID
+                             }), new { @class = "form-control", @placeholder = "Select Account Number" })
+
+
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.CompanyBankID, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.TransactionType)
+                        <div class="input-group">
+                            <select class="form-control" name="TransactionType" id="TransactionType">
+                                <option value="">Select Transaction Type</option>
+                                <option value="Receipt"  @(Model.TransactionType == "Receipt" ? "selected=selected" : "") >Receipt</option>
+                                <option value="Payment" @(Model.TransactionType == "Payment" ? "selected=selected" : "")>Payment</option> 
+                            </select>
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.PaymentType)
+                        <div class="input-group">
+                            <select class="form-control" name="PaymentType" id="PaymentType">
+                                <option value="">Select Payment Type</option>
+                                <option value="WIRE" @(Model.PaymentType == "WIRE" ? "selected=selected" : "")>Wire</option>
+                                <option value="ACH" @(Model.PaymentType == "ACH" ? "selected=selected" : "")>ACH</option>
+                                <option value="CHECK" @(Model.PaymentType == "CHECK" ? "selected=selected" : "")>Check</option>
+                            </select>
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <label>Transaction status </label>
+                        <div class="input-group">
+                            <select class="form-control" name="TransactionStatus" id="TransactionStatus">
+                                <option value="">Select Transaction status</option>
+                                <option value="1" @(Model.TransactionStatus == 1 ? "selected=selected" : "") >Cleared</option>
+                                <option value="2" @(Model.TransactionStatus == 2 ? "selected=selected" : "")  >QB pending</option>
+                                <option value="3" @(Model.TransactionStatus == 3 ? "selected=selected" : "")>Bank pending check</option>
+                            </select>
+
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.ReceiptNumber)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.ReceiptNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Receipt Number" } })
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-file"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ReceiptNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <label>Category </label>
+                        <div class="input-group">
+                            <select class="form-control"  name="CategoryType" id="CategoryType">
+                                <option value="">Select Category</option>
+                                <option value="Intercompany"  @(Model.CategoryType == "Intercompany" ? "selected=selected" : "")>Intercompany</option>
+                                <option value="Vendor"  @(Model.CategoryType == "Vendor" ? "selected=selected" : "") >Vendor</option>
+                                <option value="Client" @(Model.CategoryType == "Client" ? "selected=selected" : "") >Client</option>
+                            </select>
+
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.ToCompanyBankID)
+                        <div class="input-group">
+
+                            @Html.DropDownListFor(model => model.ToCompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+                             x => new SelectListItem()
+                             {
+                                 Value = x.CompanyBankID.ToString(),
+                                 Text = x.AccountNumber +" - "+ x.CompanyName + " - " +x.BankName,
+                                 Selected = x.CompanyBankID == Model.ToCompanyBankID
+                             }), new { @class = "form-control", @placeholder = "Select To Account Number" })
+
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ToCompanyBankID, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-sm-6">
+
+                        @Html.LabelFor(model => model.Description)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description" } })
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-file"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+
+                        @Html.LabelFor(model => model.Amount)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount" } })
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-dollar"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="divider"><hr></div>
+
+            @Html.HiddenFor(model => model.CompanyBankTransactionID)
+            @Html.HiddenFor(model => model.CreatedOn)
+            @Html.HiddenFor(model => model.LastModified)
+            <div class="form-group text-center">
+                <div class="col-sm-10">
+                    <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+                    <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+                </div>
+                <br /><br /><br /><br />
+            </div>
+
+
+        </div>
+    </div>
+
+}
+
+ 
+<script type="text/javascript">
+
+    //@@ sourceURL=_AddEditPettyCash.cshtml
+    $(document).ready(function () {
+
+
+        $(this).find('.datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:+10',
+            setDate: new Date()
+        });
+        if ($(".datepicker").val() == "")
+        $(".datepicker").datepicker().datepicker("setDate", new Date());
+
+        $("#btnSave").click(function (evt) {
+            var $form = $('.data_form');
+
+            if ($form.valid()) {
+                AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
+            }
+        })
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+
+    });
+
+    function OnSuccess(response) {
+
+        DTToggler(); $("#divOperations").empty();
+        oTable.fnDraw(false);
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>

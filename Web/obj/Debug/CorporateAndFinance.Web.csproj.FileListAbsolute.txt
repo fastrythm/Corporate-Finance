@@ -1,5 +1,4 @@
 D:\tutorials\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ApplicationInsights.config
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\roslyn\csc.exe
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -27,6 +26,8 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Service.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\EntityFramework.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\EntityFramework.SqlServer.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ICSharpCode.SharpZipLib.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.Agent.Intercept.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.DependencyCollector.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -63,12 +64,14 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Web.WebPages.Razor.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\WebGrease.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Core.pdb
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Data.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Service.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.Integration.Mvc.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.Integration.Mvc.Owin.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.Integration.Owin.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\AutoMapper.xml
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.DependencyCollector.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.Web.xml
@@ -101,9 +104,6 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.Owin.Security.Google.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.Owin.Security.Twitter.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.pdb
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ICSharpCode.SharpZipLib.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.pdb
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\CorporateAndFinance.Data.pdb
