@@ -554,6 +554,7 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
+    <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-003.pubxml" />

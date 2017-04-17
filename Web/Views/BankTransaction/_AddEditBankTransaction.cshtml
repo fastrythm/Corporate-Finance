@@ -1,5 +1,5 @@
 ﻿@model CorporateAndFinance.Core.Model.CompanyBankTransaction
-
+@using CorporateAndFinance.Core.Helper.Structure
 @using (Html.BeginForm("AddEdit", "BankTransaction", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
@@ -25,7 +25,7 @@
                     <div class="col-sm-6">
                         @Html.LabelFor(model => model.CompanyBankID)
                         <div class="input-group">
-                         
+
                             @Html.DropDownListFor(model => model.CompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
                              x => new SelectListItem()
                              {
@@ -51,8 +51,8 @@
                         <div class="input-group">
                             <select class="form-control" name="TransactionType" id="TransactionType">
                                 <option value="">Select Transaction Type</option>
-                                <option value="Receipt"  @(Model.TransactionType == "Receipt" ? "selected=selected" : "") >Receipt</option>
-                                <option value="Payment" @(Model.TransactionType == "Payment" ? "selected=selected" : "")>Payment</option> 
+                                <option value="Receipt" @(Model.TransactionType == "Receipt" ? "selected=selected" : "")>Receipt</option>
+                                <option value="Payment" @(Model.TransactionType == "Payment" ? "selected=selected" : "")>Payment</option>
                             </select>
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
@@ -82,9 +82,9 @@
                         <div class="input-group">
                             <select class="form-control" name="TransactionStatus" id="TransactionStatus">
                                 <option value="">Select Transaction status</option>
-                                <option value="1" @(Model.TransactionStatus == 1 ? "selected=selected" : "") >Cleared</option>
-                                <option value="2" @(Model.TransactionStatus == 2 ? "selected=selected" : "")  >QB pending</option>
-                                <option value="3" @(Model.TransactionStatus == 3 ? "selected=selected" : "")>Bank pending check</option>
+                                <option value="1" @(Model.TransactionStatus == 1 ? "selected=selected" : "")>Cleared</option>
+                                <option value="2" @(Model.TransactionStatus == 2 ? "selected=selected" : "")>QB pending</option>
+                                <option value="3" @(Model.TransactionStatus == 3 ? "selected=selected" : "")>Bank pending</option>
                             </select>
 
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
@@ -107,31 +107,86 @@
                     <div class="col-sm-6">
                         <label>Category </label>
                         <div class="input-group">
-                            <select class="form-control"  name="CategoryType" id="CategoryType">
-                                <option value="">Select Category</option>
-                                <option value="Intercompany"  @(Model.CategoryType == "Intercompany" ? "selected=selected" : "")>Intercompany</option>
-                                <option value="Vendor"  @(Model.CategoryType == "Vendor" ? "selected=selected" : "") >Vendor</option>
-                                <option value="Client" @(Model.CategoryType == "Client" ? "selected=selected" : "") >Client</option>
-                            </select>
-
+                                @Html.DropDownListFor(model => model.CategoryType, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Select Category", Value = "" },
+                                    new SelectListItem{ Text=@CompanyType.Inter, Value = @CompanyType.Inter },
+                                    new SelectListItem{ Text=@CompanyType.Vendor, Value = @CompanyType.Vendor },
+                                    new SelectListItem{ Text=@CompanyType.Client, Value = @CompanyType.Client },
+                                    new SelectListItem{ Text=@EntityType.Consultant, Value = @EntityType.Consultant },
+                                    new SelectListItem{ Text=@EntityType.AutoDebit, Value = @EntityType.AutoDebit },
+                                    new SelectListItem{ Text=@EntityType.Other, Value = @EntityType.Other },
+                                } ,new { @class = "form-control", @placeholder = "Select Category" })
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
+                        @Html.ValidationMessageFor(model => model.CategoryType, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
-                        @Html.LabelFor(model => model.ToCompanyBankID)
-                        <div class="input-group">
+                        <div id="divCompany" style="display:none;" class="hideControl">
+                            @Html.LabelFor(model => model.ToCompanyBankID)
+                            <div class="input-group">
 
-                            @Html.DropDownListFor(model => model.ToCompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+                                @Html.DropDownListFor(model => model.ToCompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
                              x => new SelectListItem()
                              {
                                  Value = x.CompanyBankID.ToString(),
-                                 Text = x.AccountNumber +" - "+ x.CompanyName + " - " +x.BankName,
+                                 Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
                                  Selected = x.CompanyBankID == Model.ToCompanyBankID
                              }), new { @class = "form-control", @placeholder = "Select To Account Number" })
 
-                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ToCompanyBankID, "", new { @class = "text-danger" })
                         </div>
-                        @Html.ValidationMessageFor(model => model.ToCompanyBankID, "", new { @class = "text-danger" })
+                        <div id="divVendor" style="display:none;" class="hideControl">
+                            <label>Vendor</label>
+                            <div class="input-group">
+
+                                @Html.DropDownListFor(model => model.CategoryVendorID, Model.CategoryVendors.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CategoryVendors.Select(
+                             x => new SelectListItem()
+                             {
+                                 Value = x.CompanyID.ToString(),
+                                 Text = x.Name + " - " + x.CompanyNumber,
+                                 Selected = x.CompanyID == Model.CategoryReferenceID
+                             }), new { @class = "form-control", @placeholder = "Select Vendor" })
+
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.CategoryVendorID, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="divClient" style="display:none;" class="hideControl">
+                            <label>Client</label>
+                            <div class="input-group">
+
+                                @Html.DropDownListFor(model => model.CategoryClientID, Model.CategoryClients.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CategoryClients.Select(
+                             x => new SelectListItem()
+                             {
+                                 Value = x.CompanyID.ToString(),
+                                 Text = x.Name + " - " + x.CompanyNumber,
+                                 Selected = x.CompanyID == Model.CategoryReferenceID
+                             }), new { @class = "form-control", @placeholder = "Select Client" })
+
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.CategoryClientID, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="divConsultant" style="display:none;" class="hideControl">
+                            <label>Consultant</label>
+                            <div class="input-group">
+
+                                @Html.DropDownListFor(model => model.CategoryConsultantID, Model.CategoryConsultants.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CategoryConsultants.Select(
+                             x => new SelectListItem()
+                             {
+                                 Value = x.ConsultantID.ToString(),
+                                 Text = x.FirstName + " " + x.LastName + " - " + x.ConsultantNumber,
+                                 Selected = x.ConsultantID == Model.CategoryReferenceID
+                             }), new { @class = "form-control", @placeholder = "Select Consultant" })
+
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.CategoryConsultantID, "", new { @class = "text-danger" })
+                        </div>
+
                     </div>
 
                 </div>
@@ -179,7 +234,7 @@
 
 }
 
- 
+
 <script type="text/javascript">
 
     //@@ sourceURL=_AddEditPettyCash.cshtml
@@ -193,7 +248,7 @@
             setDate: new Date()
         });
         if ($(".datepicker").val() == "")
-        $(".datepicker").datepicker().datepicker("setDate", new Date());
+            $(".datepicker").datepicker().datepicker("setDate", new Date());
 
         $("#btnSave").click(function (evt) {
             var $form = $('.data_form');
@@ -207,7 +262,29 @@
             DTToggler(); $("#divOperations").empty();
         })
 
+        $("#CategoryType").change(function () {
+
+            SetCategoryType();
+           
+
+        });
+
+        SetCategoryType();
     });
+
+    function SetCategoryType()
+    {
+        $(".hideControl").hide();
+        var value = $("#CategoryType").val();
+        if (value == '@CompanyType.Inter')
+            $("#divCompany").show();
+        else if (value == '@CompanyType.Client')
+            $("#divClient").show();
+        else if (value == '@CompanyType.Vendor')
+            $("#divVendor").show();
+        else if (value == '@EntityType.Consultant')
+            $("#divConsultant").show();
+    }
 
     function OnSuccess(response) {
 

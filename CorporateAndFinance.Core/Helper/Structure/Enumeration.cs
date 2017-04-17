@@ -49,6 +49,13 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Vendor = "Vendor";
         public static string Client = "Client";
     }
+    public struct EntityType
+    {
+        public static string Consultant = "Consultant";
+        public static string Other = "Other";
+        public static string AutoDebit = "Auto-Debit"; 
+    }
+
 
     public enum UserAppPermissions
     {

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CorporateAndFinance.Core.ViewModel;
+using CorporateAndFinance.Core.Helper.Structure;
 
 namespace CorporateAndFinance.Service.Implementation
 {
@@ -45,6 +46,16 @@ namespace CorporateAndFinance.Service.Implementation
         public IEnumerable<CompanyBankVM> GetCompanyBankAccounts()
         {
             return companyRepository.GetCompanyBankAccounts();
+        }
+
+        public IEnumerable<Company> GetAllVendorCompanies()
+        {
+            return companyRepository.GetMany(comp => comp.IsActive == true && comp.CompanyType == CompanyType.Vendor);
+        }
+
+        public IEnumerable<Company> GetAllClientCompanies()
+        {
+            return companyRepository.GetMany(comp => comp.IsActive == true && comp.CompanyType == CompanyType.Client);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace CorporateAndFinance.Service.Interface
     public interface ICompanyManagement
     {
         IEnumerable<Company> GetAllCompanies();
+        IEnumerable<Company> GetAllVendorCompanies();
+        IEnumerable<Company> GetAllClientCompanies();
         Company GetCompanyByNumber(long number);
         IEnumerable<CompanyBankVM> GetCompanyBankAccounts();
         bool Add(Company model);

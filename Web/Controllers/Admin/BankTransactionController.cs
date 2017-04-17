@@ -20,11 +20,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private ApplicationUserManager _userManager;
         private readonly IBankTransactionManagement bankTransactionManagement;
         private readonly ICompanyManagement companyManagment;
+        private readonly IConsultantManagement consultantManagment;
 
-        public BankTransactionController(IBankTransactionManagement bankTransactionManagement, ICompanyManagement companyManagment)
+        public BankTransactionController(IBankTransactionManagement bankTransactionManagement, ICompanyManagement companyManagment, IConsultantManagement consultantManagment)
         {
             this.bankTransactionManagement = bankTransactionManagement;
             this.companyManagment = companyManagment;
+            this.consultantManagment = consultantManagment;
         }
 
 
@@ -73,6 +75,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 transaction = new CompanyBankTransaction();
 
             transaction.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
+            transaction.CategoryVendors = companyManagment.GetAllVendorCompanies();
+            transaction.CategoryClients = companyManagment.GetAllClientCompanies();
+            transaction.CategoryConsultants = consultantManagment.GetAllConsultants();
 
             return PartialView("_AddEditBankTransaction", transaction);
         }
@@ -94,7 +99,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         {
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
-
+                        SetCategoryTypeID(model);
                         if (bankTransactionManagement.Add(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
@@ -103,7 +108,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         else
                         {
                             if (model != null)
-                                model.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
+                            {  model.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
+                                model.CategoryVendors = companyManagment.GetAllVendorCompanies();
+                                model.CategoryClients = companyManagment.GetAllClientCompanies();
+                                model.CategoryConsultants = consultantManagment.GetAllConsultants();
+                            }
                             return Json(new { Message = string.Format("Validation Failded", "Compliance"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
@@ -114,6 +123,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
+                        SetCategoryTypeID(model);
                         if (bankTransactionManagement.Update(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
@@ -122,7 +132,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         else
                         {
                             if (model != null)
+                            {
                                 model.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
+                                model.CategoryVendors = companyManagment.GetAllVendorCompanies();
+                                model.CategoryClients = companyManagment.GetAllClientCompanies();
+                                model.CategoryConsultants = consultantManagment.GetAllConsultants();
+                            }
                             return Json(new { Message = string.Format("Validation Failded", "Bank Transaction"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
@@ -130,7 +145,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 else
                 {
                     if (model != null)
+                    {
                         model.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
+                        model.CategoryVendors = companyManagment.GetAllVendorCompanies();
+                        model.CategoryClients = companyManagment.GetAllClientCompanies();
+                        model.CategoryConsultants = consultantManagment.GetAllConsultants();
+                    }
                     return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "Bank Transaction"), MessageClass = MessageClass.Error, Response = false });
                 }
 
@@ -139,6 +159,18 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
+        }
+
+        private void SetCategoryTypeID(CompanyBankTransaction model)
+        {
+            if (model.CategoryType == CompanyType.Client)
+                model.CategoryReferenceID = model.CategoryClientID;
+            else if (model.CategoryType == CompanyType.Vendor)
+                model.CategoryReferenceID = model.CategoryVendorID;
+            else if (model.CategoryType == EntityType.Consultant)
+                model.CategoryReferenceID = model.CategoryConsultantID;
+            else
+                model.CategoryReferenceID = null;
         }
 
         [HttpPost]
