@@ -12,5 +12,6 @@ namespace CorporateAndFinance.Service.Interface
         Consultant GetConsultantByNumber(int number);
         bool Add(Consultant model);
         void SaveConsultant();
+        IEnumerable<Consultant> GetAllConsultants();
     }
 }

@@ -42,16 +42,20 @@ namespace CorporateAndFinance.Core.Model
 
         [StringLength(128)]
         [Display(Name = "Category")]
+        [Required]
         public string CategoryType { get; set; }
 
         [Display(Name = "To Account Number")]
         public long? ToCompanyBankID { get; set; }
 
+        [Display(Name = "Category Reference")]
+        public Guid? CategoryReferenceID { get; set; }
+
         [Display(Name = "Status")]
         public int TransactionStatus { get; set; }
 
         public bool IsDeleted { get; set; }
-  
+
         public DateTime CreatedOn { get; set; }
 
         public DateTime LastModified { get; set; }
@@ -61,5 +65,18 @@ namespace CorporateAndFinance.Core.Model
         [NotMapped]
         public IEnumerable<CompanyBankVM> CompanyBankAccounts { get; set; }
 
+        [NotMapped]
+        public IEnumerable<Company> CategoryVendors { get; set; }
+        [NotMapped]
+        public Guid? CategoryVendorID { get; set; }
+        [NotMapped]
+        public IEnumerable<Company> CategoryClients { get; set; }
+        [NotMapped]
+        public Guid? CategoryClientID { get; set; }
+        [NotMapped]
+        public IEnumerable<Consultant> CategoryConsultants { get; set; }
+
+        [NotMapped]
+        public Guid? CategoryConsultantID { get; set; }
     }
 }

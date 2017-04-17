@@ -18,7 +18,7 @@
             var bankPosition = '@PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View)';
             var compliance = '@PermissionControl.CheckPermission(UserAppPermissions.Compliance_View)';
             var userCard = '@PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View)';
-
+            var bankTrans = '@PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View)';
 
             $(document).ready(function () {
 
@@ -36,7 +36,8 @@
                     $("#metroaqui").AddBtnMy('bt4', '6', 'sky', 'chain', 'Compliance Management', '@Url.Action("Index", "Compliance")');
                 if (userCard == 'True')
                 $("#metroaqui").AddBtnMy('bt4', '6', 'red', 'line-chart', 'AMEX Management', '@Url.Action("Index", "CardExpense")');
-                //$("#metroaqui").AddBtnMy('bt4', '6', 'gary', 'bar-chart', 'Report', '#');
+                if (bankTrans == 'True')
+                $("#metroaqui").AddBtnMy('bt4', '6', 'gary', 'bar-chart', 'Bank Transaction', '@Url.Action("Index", "BankTransaction")');
                     //   $("#metroaqui").AddBtnMy('bt4', '4', 'orange', 'check-square-o ', 'Check Inventory / Check Log Sheet', '#');
 
 

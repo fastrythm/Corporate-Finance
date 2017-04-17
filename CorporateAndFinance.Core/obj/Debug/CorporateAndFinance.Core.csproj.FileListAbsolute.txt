@@ -33,6 +33,5 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\bin\Debug\EntityFramework.SqlServer.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\obj\Debug\CorporateAndFinance.Core.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\obj\Debug\CorporateAndFinance.Core.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\obj\Debug\CorporateAndFinance.Core.pdb

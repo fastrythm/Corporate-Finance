@@ -37,6 +37,9 @@ namespace CorporateAndFinance.Service.Implementation
             return consultantRepository.Add(model);
         }
 
-        
+        public IEnumerable<Consultant> GetAllConsultants()
+        {
+            return consultantRepository.GetMany(consult => consult.IsActive == true && consult.IsDeleted == false);
+        }
     }
 }
