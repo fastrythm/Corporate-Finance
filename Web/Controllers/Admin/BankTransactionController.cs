@@ -68,7 +68,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(int id)
         {
-           
+
 
             var transaction = bankTransactionManagement.GetCompanyBankTransaction(id);
             if (transaction == null)
@@ -100,15 +100,30 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
                         SetCategoryTypeID(model);
+
                         if (bankTransactionManagement.Add(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
+                            //Reversal entery for Inter Company case.
+                            if (model.CategoryType == CompanyType.Inter)
+                            {
+                                long companyId = model.CompanyBankID;
+                                long? toCompanyId = model.ToCompanyBankID;
+                                model.CompanyBankID = Convert.ToInt64(toCompanyId);
+                                model.ToCompanyBankID = companyId;
+                                model.TransactionType = model.TransactionType == "Receipt" ? "Payment" : "Receipt";
+                                bankTransactionManagement.Add(model);
+                                bankTransactionManagement.SaveCompanyBankTransaction();
+                            }
+
+
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Compliance"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
                             if (model != null)
-                            {  model.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
+                            {
+                                model.CompanyBankAccounts = companyManagment.GetCompanyBankAccounts();
                                 model.CategoryVendors = companyManagment.GetAllVendorCompanies();
                                 model.CategoryClients = companyManagment.GetAllClientCompanies();
                                 model.CategoryConsultants = consultantManagment.GetAllConsultants();
@@ -164,13 +179,15 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private void SetCategoryTypeID(CompanyBankTransaction model)
         {
             if (model.CategoryType == CompanyType.Client)
-                model.CategoryReferenceID = model.CategoryClientID;
+            { model.CategoryReferenceID = model.CategoryClientID;
+                model.ToCompanyBankID = null;
+            }
             else if (model.CategoryType == CompanyType.Vendor)
-                model.CategoryReferenceID = model.CategoryVendorID;
+            { model.CategoryReferenceID = model.CategoryVendorID; model.ToCompanyBankID = null; }
             else if (model.CategoryType == EntityType.Consultant)
-                model.CategoryReferenceID = model.CategoryConsultantID;
-            else
-                model.CategoryReferenceID = null;
+            { model.CategoryReferenceID = model.CategoryConsultantID; model.ToCompanyBankID = null; }
+            else if (model.CategoryType == EntityType.AutoDebit || model.CategoryType == EntityType.Other)
+            { model.CategoryReferenceID = null; model.ToCompanyBankID = null; }
         }
 
         [HttpPost]

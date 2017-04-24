@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CorporateAndFinance.Core.Helper.Extension;
 using System.Data.Entity;
- 
+using CorporateAndFinance.Core.Helper.Structure;
+
 namespace CorporateAndFinance.Data.Repositories
 {
     public class UserCardExpenseRepository : RepositoryBase<UserCardExpense>, IUserCardExpenseRepository
@@ -101,6 +102,8 @@ namespace CorporateAndFinance.Data.Repositories
  
             }
 
+            string id = Utility.CovertID(param.DTObject.search.value, "AX-");
+
             if (param.DTObject.search.value != null && !string.IsNullOrEmpty(param.DTObject.search.value))
                 query = query.Where(col => (
                     col.Description.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
@@ -108,7 +111,9 @@ namespace CorporateAndFinance.Data.Repositories
                     col.Remarks.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                     col.UserCardNumber.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                     col.CardHolderName.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
-                    col.Amount.ToString().Contains(param.DTObject.search.value.ToUpper())));
+                    col.Amount.ToString().Contains(param.DTObject.search.value.ToUpper()) ||
+                    col.CompanyName.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
+                    col.UserCardExpenseID.ToString().Equals(id)));
             return query;
 
  

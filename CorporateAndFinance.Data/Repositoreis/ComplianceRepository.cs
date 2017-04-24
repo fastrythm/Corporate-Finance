@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Core.Helper.Extension;
+using CorporateAndFinance.Core.Helper.Structure;
 
 namespace CorporateAndFinance.Data.Repositories
 {
@@ -94,6 +95,8 @@ namespace CorporateAndFinance.Data.Repositories
                 }
             }
 
+            string id = Utility.CovertID(param.DTObject.search.value, "CC-");
+
             if (param.DTObject.search.value != null && !string.IsNullOrEmpty(param.DTObject.search.value))
                 query = query.Where(col => (
                     col.Description.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
@@ -101,7 +104,10 @@ namespace CorporateAndFinance.Data.Repositories
                     col.Status.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                     col.Remarks1.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                     col.Remarks2.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
-                    col.GeneralRemarks.ToUpper().Contains(param.DTObject.search.value.ToUpper())));
+                    col.GeneralRemarks.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
+                    col.CompanyComplianceID.ToString().Equals(id)));
+
+
             return query;
 
 

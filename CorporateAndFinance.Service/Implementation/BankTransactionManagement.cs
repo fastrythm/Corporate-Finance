@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Data.Infrastructure;
@@ -32,6 +33,11 @@ namespace CorporateAndFinance.Service.Implementation
         public IEnumerable<CompanyBankTransactionVM> GetAllBankTransactionByParam(CompanyBankTransactionVM transaction, DateTime frdate, DateTime tdate)
         {
             return bankTransactionRepository.GetAllBankTransactionByParam(transaction, frdate, tdate);
+        }
+
+        public List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate)
+        {
+            return bankTransactionRepository.GetCollectionAndPaymentDetails(fromDate, toDate);
         }
 
         public CompanyBankTransaction GetCompanyBankTransaction(long id)

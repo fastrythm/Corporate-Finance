@@ -95,6 +95,13 @@
 
             GenerateDTVersion1('#tblUserCardExpenses', [
 
+                     {
+                         "data": "UserCardExpenseID",
+                         "sTitle": 'Doc #',
+                         "render": function (data, type, full, meta) {
+                             return "AX-" + addLeadingZeros(data, 6);
+                         }
+                     },
                       { "data": "RecieptNumber", "sTitle": "Reciept Number" },
                       {
                           "data": "Date",

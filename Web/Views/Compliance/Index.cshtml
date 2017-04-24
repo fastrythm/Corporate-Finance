@@ -97,6 +97,14 @@
 
             GenerateDTVersion1('#tblCompliance', [
 
+
+                    {
+                        "data": "CompanyComplianceID",
+                        "sTitle": 'Doc #',
+                        "render": function (data, type, full, meta) {
+                            return "CC-" + addLeadingZeros(data, 6);
+                        }
+                    },
                       {
                           "data": "Date",
                           "sTitle": 'Date',
