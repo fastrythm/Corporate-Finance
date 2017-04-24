@@ -93,6 +93,7 @@
     <Compile Include="Model\UserCompany.cs" />
     <Compile Include="Model\VendorConsultant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\InterCompanyReconciliationReport.cs" />
     <Compile Include="ViewModel\PettyCashOpenCloseBalance.cs" />
     <Compile Include="ViewModel\ReportVM.cs" />
     <Compile Include="ViewModel\UserCardExpenseVM.cs" />

@@ -92,5 +92,48 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             return View(model);
 
         }
+
+        public ActionResult InterCompanyReconciliation(ReportVM model)
+        {
+            if (!PermissionControl.CheckPermission(UserAppPermissions.InterCompanyReconciliation_View))
+            { return RedirectToAction("Restricted", "Home"); }
+
+            if (model != null)
+            {
+
+                DateTime frdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(model.FromDate))
+                    frdate = DateTime.Parse(model.FromDate);
+
+                DateTime tdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(model.ToDate))
+                    tdate = DateTime.Parse(model.ToDate);
+
+                ReportViewer reportViewer = new ReportViewer();
+                try
+                {
+                    ReportParameter rp = new ReportParameter("ReportDates", string.Format("Date: {0} - {1}", frdate.ToShortDateString(), tdate.ToShortDateString()));
+                    reportViewer.ProcessingMode = ProcessingMode.Local;
+                    reportViewer.SizeToReportContent = true;
+                    reportViewer.Width = Unit.Percentage(100);
+                    reportViewer.Height = Unit.Percentage(100);
+                    reportViewer.ZoomMode = ZoomMode.Percent;
+                    reportViewer.ShowZoomControl = true;
+                    reportViewer.AsyncRendering = false;
+                    reportViewer.ShowPrintButton = true;
+
+                    var data = bankTransactionManagement.InterCompanyReconciliation(frdate, tdate);
+                    reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + "/Reports/CompanyWiseBankRecon.rdlc";
+                    reportViewer.LocalReport.SetParameters(new ReportParameter[] { rp });
+                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource("GetCompanyReconciliation", data));
+                }
+                catch (Exception ex)
+                {
+                }
+                ViewBag.ReportViewer = reportViewer;
+            }
+            return View(model);
+
+        }
     }
 }

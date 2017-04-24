@@ -144,12 +144,24 @@ namespace CorporateAndFinance.Data.Repositories
 
             return result;
         }
+
+        public List<InterCompanyReconciliationReport> InterCompanyReconciliation(DateTime fromDate, DateTime toDate)
+        {
+            var FromDate = new SqlParameter("@FromDate", fromDate.ToShortDateString());
+            FromDate.Size = 25;
+            var ToDate = new SqlParameter("@ToDate", toDate.ToShortDateString());
+            ToDate.Size = 25;
+            var result = DbContext.Database.SqlQuery<InterCompanyReconciliationReport>("GetCompanyReconciliation @FromDate,@ToDate", FromDate, ToDate).ToList();
+
+            return result;
+        }
     }
 
     public interface IBankTransactionRepository : IRepository<CompanyBankTransaction>
     {
         IEnumerable<CompanyBankTransactionVM> GetAllBankTransactionByParam(CompanyBankTransactionVM transaction, DateTime frdate, DateTime tdate);
         List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate);
+        List<InterCompanyReconciliationReport> InterCompanyReconciliation(DateTime fromDate, DateTime toDate);
     }
 
 
