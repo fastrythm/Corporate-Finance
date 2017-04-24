@@ -52,25 +52,38 @@
                             <ul class="dropdown-menu">
                                 @if (PermissionControl.CheckPermission(UserAppPermissions.User_View))
                                 {
-                                <li><a href="@Url.Action("Index", "User")">User Managment</a></li>}
+                                    <li><a href="@Url.Action("Index", "User")">User Managment</a></li>}
                                 @if (PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
                                 {
-                                <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>}
+                                    <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>}
                                 @if (PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
                                 {
-                                <li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>}
+                                    <li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>}
                                 @if (PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
                                 {
-                                <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>}
+                                    <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>}
                                 @if (PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
                                 {
-                                <li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>}
+                                    <li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>}
                                 @if (PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
                                 {
-                                <li><a href="@Url.Action("Index", "BankTransaction")">Bank Transaction</a></li>}
-                                @*<li><a href="#">Report</a></li>*@
+                                    <li><a href="@Url.Action("Index", "BankTransaction")">Bank Transaction</a></li>}
+
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                               href="#">
+                                <i class="fa fa-dashboard"></i>Reports <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (PermissionControl.CheckPermission(UserAppPermissions.PaymentAndCollectionReport_View))
+                                {
+                                    <li><a href="@Url.Action("PaymentAndCollection", "Report")">Payment And Collection</a></li>
+                                }
+                            </ul>
+                        </li>
+
                         @*<li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
                                    href="#">

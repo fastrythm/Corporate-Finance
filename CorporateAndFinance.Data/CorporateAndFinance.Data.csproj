@@ -187,7 +187,10 @@
     <Content Include="Migrations\CompanyNumber-ConsultantNumber-UserCardExpense.sql" />
     <Content Include="Migrations\companytype-field.sql" />
     <Content Include="Migrations\consultant-change-requiredfields.sql" />
+    <Content Include="Migrations\Functions\fnGetCompanyClosingBalance.sql" />
+    <Content Include="Migrations\Functions\fnGetCompanyOpeningBalance.sql" />
     <Content Include="Migrations\InitialDBSetup.sql" />
+    <Content Include="Migrations\StoreProcedures\GetBankTransaction.sql" />
     <Content Include="Migrations\UserPermissionTable.sql" />
   </ItemGroup>
   <ItemGroup>

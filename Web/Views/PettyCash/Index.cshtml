@@ -53,6 +53,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>Starting Balance : <span  id="tblPettyCash_OpeningBal"   class="numericCol">0.000</span></th>
                             <th>Close Balance : <span id="tblPettyCash_ClosingBal" class="numericCol">0.000</span></th>
                             <th></th>
@@ -106,6 +107,13 @@
            
             GenerateDTVersion1('#tblPettyCash', [
 
+                        {
+                            "data": "PettyCashID",
+                            "sTitle": 'Doc #',
+                            "render": function (data, type, full, meta) {
+                                return "PC-" + addLeadingZeros(data, 6);
+                            }
+                        },
                       {
                           "data": "TransactionDate",
                           "sTitle": 'Date',
@@ -139,7 +147,7 @@
                        },
                         {
                             "data": "PettyCashID",
-                            "bSearchable": false,
+                            "bSearchable": true,
                             "bSortable": false,
                             "sWidth": "100px",
                             "sTitle": 'Action',
@@ -155,7 +163,7 @@
                     footer: true,
                     
                     exportOptions: {
-                        columns: [0,1, 2,3,4]
+                        columns: [0,1, 2,3,4,5]
                     }
                 }]
             });

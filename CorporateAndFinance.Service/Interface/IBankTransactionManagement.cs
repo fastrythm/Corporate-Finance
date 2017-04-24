@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
+using System.Data;
 
 namespace CorporateAndFinance.Service.Interface
 {
@@ -16,5 +17,6 @@ namespace CorporateAndFinance.Service.Interface
         void SaveCompanyBankTransaction();
         bool Add(CompanyBankTransaction model);
         bool Update(CompanyBankTransaction model);
+        List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate);
     }
 }

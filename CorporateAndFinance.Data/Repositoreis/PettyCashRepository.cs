@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CorporateAndFinance.Core.Helper.Extension;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
+using CorporateAndFinance.Core.Helper.Structure;
 
 namespace CorporateAndFinance.Data.Repositories
 {
@@ -48,7 +50,6 @@ namespace CorporateAndFinance.Data.Repositories
 
         private IQueryable<PettyCash> GetPettyCashFiltersOrderQuery(IQueryable<PettyCash> query, PettyCash param, bool forAll = false)
         {
-            //   var expression = PredicateBuilder.True<AssetsEntity>();
             if (param == null)
                 return query;
 
@@ -79,11 +80,14 @@ namespace CorporateAndFinance.Data.Repositories
                 }
             }
 
+            string id = Utility.CovertID(param.DTObject.search.value, "PC-");
+
             if (param.DTObject.search.value != null && !string.IsNullOrEmpty(param.DTObject.search.value))
                 query = query.Where(col => (
                     col.Description.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                     col.TransactionType.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
-                    col.Amount.ToString().Contains(param.DTObject.search.value.ToUpper())));
+                    col.Amount.ToString().Contains(param.DTObject.search.value.ToUpper()) ||
+                    col.PettyCashID.ToString().Equals(id)));
             return query;
 
 

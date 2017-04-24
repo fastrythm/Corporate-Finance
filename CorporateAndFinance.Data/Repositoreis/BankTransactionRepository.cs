@@ -7,6 +7,8 @@ using CorporateAndFinance.Data.Infrastructure;
 using System.Linq;
 using CorporateAndFinance.Core.Helper.Extension;
 using System.Data.Entity;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CorporateAndFinance.Data.Repositories
 {
@@ -131,11 +133,23 @@ namespace CorporateAndFinance.Data.Repositories
             return base.Update(entity);
 
         }
+
+        public List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate)
+        {
+            var FromDate = new SqlParameter("@FromDate", fromDate.ToShortDateString());
+            FromDate.Size = 25;
+            var ToDate = new SqlParameter("@ToDate", toDate.ToShortDateString());
+            ToDate.Size = 25;
+            var result = DbContext.Database.SqlQuery<BankTransactionReport>("GetBankTransaction @FromDate,@ToDate", FromDate, ToDate).ToList();
+
+            return result;
+        }
     }
 
     public interface IBankTransactionRepository : IRepository<CompanyBankTransaction>
     {
         IEnumerable<CompanyBankTransactionVM> GetAllBankTransactionByParam(CompanyBankTransactionVM transaction, DateTime frdate, DateTime tdate);
+        List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate);
     }
 
 
