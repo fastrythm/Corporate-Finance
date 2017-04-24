@@ -89,7 +89,8 @@ namespace CorporateAndFinance.Core.Helper.Structure
         BankTransaction_Edit = 23,
         BankTransaction_Delete = 24,
 
-        PaymentAndCollectionReport_View = 25
+        PaymentAndCollectionReport_View = 25,
+        InterCompanyReconciliation_View = 26
     }
 
     public class ChartOfAccount

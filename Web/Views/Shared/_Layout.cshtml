@@ -81,6 +81,10 @@
                                 {
                                     <li><a href="@Url.Action("PaymentAndCollection", "Report")">Payment And Collection</a></li>
                                 }
+                                @if (PermissionControl.CheckPermission(UserAppPermissions.InterCompanyReconciliation_View))
+                                {
+                                    <li><a href="@Url.Action("InterCompanyReconciliation", "Report")">InterCompany Reconciliation</a></li>
+                                }
                             </ul>
                         </li>
 

@@ -39,6 +39,10 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return bankTransactionRepository.GetCollectionAndPaymentDetails(fromDate, toDate);
         }
+        public  List<InterCompanyReconciliationReport> InterCompanyReconciliation(DateTime fromDate, DateTime toDate)
+        {
+            return bankTransactionRepository.InterCompanyReconciliation(fromDate, toDate);
+        }
 
         public CompanyBankTransaction GetCompanyBankTransaction(long id)
         {

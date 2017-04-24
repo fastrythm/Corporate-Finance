@@ -2,7 +2,7 @@
 <xs:schema id="CorporateAndFinanceDataSet" targetNamespace="http://tempuri.org/CorporateAndFinanceDataSet.xsd" xmlns:mstns="http://tempuri.org/CorporateAndFinanceDataSet.xsd" xmlns="http://tempuri.org/CorporateAndFinanceDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" GeneratorFunctionsComponentClassName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" UserFunctionsComponentName="QueriesTableAdapter" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CorporateFinanceConnection" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CorporateFinanceConnection (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CorporateFinanceConnection.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
@@ -64,7 +64,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CategoryType" msprop:Generator_ColumnVarNameInTable="columnCategoryType" msprop:Generator_ColumnPropNameInRow="CategoryType" msprop:Generator_ColumnPropNameInTable="CategoryTypeColumn" msprop:Generator_UserColumnName="CategoryType">
+              <xs:element name="CategoryType" msprop:Generator_ColumnVarNameInTable="columnCategoryType" msprop:Generator_ColumnPropNameInRow="CategoryType" msprop:Generator_ColumnPropNameInTable="CategoryTypeColumn" msprop:Generator_UserColumnName="CategoryType" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="128" />
@@ -73,14 +73,14 @@
               </xs:element>
               <xs:element name="ToCompanyBankID" msprop:Generator_ColumnVarNameInTable="columnToCompanyBankID" msprop:Generator_ColumnPropNameInRow="ToCompanyBankID" msprop:Generator_ColumnPropNameInTable="ToCompanyBankIDColumn" msprop:Generator_UserColumnName="ToCompanyBankID" type="xs:long" minOccurs="0" />
               <xs:element name="CategoryReferenceID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnCategoryReferenceID" msprop:Generator_ColumnPropNameInRow="CategoryReferenceID" msprop:Generator_ColumnPropNameInTable="CategoryReferenceIDColumn" msprop:Generator_UserColumnName="CategoryReferenceID" type="xs:string" minOccurs="0" />
-              <xs:element name="TransactionType" msprop:Generator_ColumnVarNameInTable="columnTransactionType" msprop:Generator_ColumnPropNameInRow="TransactionType" msprop:Generator_ColumnPropNameInTable="TransactionTypeColumn" msprop:Generator_UserColumnName="TransactionType">
+              <xs:element name="TransactionType" msprop:Generator_ColumnVarNameInTable="columnTransactionType" msprop:Generator_ColumnPropNameInRow="TransactionType" msprop:Generator_ColumnPropNameInTable="TransactionTypeColumn" msprop:Generator_UserColumnName="TransactionType" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:decimal" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:decimal" minOccurs="0" />
               <xs:element name="CategoryReference" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCategoryReference" msprop:Generator_ColumnPropNameInRow="CategoryReference" msprop:Generator_ColumnPropNameInTable="CategoryReferenceColumn" msprop:Generator_UserColumnName="CategoryReference" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -89,7 +89,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="CompanyBankID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCompanyBankID" msprop:Generator_ColumnPropNameInRow="CompanyBankID" msprop:Generator_ColumnPropNameInTable="CompanyBankIDColumn" msprop:Generator_UserColumnName="CompanyBankID" type="xs:long" />
-              <xs:element name="TransactionDate" msprop:Generator_ColumnVarNameInTable="columnTransactionDate" msprop:Generator_ColumnPropNameInRow="TransactionDate" msprop:Generator_ColumnPropNameInTable="TransactionDateColumn" msprop:Generator_UserColumnName="TransactionDate" type="xs:dateTime" />
+              <xs:element name="TransactionDate" msprop:Generator_ColumnVarNameInTable="columnTransactionDate" msprop:Generator_ColumnPropNameInRow="TransactionDate" msprop:Generator_ColumnPropNameInTable="TransactionDateColumn" msprop:Generator_UserColumnName="TransactionDate" type="xs:dateTime" minOccurs="0" />
               <xs:element name="OpeningBalance" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOpeningBalance" msprop:Generator_ColumnPropNameInRow="OpeningBalance" msprop:Generator_ColumnPropNameInTable="OpeningBalanceColumn" msprop:Generator_UserColumnName="OpeningBalance" type="xs:decimal" minOccurs="0" />
               <xs:element name="ClosingBalance" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnClosingBalance" msprop:Generator_ColumnPropNameInRow="ClosingBalance" msprop:Generator_ColumnPropNameInTable="ClosingBalanceColumn" msprop:Generator_UserColumnName="ClosingBalance" type="xs:decimal" minOccurs="0" />
               <xs:element name="Company" msprop:Generator_ColumnVarNameInTable="columnCompany" msprop:Generator_ColumnPropNameInRow="Company" msprop:Generator_ColumnPropNameInTable="CompanyColumn" msprop:Generator_UserColumnName="Company" minOccurs="0">
@@ -99,6 +99,16 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="GetCompanyReconciliation" msprop:Generator_TableClassName="GetCompanyReconciliationDataTable" msprop:Generator_TableVarName="tableGetCompanyReconciliation" msprop:Generator_TablePropName="GetCompanyReconciliation" msprop:Generator_RowDeletingName="GetCompanyReconciliationRowDeleting" msprop:Generator_RowChangingName="GetCompanyReconciliationRowChanging" msprop:Generator_RowEvHandlerName="GetCompanyReconciliationRowChangeEventHandler" msprop:Generator_RowDeletedName="GetCompanyReconciliationRowDeleted" msprop:Generator_UserTableName="GetCompanyReconciliation" msprop:Generator_RowChangedName="GetCompanyReconciliationRowChanged" msprop:Generator_RowEvArgName="GetCompanyReconciliationRowChangeEvent" msprop:Generator_RowClassName="GetCompanyReconciliationRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ShortName" msprop:Generator_ColumnVarNameInTable="columnShortName" msprop:Generator_ColumnPropNameInRow="ShortName" msprop:Generator_ColumnPropNameInTable="ShortNameColumn" msprop:Generator_UserColumnName="ShortName" type="xs:string" minOccurs="0" />
+              <xs:element name="TransactionType" msprop:Generator_ColumnVarNameInTable="columnTransactionType" msprop:Generator_ColumnPropNameInRow="TransactionType" msprop:Generator_ColumnPropNameInTable="TransactionTypeColumn" msprop:Generator_UserColumnName="TransactionType" type="xs:string" minOccurs="0" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ToComapnyShortName" msprop:Generator_ColumnVarNameInTable="columnToComapnyShortName" msprop:Generator_ColumnPropNameInRow="ToComapnyShortName" msprop:Generator_ColumnPropNameInTable="ToComapnyShortNameColumn" msprop:Generator_UserColumnName="ToComapnyShortName" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

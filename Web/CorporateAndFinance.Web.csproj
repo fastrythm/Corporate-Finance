@@ -262,6 +262,9 @@
     <Compile Include="Controllers\Admin\ReportController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
+    <Compile Include="CorporateAndFinanceDataSet.cs">
+      <DependentUpon>CorporateAndFinanceDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="CorporateAndFinanceDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -279,13 +282,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\Report.aspx.cs">
-      <DependentUpon>Report.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\Report.aspx.designer.cs">
-      <DependentUpon>Report.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -488,7 +484,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Reports\Report.aspx" />
     <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -736,6 +731,7 @@
     <Content Include="Views\BankTransaction\Index.cshtml" />
     <Content Include="Views\BankTransaction\_AddEditBankTransaction.cshtml" />
     <Content Include="Views\Report\PaymentAndCollection.cshtml" />
+    <Content Include="Views\Report\InterCompanyReconciliation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -770,6 +766,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\BankTransaction.rdlc" />
+    <EmbeddedResource Include="Reports\CompanyWiseBankRecon.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
