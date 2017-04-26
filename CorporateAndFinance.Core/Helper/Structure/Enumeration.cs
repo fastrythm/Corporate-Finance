@@ -56,6 +56,12 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string AutoDebit = "Auto-Debit"; 
     }
 
+    public enum BankTransactionStatus
+    {
+        Cleared = 1,
+        QB_Pending = 2,
+        Bank_PEnding = 3 
+    }
 
     public enum UserAppPermissions
     {
@@ -90,7 +96,9 @@ namespace CorporateAndFinance.Core.Helper.Structure
         BankTransaction_Delete = 24,
 
         PaymentAndCollectionReport_View = 25,
-        InterCompanyReconciliation_View = 26
+        InterCompanyReconciliation_View = 26,
+        PaymentTypeWiseBankTransactionReport_View = 27,
+        BankReconciliationQBWiseReport_View = 28
     }
 
     public class ChartOfAccount

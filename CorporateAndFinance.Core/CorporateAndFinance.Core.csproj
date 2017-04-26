@@ -79,6 +79,8 @@
     <Compile Include="Model\ConsultantDocument.cs" />
     <Compile Include="Model\ConsultantPlacement.cs" />
     <Compile Include="Model\UserPermission.cs" />
+    <Compile Include="ViewModel\BankReconciliationQBWiseReport.cs" />
+    <Compile Include="ViewModel\BankTransactionPaymentWiseReport.cs" />
     <Compile Include="ViewModel\BankTransactionReport.cs" />
     <Compile Include="ViewModel\CompanyBankPositionVM.cs" />
     <Compile Include="ViewModel\CompanyBankTransactionVM.cs" />

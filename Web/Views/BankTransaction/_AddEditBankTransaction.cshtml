@@ -25,15 +25,26 @@
                     <div class="col-sm-6">
                         @Html.LabelFor(model => model.CompanyBankID)
                         <div class="input-group">
-
-                            @Html.DropDownListFor(model => model.CompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
-                             x => new SelectListItem()
-                             {
-                                 Value = x.CompanyBankID.ToString(),
-                                 Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
-                                 Selected = x.CompanyBankID == Model.CompanyBankID
-                             }), new { @class = "form-control", @placeholder = "Select Account Number" })
-
+                            @if (Model.CompanyBankTransactionID != 0)
+                            {
+                                @Html.DropDownListFor(model => model.CompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+          x => new SelectListItem()
+          {
+              Value = x.CompanyBankID.ToString(),
+              Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
+              Selected = x.CompanyBankID == Model.CompanyBankID
+          }), new { @class = "form-control", @placeholder = "Select Account Number", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(model => model.CompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+          x => new SelectListItem()
+          {
+              Value = x.CompanyBankID.ToString(),
+              Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
+              Selected = x.CompanyBankID == Model.CompanyBankID
+          }), new { @class = "form-control", @placeholder = "Select Account Number" })
+                            }
 
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
@@ -107,6 +118,8 @@
                     <div class="col-sm-6">
                         <label>Category </label>
                         <div class="input-group">
+                            @if (Model.CompanyBankTransactionID != 0)
+                            {
                                 @Html.DropDownListFor(model => model.CategoryType, new List<SelectListItem>
                                 {
                                     new SelectListItem{ Text="Select Category", Value = "" },
@@ -116,7 +129,21 @@
                                     new SelectListItem{ Text=@EntityType.Consultant, Value = @EntityType.Consultant },
                                     new SelectListItem{ Text=@EntityType.AutoDebit, Value = @EntityType.AutoDebit },
                                     new SelectListItem{ Text=@EntityType.Other, Value = @EntityType.Other },
-                                } ,new { @class = "form-control", @placeholder = "Select Category" })
+                                }, new { @class = "form-control", @placeholder = "Select Category", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(model => model.CategoryType, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Select Category", Value = "" },
+                                    new SelectListItem{ Text=@CompanyType.Inter, Value = @CompanyType.Inter },
+                                    new SelectListItem{ Text=@CompanyType.Vendor, Value = @CompanyType.Vendor },
+                                    new SelectListItem{ Text=@CompanyType.Client, Value = @CompanyType.Client },
+                                    new SelectListItem{ Text=@EntityType.Consultant, Value = @EntityType.Consultant },
+                                    new SelectListItem{ Text=@EntityType.AutoDebit, Value = @EntityType.AutoDebit },
+                                    new SelectListItem{ Text=@EntityType.Other, Value = @EntityType.Other },
+                                }, new { @class = "form-control", @placeholder = "Select Category" })
+                            }
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
                         @Html.ValidationMessageFor(model => model.CategoryType, "", new { @class = "text-danger" })
@@ -125,15 +152,26 @@
                         <div id="divCompany" style="display:none;" class="hideControl">
                             @Html.LabelFor(model => model.ToCompanyBankID)
                             <div class="input-group">
-
-                                @Html.DropDownListFor(model => model.ToCompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
-                             x => new SelectListItem()
-                             {
-                                 Value = x.CompanyBankID.ToString(),
-                                 Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
-                                 Selected = x.CompanyBankID == Model.ToCompanyBankID
-                             }), new { @class = "form-control", @placeholder = "Select To Account Number" })
-
+                                @if (Model.CompanyBankTransactionID != 0)
+                                {
+                                    @Html.DropDownListFor(model => model.ToCompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+                                      x => new SelectListItem()
+                                      {
+                                          Value = x.CompanyBankID.ToString(),
+                                          Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
+                                          Selected = x.CompanyBankID == Model.ToCompanyBankID
+                                      }), new { @class = "form-control", @placeholder = "Select To Account Number", @disabled = "disabled" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.ToCompanyBankID, Model.CompanyBankAccounts.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.CompanyBankAccounts.Select(
+                                      x => new SelectListItem()
+                                      {
+                                          Value = x.CompanyBankID.ToString(),
+                                          Text = x.AccountNumber + " - " + x.CompanyName + " - " + x.BankName,
+                                          Selected = x.CompanyBankID == Model.ToCompanyBankID
+                                      }), new { @class = "form-control", @placeholder = "Select To Account Number" })
+                                }
                                 <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                             </div>
                             @Html.ValidationMessageFor(model => model.ToCompanyBankID, "", new { @class = "text-danger" })
@@ -265,15 +303,14 @@
         $("#CategoryType").change(function () {
 
             SetCategoryType();
-           
+
 
         });
 
         SetCategoryType();
     });
 
-    function SetCategoryType()
-    {
+    function SetCategoryType() {
         $(".hideControl").hide();
         var value = $("#CategoryType").val();
         if (value == '@CompanyType.Inter')

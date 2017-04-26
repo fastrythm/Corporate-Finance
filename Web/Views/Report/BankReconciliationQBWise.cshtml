@@ -9,7 +9,7 @@
 
     <div class="col-sm-9 nopadding">
         <div id="div-table">
-            <h1 class="red list-inline"><span class="gray"></span> Intercompany Bank Reconciliation Report</h1>
+            <h1 class="red list-inline"><span class="gray"></span> Bank Reconciliation Report</h1>
             <div class="row">
             </div>
             <div class="clearfix"></div>
@@ -39,17 +39,11 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <table>
-                        <tr>
-                            <td width="25%"></td>
-                            <td width="50%">
+               
                                 <div id="reportView" class="table-responsive">
                                     @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer, new { style = "border: none; ", scrolling = "yes", width = "100%" })
                                 </div>
-                            </td>
-                            <td width="25%"></td>
-                        </tr>
-                    </table>
+                           
 
 
                 </div>

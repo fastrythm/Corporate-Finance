@@ -14,7 +14,7 @@ BEGIN
 	 
 	SET NOCOUNT ON;
 
-
+	  DECLARE @BANK_PENDING int = 3
 	  SELECT c.ShortName, cbt.TransactionType,  IsNull(cbt.Amount,0) Amount, (SELECT tempc.ShortName  from dbo.CompanyBank tempcb 
 										       INNER JOIN dbo.Company tempc ON tempcb.CompanyID = tempc.CompanyID
 											 WHERE tempcb.CompanyBankID = cbt.ToCompanyBankID AND tempcb.IsActive = 1 ) ToComapnyShortName
@@ -22,7 +22,7 @@ BEGIN
 	   INNER JOIN dbo.CompanyBank cb ON c.CompanyID = cb.CompanyID
 	   LEFT OUTER JOIN dbo.CompanyBankTransaction cbt ON  cb.CompanyBankID = cbt.CompanyBankID
  
-	   AND cbt.CategoryType = 'Inter'  AND  cbt.TransactionDate >= @FromDate AND  cbt.TransactionDate <= @ToDate
+	   AND cbt.CategoryType = 'Inter' AND cbt.TransactionStatus != @BANK_PENDING AND  cbt.TransactionDate >= @FromDate AND  cbt.TransactionDate <= @ToDate
 
         ORDER BY c.ShortName
 

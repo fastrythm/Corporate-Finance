@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorporateAndFinance.Web", "Web\CorporateAndFinance.Web.csproj", "{5A44DF78-B05E-4329-AEA9-E5D6368B4348}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3563E010-85A8-40AA-90ED-35150E6DDC25} = {3563E010-85A8-40AA-90ED-35150E6DDC25}
+		{5843814E-A37B-4A09-8D78-9AA59E6247D6} = {5843814E-A37B-4A09-8D78-9AA59E6247D6}
+		{1434E87E-7B29-4197-9FA1-FEFDDFF77E6A} = {1434E87E-7B29-4197-9FA1-FEFDDFF77E6A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorporateAndFinance.Data", "CorporateAndFinance.Data\CorporateAndFinance.Data.csproj", "{3563E010-85A8-40AA-90ED-35150E6DDC25}"
 EndProject

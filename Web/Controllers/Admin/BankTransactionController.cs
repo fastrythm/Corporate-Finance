@@ -117,7 +117,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             }
 
 
-                            return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Compliance"), MessageClass = MessageClass.Success, Response = true });
+                            return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Transaction"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
@@ -128,7 +128,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                                 model.CategoryClients = companyManagment.GetAllClientCompanies();
                                 model.CategoryConsultants = consultantManagment.GetAllConsultants();
                             }
-                            return Json(new { Message = string.Format("Validation Failded", "Compliance"), MessageClass = MessageClass.Error, Response = false });
+                            return Json(new { Message = string.Format("Validation Failded", "Transaction"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
                     else
@@ -142,7 +142,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         if (bankTransactionManagement.Update(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
-                            return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "Bank Transaction"), MessageClass = MessageClass.Success, Response = true });
+                            return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "Transaction"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
@@ -153,7 +153,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                                 model.CategoryClients = companyManagment.GetAllClientCompanies();
                                 model.CategoryConsultants = consultantManagment.GetAllConsultants();
                             }
-                            return Json(new { Message = string.Format("Validation Failded", "Bank Transaction"), MessageClass = MessageClass.Error, Response = false });
+                            return Json(new { Message = string.Format("Validation Failded", "Transaction"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
                 }
@@ -166,7 +166,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         model.CategoryClients = companyManagment.GetAllClientCompanies();
                         model.CategoryConsultants = consultantManagment.GetAllConsultants();
                     }
-                    return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "Bank Transaction"), MessageClass = MessageClass.Error, Response = false });
+                    return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "Transaction"), MessageClass = MessageClass.Error, Response = false });
                 }
 
             }

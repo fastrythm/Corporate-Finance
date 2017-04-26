@@ -41,13 +41,55 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <ColSpan>2</ColSpan>
                 </CellContents>
               </TablixCornerCell>
+              <TablixCornerCell />
             </TablixCornerRow>
             <TablixCornerRow>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox10">
+                  <Textbox Name="Textbox102">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Banks</Value>
+                            <Style>
+                              <FontSize>9pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox102</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>Orange</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#ffd679</BackgroundColor>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                  <ColSpan>2</ColSpan>
+                </CellContents>
+              </TablixCornerCell>
+              <TablixCornerCell />
+            </TablixCornerRow>
+            <TablixCornerRow>
+              <TablixCornerCell>
+                <CellContents>
+                  <Textbox Name="Textbox103">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -61,10 +103,12 @@
                             </Style>
                           </TextRun>
                         </TextRuns>
-                        <Style />
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox10</rd:DefaultName>
+                    <rd:DefaultName>Textbox103</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>Orange</Color>
@@ -77,123 +121,45 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <ColSpan>2</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-            </TablixCornerRow>
-            <TablixCornerRow>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox17">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style>
-                              <FontSize>8pt</FontSize>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox17</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>Orange</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>#ffd679</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-            </TablixCornerRow>
-            <TablixCornerRow>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox1">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Opening Balance</Value>
-                            <Style>
-                              <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox1</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>Orange</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <BottomBorder>
-                        <Color>LightGrey</Color>
-                      </BottomBorder>
-                      <LeftBorder>
-                        <Color>LightGrey</Color>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Color>LightGrey</Color>
-                      </RightBorder>
-                      <BackgroundColor>LightBlue</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
+              <TablixCornerCell />
             </TablixCornerRow>
           </TablixCornerRows>
         </TablixCorner>
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.52084in</Width>
+              <Width>0.69792in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.21875in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox16">
+                    <Textbox Name="QBClosingBalance">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!QBClosingBalance.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.000;(#,0.000)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox16</rd:DefaultName>
+                      <rd:DefaultName>QBClosingBalance</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -210,18 +176,18 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.21875in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Amount">
-                      <CanShrink>true</CanShrink>
+                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Amount.Value)</Value>
+                              <Value>= IIF(Fields!TransactionType.Value = "Receipt",-1 * Fields!Amount.Value,IIF(Fields!TransactionType.Value = "Payment",Fields!Amount.Value,0))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.000;(#,0.000)</Format>
@@ -250,53 +216,11 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25001in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Amount3">
-                      <CanShrink>true</CanShrink>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Sum(CDec(IIF(Fields!TransactionType.Value="Receipt",Fields!Amount.Value,0)))</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>#,0.000;(#,0.000)</Format>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Amount3</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>LightBlue</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>0.20833in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox21">
+                    <Textbox Name="Textbox101">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -309,10 +233,12 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox21</rd:DefaultName>
+                      <rd:DefaultName>Textbox101</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -333,14 +259,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Amount2">
-                      <CanShrink>true</CanShrink>
+                    <Textbox Name="Textbox99">
+                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Amount.Value)</Value>
+                              <Value>= IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!TransactionType.Value = "Payment",-1 * Fields!Amount.Value,0))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.000;(#,0.000)</Format>
@@ -352,7 +278,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Amount2</rd:DefaultName>
+                      <rd:DefaultName>Textbox99</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -369,21 +295,60 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.19792in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Amount1">
-                      <CanShrink>true</CanShrink>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(CDec(IIF(Fields!TransactionType.Value = "Payment",Fields!Amount.Value,0)))</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Amount1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>= CDEC(Fields!QBClosingBalance.Value) + SUM(CDEC(IIF(Fields!TransactionStatus.Value = "BANK",
+IIF(Fields!TransactionType.Value = "Receipt",-1 * Fields!Amount.Value,IIF(Fields!TransactionType.Value = "Payment",Fields!Amount.Value,0)),
+IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!TransactionType.Value = "Payment",-1*Fields!Amount.Value,0))
+)))</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
                                 <Format>#,0.000;(#,0.000)</Format>
                               </Style>
                             </TextRun>
@@ -399,7 +364,6 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightBlue</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -411,21 +375,20 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.20833in</Height>
+              <Height>0.25in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ClosingBalance">
-                      <CanShrink>true</CanShrink>
+                    <Textbox Name="BankClosingBalance">
+                      <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ClosingBalance.Value</Value>
+                              <Value>=Fields!BankClosingBalance.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
                                 <Format>#,0.000;(#,0.000)</Format>
                               </Style>
                             </TextRun>
@@ -435,13 +398,55 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>ClosingBalance</rd:DefaultName>
+                      <rd:DefaultName>BankClosingBalance</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>LightBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="BankClosingBalance1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>= (Fields!BankClosingBalance.Value) -  (CDEC(Fields!QBClosingBalance.Value) + SUM(CDEC(IIF(Fields!TransactionStatus.Value = "BANK",
+IIF(Fields!TransactionType.Value = "Receipt",-1 * Fields!Amount.Value,IIF(Fields!TransactionType.Value = "Payment",Fields!Amount.Value,0)),
+IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!TransactionType.Value = "Payment",-1*Fields!Amount.Value,0))
+))))</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>#,0.000;(#,0.000)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>BankClosingBalance1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -460,22 +465,14 @@
               <TablixHeader>
                 <Size>0.25in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox5">
+                  <Textbox Name="Textbox116">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value xml:space="preserve"> </Value>
-                            <Style>
-                              <FontSize>9pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                              <Color>Yellow</Color>
-                            </Style>
-                          </TextRun>
-                          <TextRun>
-                            <Value>Collection &amp; Payment Report</Value>
+                            <Value>AL Group Bank Reconciliation Report</Value>
                             <Style>
                               <FontSize>12pt</FontSize>
                               <FontWeight>Bold</FontWeight>
@@ -484,11 +481,11 @@
                           </TextRun>
                         </TextRuns>
                         <Style>
-                          <TextAlign>Left</TextAlign>
+                          <TextAlign>Center</TextAlign>
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                    <rd:DefaultName>Textbox116</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>Orange</Color>
@@ -505,27 +502,27 @@
               </TablixHeader>
               <TablixMembers>
                 <TablixMember>
-                  <Group Name="Company">
+                  <Group Name="Bank">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Company.Value</GroupExpression>
+                      <GroupExpression>=Fields!Bank.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!company.Value</Value>
+                      <Value>=Fields!Bank.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.27083in</Size>
+                    <Size>0.25in</Size>
                     <CellContents>
-                      <Textbox Name="Company">
-                        <CanShrink>true</CanShrink>
+                      <Textbox Name="Bank">
+                        <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!Company.Value</Value>
+                                <Value>=Fields!Bank.Value</Value>
                                 <Style>
                                   <FontSize>9pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
@@ -537,7 +534,7 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Company</rd:DefaultName>
+                        <rd:DefaultName>Bank</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>Orange</Color>
@@ -565,10 +562,10 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.20833in</Size>
+                        <Size>0.25in</Size>
                         <CellContents>
                           <Textbox Name="AccountNumber">
-                            <CanShrink>true</CanShrink>
+                            <CanGrow>true</CanGrow>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -577,8 +574,6 @@
                                     <Value>=Fields!AccountNumber.Value</Value>
                                     <Style>
                                       <FontSize>8pt</FontSize>
-                                      <FontWeight>Bold</FontWeight>
-                                      <Color>SeaGreen</Color>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -600,65 +595,9 @@
                               <PaddingBottom>2pt</PaddingBottom>
                             </Style>
                           </Textbox>
+                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
-                      <TablixMembers>
-                        <TablixMember>
-                          <TablixHeader>
-                            <Size>0.20833in</Size>
-                            <CellContents>
-                              <Textbox Name="OpeningBalance">
-                                <CanShrink>true</CanShrink>
-                                <KeepTogether>true</KeepTogether>
-                                <Paragraphs>
-                                  <Paragraph>
-                                    <TextRuns>
-                                      <TextRun>
-                                        <Value>=Fields!OpeningBalance.Value</Value>
-                                        <Style>
-                                          <FontSize>8pt</FontSize>
-                                          <FontWeight>Bold</FontWeight>
-                                          <Format>#,0.000;(#,0.000)</Format>
-                                        </Style>
-                                      </TextRun>
-                                    </TextRuns>
-                                    <Style>
-                                      <TextAlign>Right</TextAlign>
-                                    </Style>
-                                  </Paragraph>
-                                </Paragraphs>
-                                <rd:DefaultName>OpeningBalance</rd:DefaultName>
-                                <Style>
-                                  <Border>
-                                    <Color>Orange</Color>
-                                    <Style>Solid</Style>
-                                  </Border>
-                                  <TopBorder>
-                                    <Style>None</Style>
-                                  </TopBorder>
-                                  <BottomBorder>
-                                    <Color>LightGrey</Color>
-                                  </BottomBorder>
-                                  <LeftBorder>
-                                    <Color>LightGrey</Color>
-                                  </LeftBorder>
-                                  <RightBorder>
-                                    <Color>LightGrey</Color>
-                                  </RightBorder>
-                                  <BackgroundColor>LightBlue</BackgroundColor>
-                                  <PaddingLeft>2pt</PaddingLeft>
-                                  <PaddingRight>2pt</PaddingRight>
-                                  <PaddingTop>2pt</PaddingTop>
-                                  <PaddingBottom>2pt</PaddingBottom>
-                                </Style>
-                              </Textbox>
-                            </CellContents>
-                          </TablixHeader>
-                          <TablixMembers>
-                            <TablixMember />
-                          </TablixMembers>
-                        </TablixMember>
-                      </TablixMembers>
                     </TablixMember>
                   </TablixMembers>
                 </TablixMember>
@@ -670,26 +609,28 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.10417in</Size>
+                <Size>1.52084in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox15">
+                  <Textbox Name="Textbox104">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Collection</Value>
+                            <Value>End Balance in QB</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
                         </TextRuns>
-                        <Style />
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox15</rd:DefaultName>
+                    <rd:DefaultName>Textbox104</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -703,152 +644,31 @@
                   </Textbox>
                 </CellContents>
               </TablixHeader>
-              <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
-              <Group Name="CategoryReference">
-                <GroupExpressions>
-                  <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
-                </GroupExpressions>
-              </Group>
               <TablixHeader>
-                <Size>1.10417in</Size>
+                <Size>0.63542in</Size>
                 <CellContents>
-                  <Textbox Name="CategoryReference">
+                  <Textbox Name="TransactionDate">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!CategoryReference.Value</Value>
+                            <Value>=Fields!TransactionDate.Value</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
+                              <Format>d</Format>
                             </Style>
                           </TextRun>
                         </TextRuns>
-                        <Style />
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>CategoryReference</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixHeader>
-              <Visibility>
-                <Hidden>=IIF(Fields!TransactionType.Value = "Receipt",False,True)</Hidden>
-              </Visibility>
-            </TablixMember>
-            <TablixMember>
-              <TablixHeader>
-                <Size>1.10417in</Size>
-                <CellContents>
-                  <Textbox Name="Textbox51">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Collection Total</Value>
-                            <Style>
-                              <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox51</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>LightBlue</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixHeader>
-              <KeepWithGroup>Before</KeepWithGroup>
-            </TablixMember>
-            <TablixMember>
-              <TablixHeader>
-                <Size>1.10417in</Size>
-                <CellContents>
-                  <Textbox Name="Textbox20">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Payment</Value>
-                            <Style>
-                              <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox20</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixHeader>
-              <KeepWithGroup>Before</KeepWithGroup>
-            </TablixMember>
-            <TablixMember>
-              <Group Name="CategoryReference1">
-                <GroupExpressions>
-                  <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
-                </GroupExpressions>
-              </Group>
-              <TablixHeader>
-                <Size>1.10417in</Size>
-                <CellContents>
-                  <Textbox Name="CategoryReference11">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>=Fields!CategoryReference.Value</Value>
-                            <Style>
-                              <FontSize>8pt</FontSize>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>CategoryReference11</rd:DefaultName>
+                    <rd:DefaultName>TransactionDate</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -863,40 +683,83 @@
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
-                <TablixMember />
+                <TablixMember>
+                  <Group Name="CategoryReference">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!CategoryReference.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="CategoryReference">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!CategoryReference.Value</Value>
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>CategoryReference</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>LightGrey</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <Visibility>
+                    <Hidden>=IIF(Fields!TransactionStatus.Value = "BANK",FALSE,TRUE)</Hidden>
+                  </Visibility>
+                </TablixMember>
               </TablixMembers>
-              <Visibility>
-                <Hidden>=IIF(Fields!TransactionType.Value = "Payment",False,True)</Hidden>
-              </Visibility>
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.10417in</Size>
+                <Size>0.63542in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox53">
+                  <Textbox Name="Textbox106">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Payment Total</Value>
+                            <Value />
                             <Style>
                               <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox53</rd:DefaultName>
+                    <rd:DefaultName>Textbox106</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
                         <Style>Solid</Style>
                       </Border>
-                      <BackgroundColor>LightBlue</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -905,36 +768,73 @@
                   </Textbox>
                 </CellContents>
               </TablixHeader>
-              <KeepWithGroup>Before</KeepWithGroup>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox100">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox100</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.10417in</Size>
+                <Size>0.63542in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox11">
+                  <Textbox Name="TransactionDate1">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Closing Balance</Value>
+                            <Value>=Fields!TransactionDate.Value</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
+                              <Format>d</Format>
                             </Style>
                           </TextRun>
                         </TextRuns>
-                        <Style />
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox11</rd:DefaultName>
+                    <rd:DefaultName>TransactionDate1</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
                         <Style>Solid</Style>
                       </Border>
-                      <BackgroundColor>LightBlue</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -943,16 +843,249 @@
                   </Textbox>
                 </CellContents>
               </TablixHeader>
-              <KeepWithGroup>Before</KeepWithGroup>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="CategoryReference1">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!CategoryReference.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="CategoryReference1">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!CategoryReference.Value</Value>
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>CategoryReference1</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>=IIF(Fields!TransactionStatus.Value = "BANK", "#f76868" ,"Transparent")</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <Visibility>
+                    <Hidden>=IIF(Fields!TransactionStatus.Value ="QB",FALSE,TRUE)</Hidden>
+                  </Visibility>
+                </TablixMember>
+              </TablixMembers>
+            </TablixMember>
+            <TablixMember>
+              <TablixHeader>
+                <Size>0.63542in</Size>
+                <CellContents>
+                  <Textbox Name="Textbox108">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value />
+                            <Style>
+                              <FontSize>8pt</FontSize>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox108</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox13">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox13</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
+            </TablixMember>
+            <TablixMember>
+              <TablixHeader>
+                <Size>1.52084in</Size>
+                <CellContents>
+                  <Textbox Name="Textbox37">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Bank Ending Bal</Value>
+                            <Style>
+                              <FontSize>8pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox34</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+            </TablixMember>
+            <TablixMember>
+              <TablixHeader>
+                <Size>1.52084in</Size>
+                <CellContents>
+                  <Textbox Name="Textbox38">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Bank Actual Balances</Value>
+                            <Style>
+                              <FontSize>8pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox35</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+            </TablixMember>
+            <TablixMember>
+              <TablixHeader>
+                <Size>1.52084in</Size>
+                <CellContents>
+                  <Textbox Name="Textbox111">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Differences</Value>
+                            <Style>
+                              <FontSize>8pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox111</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>LightGrey</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>GetBankTransaction</DataSetName>
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
-        <Height>2.48958in</Height>
-        <Width>1.62501in</Width>
+        <DataSetName>BankReconciliation</DataSetName>
+        <Height>2.75in</Height>
+        <Width>2.21875in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -960,13 +1093,11 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.51041in</Height>
+    <Height>2.75in</Height>
     <Style />
   </Body>
-  <Width>1.63416in</Width>
+  <Width>2.22917in</Width>
   <Page>
-    <PageHeight>8.27in</PageHeight>
-    <PageWidth>11.69in</PageWidth>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>
@@ -980,35 +1111,27 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>c096616a-a101-46b4-9a7e-d9d3bdfabacf</rd:DataSourceID>
+      <rd:DataSourceID>c811d28c-085a-442c-8ce7-bd92417120c3</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="GetBankTransaction">
+    <DataSet Name="BankReconciliation">
       <Query>
         <DataSourceName>CorporateAndFinanceDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="company">
-          <DataField>company</DataField>
+        <Field Name="Bank">
+          <DataField>Bank</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="AccountNumber">
           <DataField>AccountNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CategoryType">
-          <DataField>CategoryType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ToCompanyBankID">
-          <DataField>ToCompanyBankID</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="CategoryReferenceID">
-          <DataField>CategoryReferenceID</DataField>
-          <rd:TypeName>System.Guid</rd:TypeName>
+        <Field Name="TransactionDate">
+          <DataField>TransactionDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="TransactionType">
           <DataField>TransactionType</DataField>
@@ -1022,60 +1145,36 @@
           <DataField>CategoryReference</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CompanyBankID">
-          <DataField>CompanyBankID</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="TransactionDate">
-          <DataField>TransactionDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="OpeningBalance">
-          <DataField>OpeningBalance</DataField>
+        <Field Name="QBClosingBalance">
+          <DataField>QBClosingBalance</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ClosingBalance">
-          <DataField>ClosingBalance</DataField>
+        <Field Name="BankClosingBalance">
+          <DataField>BankClosingBalance</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Company">
-          <DataField>Company</DataField>
+        <Field Name="TransactionStatus">
+          <DataField>TransactionStatus</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>CorporateAndFinanceDataSet</rd:DataSetName>
         <rd:SchemaPath>D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\CorporateAndFinanceDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>GetBankTransaction</rd:TableName>
-        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
-        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>GetBankTransactionTableAdapter</rd:TableAdapterName>
+        <rd:TableName>BankReconciliation</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
   <ReportParameters>
     <ReportParameter Name="ReportDates">
       <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <EmbeddedImages>
-    <EmbeddedImage Name="logowhite">
-      <MIMEType>image/png</MIMEType>
-      <ImageData>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</ImageData>
-    </EmbeddedImage>
-  </EmbeddedImages>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>83e2b849-50d5-4358-9b18-c111aaa5db30</rd:ReportID>
+  <rd:ReportID>db18ea96-5060-4feb-b031-a98308bf6fbc</rd:ReportID>
 </Report>

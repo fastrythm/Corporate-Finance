@@ -585,6 +585,7 @@
       <DependentUpon>CorporateAndFinanceDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CF-Release-006.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-007.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -732,6 +733,8 @@
     <Content Include="Views\BankTransaction\_AddEditBankTransaction.cshtml" />
     <Content Include="Views\Report\PaymentAndCollection.cshtml" />
     <Content Include="Views\Report\InterCompanyReconciliation.cshtml" />
+    <Content Include="Views\Report\PaymentTypeWiseBankTransaction.cshtml" />
+    <Content Include="Views\Report\BankReconciliationQBWise.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -765,7 +768,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\BankReconciliation.rdlc" />
     <EmbeddedResource Include="Reports\BankTransaction.rdlc" />
+    <EmbeddedResource Include="Reports\BankTransactionPaymentTypeWise.rdlc" />
     <EmbeddedResource Include="Reports\CompanyWiseBankRecon.rdlc" />
   </ItemGroup>
   <PropertyGroup>

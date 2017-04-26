@@ -14,5 +14,7 @@ namespace CorporateAndFinance.Core.ViewModel
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}",
               ApplyFormatInEditMode = true)]
         public string ToDate { get; set; } = DateTime.Now.ToShortDateString();
+
+        public string PaymentType { get; set; }
     }
 }

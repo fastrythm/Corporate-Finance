@@ -44,6 +44,11 @@ namespace CorporateAndFinance.Service.Implementation
             return bankTransactionRepository.InterCompanyReconciliation(fromDate, toDate);
         }
 
+        public List<BankTransactionPaymentWiseReport> PaymentTypeWiseBankTransaction(DateTime fromDate, DateTime toDate, string paymentType)
+        {
+            return bankTransactionRepository.PaymentTypeWiseBankTransaction(fromDate, toDate, paymentType);
+        }
+
         public CompanyBankTransaction GetCompanyBankTransaction(long id)
         {
             return bankTransactionRepository.GetById(id);
@@ -57,6 +62,11 @@ namespace CorporateAndFinance.Service.Implementation
         public bool Update(CompanyBankTransaction model)
         {
             return bankTransactionRepository.Update(model);
+        }
+
+        public List<BankReconciliationQBWiseReport> BankReconciliationQBWise(DateTime frdate, DateTime tdate)
+        {
+            return bankTransactionRepository.BankReconciliationQBWise(frdate, tdate);
         }
     }
 }

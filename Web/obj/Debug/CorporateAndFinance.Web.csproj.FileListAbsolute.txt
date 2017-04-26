@@ -1,4 +1,7 @@
 D:\tutorials\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\RdlCompile.cache
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\RdlCompile.compiled
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ApplicationInsights.config
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\roslyn\csc.exe
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -117,8 +120,5 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ru\Microsoft.SqlServer.Types.resources.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\zh-Hans\Microsoft.SqlServer.Types.resources.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\zh-Hant\Microsoft.SqlServer.Types.resources.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\RdlCompile.cache
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\RdlCompile.compiled
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.pdb

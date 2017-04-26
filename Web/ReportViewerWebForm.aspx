@@ -16,7 +16,9 @@
                     <asp:ScriptReference Assembly="ReportViewerForMvc" Name="ReportViewerForMvc.Scripts.PostMessage.js" />
                 </Scripts>
             </asp:ScriptManager>
+            <div>
             <rsweb:ReportViewer ID="ReportViewer1" runat="server" ></rsweb:ReportViewer>
+            </div>
         </div>
     </form>
 </body>

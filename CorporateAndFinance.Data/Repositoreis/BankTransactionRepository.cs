@@ -155,13 +155,41 @@ namespace CorporateAndFinance.Data.Repositories
 
             return result;
         }
+
+        public List<BankTransactionPaymentWiseReport> PaymentTypeWiseBankTransaction(DateTime fromDate, DateTime toDate, string paymentType)
+        {
+            var FromDate = new SqlParameter("@FromDate", fromDate.ToShortDateString());
+            FromDate.Size = 25;
+            var ToDate = new SqlParameter("@ToDate", toDate.ToShortDateString());
+            ToDate.Size = 25;
+
+            var paymentTypes = new SqlParameter("@PaymentTypes", paymentType);
+            ToDate.Size = -1;
+
+            var result = DbContext.Database.SqlQuery<BankTransactionPaymentWiseReport>("GetBankTransactionByPaymentTypes @FromDate,@ToDate,@PaymentTypes", FromDate, ToDate, paymentTypes).ToList();
+
+            return result;
+        }
+
+        public List<BankReconciliationQBWiseReport> BankReconciliationQBWise(DateTime fromDate, DateTime toDate)
+        {
+            var FromDate = new SqlParameter("@FromDate", fromDate.ToShortDateString());
+            FromDate.Size = 25;
+            var ToDate = new SqlParameter("@ToDate", toDate.ToShortDateString());
+            ToDate.Size = 25;
+            var result = DbContext.Database.SqlQuery<BankReconciliationQBWiseReport>("GetBankReconciliation @FromDate,@ToDate", FromDate, ToDate).ToList();
+
+            return result;
+        }
     }
 
     public interface IBankTransactionRepository : IRepository<CompanyBankTransaction>
     {
+        List<BankReconciliationQBWiseReport> BankReconciliationQBWise(DateTime fromDate, DateTime toDate);
         IEnumerable<CompanyBankTransactionVM> GetAllBankTransactionByParam(CompanyBankTransactionVM transaction, DateTime frdate, DateTime tdate);
         List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate);
         List<InterCompanyReconciliationReport> InterCompanyReconciliation(DateTime fromDate, DateTime toDate);
+        List<BankTransactionPaymentWiseReport> PaymentTypeWiseBankTransaction(DateTime fromDate, DateTime toDate, string paymentType);
     }
 
 

@@ -85,6 +85,14 @@
                                 {
                                     <li><a href="@Url.Action("InterCompanyReconciliation", "Report")">InterCompany Reconciliation</a></li>
                                 }
+                                @if (PermissionControl.CheckPermission(UserAppPermissions.PaymentTypeWiseBankTransactionReport_View))
+                                {
+                                    <li><a href="@Url.Action("PaymentTypeWiseBankTransaction", "Report")">Payment Wise Bank Transaction</a></li>
+                                }
+                                @if (PermissionControl.CheckPermission(UserAppPermissions.BankReconciliationQBWiseReport_View))
+                                {
+                                    <li><a href="@Url.Action("BankReconciliationQBWise", "Report")">Bank Reconciliation QB Wise</a></li>
+                                }
                             </ul>
                         </li>
 

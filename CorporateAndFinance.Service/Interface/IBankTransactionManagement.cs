@@ -19,5 +19,7 @@ namespace CorporateAndFinance.Service.Interface
         bool Update(CompanyBankTransaction model);
         List<BankTransactionReport> GetCollectionAndPaymentDetails(DateTime fromDate, DateTime toDate);
         List<InterCompanyReconciliationReport> InterCompanyReconciliation(DateTime fromDate, DateTime toDate);
+        List<BankTransactionPaymentWiseReport> PaymentTypeWiseBankTransaction(DateTime frdate, DateTime tdate, string paymentType);
+        List<BankReconciliationQBWiseReport> BankReconciliationQBWise(DateTime frdate, DateTime tdate);
     }
 }

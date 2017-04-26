@@ -7,24 +7,27 @@
     ) 
     AS
     BEGIN
+	  
+	  DECLARE @BANK_PENDING int = 3
+
 	  INSERT INTO @ItemTable (ClosingBalance)
 	  SELECT     ( (
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus != 3) -
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus != @BANK_PENDING ) -
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus != 3)
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus !=  @BANK_PENDING )
 				 ) 
 					
 			 	+	
 				 (
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus != 3) -
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus != @BANK_PENDING ) -
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus != 3)
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus !=  @BANK_PENDING )
 				 ) )		 
 						 
 						   AS ClosingBalance
