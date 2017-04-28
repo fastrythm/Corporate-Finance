@@ -586,6 +586,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\CF-Release-006.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-007.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-008.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -612,6 +613,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Custom\shared.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Themes\finance-1\css\AdminLTE.css" />
     <Content Include="Themes\finance-1\css\bootstrap.css" />
     <Content Include="Themes\finance-1\css\buttons.bootstrap.min.css" />
     <Content Include="Themes\finance-1\css\colors.css" />
@@ -633,6 +635,7 @@
     <Content Include="Themes\finance-1\css\jquery-ui.css" />
     <Content Include="Themes\finance-1\css\jquery-ui.theme.css" />
     <Content Include="Themes\finance-1\css\jquery.dataTables.yadcf.css" />
+    <Content Include="Themes\finance-1\css\skin-red.css" />
     <Content Include="Themes\finance-1\css\style.css" />
     <Content Include="Themes\finance-1\fonts\fontawesome-webfont.svg" />
     <Content Include="Themes\finance-1\fonts\glyphicons-halflings-regular.svg" />
@@ -665,6 +668,7 @@
     <Content Include="Themes\finance-1\img\timesheet.png" />
     <Content Include="Themes\finance-1\img\wc-a.png" />
     <Content Include="Themes\finance-1\img\wc.png" />
+    <Content Include="Themes\finance-1\js\app.js" />
     <Content Include="Themes\finance-1\js\bootstrap.js" />
     <Content Include="Themes\finance-1\js\columfilter.js" />
     <Content Include="Themes\finance-1\js\dataTables.bootstrap.js" />

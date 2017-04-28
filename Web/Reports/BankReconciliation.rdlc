@@ -595,7 +595,6 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                               <PaddingBottom>2pt</PaddingBottom>
                             </Style>
                           </Textbox>
-                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
                     </TablixMember>
@@ -1085,7 +1084,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
         </TablixRowHierarchy>
         <DataSetName>BankReconciliation</DataSetName>
         <Height>2.75in</Height>
-        <Width>2.21875in</Width>
+        <Width>2.21876in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1098,6 +1097,8 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
   </Body>
   <Width>2.22917in</Width>
   <Page>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>

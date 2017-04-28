@@ -58,6 +58,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: Compliance
         public ActionResult Index()
         {
+            ViewBag.Title = "Compliance Listing";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -126,6 +128,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(int id)
         {
+            ViewBag.Title = "Add/Update Compliance";
+
             var compliance = complianceManagement.GetCompliance(id);
             if (compliance == null)
                 compliance = new CompanyCompliance();

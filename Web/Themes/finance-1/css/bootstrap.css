@@ -1788,7 +1788,8 @@ pre code {
     width: 83.33333333%;
   }
   .col-sm-9 {
-    width: 75%;
+    width: 95%;
+    margin-left:2%;
   }
   .col-sm-8 {
     width: 66.66666667%;
@@ -3825,7 +3826,7 @@ tbody.collapse.in {
 }
 .input-group .form-control {
   position: relative;
-  z-index: 2;
+  z-index: 2 !important;
   float: left;
   width: 100%;
   margin-bottom: 0;
@@ -4485,7 +4486,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    margin-right: -15px;
+    margin-right: 0px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;

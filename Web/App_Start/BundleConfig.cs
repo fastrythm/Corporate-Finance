@@ -13,6 +13,7 @@ namespace Web
                         "~/Themes/finance-1/js/jquery.js", 
                          "~/Themes/finance-1/js/bootstrap.js",
                          "~/Themes/finance-1/js/jquery-ui.js",
+                         "~/Themes/finance-1/js/app.js",
                           "~/Themes/finance-1/js/jquery.metro-btn.js",
                           "~/Themes/finance-1/js/jquery.dataTables.min.js",
                           "~/Themes/finance-1/js/dataTables.bootstrap.js",
@@ -33,6 +34,8 @@ namespace Web
                          //   "~/Themes/finance-1/css/datatables.min.css",
                           "~/Content/dataTables/css/dataTables.bootstrap.css",
                           "~/Themes/finance-1/css/style.css",
+                           "~/Themes/finance-1/css/AdminLTE.css",
+                           "~/Themes/finance-1/css/skin-red.css",
                         "~/Themes/finance-1/css/google_Open_San_Verdana.css",
                         "~/Themes/finance-1/css/Interacao.css","~/Content/DataTables/css/buttons.dataTables.css",
                         "~/Themes/finance-1/css/jq-metro.css"));

@@ -69,6 +69,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult Index()
         {
+            ViewBag.Title = "User Card Expense Listing";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -112,6 +114,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
        
         public ActionResult UploadNew()
         {
+            ViewBag.Title = "Upload New User Card Expense Sheet";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_Add))
             { return RedirectToAction("Restricted", "Home"); }
 

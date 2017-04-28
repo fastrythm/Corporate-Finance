@@ -53,6 +53,7 @@
 /// <reference path="knockout-3.4.1.js" />
 /// <reference path="modernizr-2.6.2.js" />
 /// <reference path="respond.js" />
+/// <reference path="../themes/finance-1/js/app.js" />
 /// <reference path="../themes/finance-1/js/bootstrap.js" />
 /// <reference path="../themes/finance-1/js/columfilter.js" />
 /// <reference path="../themes/finance-1/js/datatables.bootstrap.js" />

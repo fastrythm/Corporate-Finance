@@ -158,6 +158,7 @@ function GenerateDTManual(selector, aoColumns, servicePath, otherParams,isRowGro
         autoWidth: false,
         scrollX: '100%',
         scrollXInner: '100%',
+         scrollY: "300px",
         "bProcessing": _DTGlobalManualConfig.bProcessing,
         "bServerSide": _DTGlobalManualConfig.bServerSide,
         "stripeClasses": ['rowstrip1', 'rowstrip2'],

@@ -59,6 +59,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: BankTransaction
         public ActionResult Index()
         {
+            ViewBag.Title = "Bank Transaction Listing";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -68,7 +70,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(int id)
         {
-
+            ViewBag.Title = "Add/Update Bank Transaction";
 
             var transaction = bankTransactionManagement.GetCompanyBankTransaction(id);
             if (transaction == null)

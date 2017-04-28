@@ -30,7 +30,7 @@ a.dt-button {
   display: inline-block;
   box-sizing: border-box;
   margin-right: 0.333em;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em !important;
   border: 1px solid #999;
   border-radius: 2px;
   cursor: pointer;

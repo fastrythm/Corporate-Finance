@@ -62,6 +62,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult Index()
         {
+            ViewBag.Title = "Users Listing";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -120,7 +122,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(string id)
         {
-         
+            ViewBag.Title = "Add/Update Users";
+
             var user = new UserVM();
             if (id != "0")
             {

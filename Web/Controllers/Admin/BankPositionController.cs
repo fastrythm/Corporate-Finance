@@ -59,6 +59,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: PettyCash
         public ActionResult Index()
         {
+            ViewBag.Title = "Bank Position Listing";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -89,6 +91,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(long id,string number,long cbid,string date)
         {
+            ViewBag.Title = "Add/Update Bank Position";
 
             var companyBankPosition = new CompanyBankPosition();
             if (id != 0)

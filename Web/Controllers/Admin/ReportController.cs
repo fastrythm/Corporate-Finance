@@ -52,6 +52,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult PaymentAndCollection(ReportVM model)
         {
+            ViewBag.Title = "Payment And Collection Report";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.PaymentAndCollectionReport_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -95,6 +97,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult InterCompanyReconciliation(ReportVM model)
         {
+            ViewBag.Title = "InterCompany Reconciliation Report";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.InterCompanyReconciliation_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -138,6 +142,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult PaymentTypeWiseBankTransaction(ReportVM model)
         {
+            ViewBag.Title = "Payment Wise Bank Transaction Report";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.PaymentTypeWiseBankTransactionReport_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -182,6 +188,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult BankReconciliationQBWise(ReportVM model)
         {
+            ViewBag.Title = "QB AND Bank Wise Reconciliation Report";
+
             if (!PermissionControl.CheckPermission(UserAppPermissions.BankReconciliationQBWiseReport_View))
             { return RedirectToAction("Restricted", "Home"); }
 

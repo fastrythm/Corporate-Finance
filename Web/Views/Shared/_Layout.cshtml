@@ -5,140 +5,163 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Corporate Finance</title>
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
 
     @Styles.Render("~/Bundles/Themes/Finance-1/css")
 
 </head>
-<body>
-    <div class="notification"></div>
+<body class="skin-red sidebar-mini" style="height: auto;">
+   
+    <header class="main-header">
 
+        <!-- Logo -->
+        <a href="@Url.Action("Index", "Home")" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>CF</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><img src="~/Themes/finance-1/img/logo.png" style="width:100%;"></span>
+        </a>
 
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 nopadding"><img src="~/Themes/finance-1/img/logo.png"></div>
-                <div class="col-sm-6 nopadding">
-
-                    @* <ul class="notificatios"><li><a href="#"><img src="img/notification.png"><span class="badge">2</span></a></li>
-                        <li><a href="#"><img src="img/message.png"><span class="badge">8</span></a></li>
-                        <li><a href="#"><img src="img/downloads.png"></a></li>
-                                    <li><a href="#"><img src="img/profile.png"></a></li>   </ul>      *@
-
-
-
-                    @Html.Partial("_LoginPartial")
-                </div>
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        @Html.Partial("_LoginPartial")
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                   
+                </ul>
             </div>
-
-        </div>
+        </nav>
     </header>
-    <section>
 
-        <div class="container body-content">
+    <aside class="main-sidebar">
 
-            <div class="row">
-                <div class="col-sm-3 nopadding">
-                    <h2 class="dgray">EOB Extended</h2>
-                    <ul class="nav">
-                        <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i>Home</a></li>
-                        <li class="dropdown active">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                               href="#">
-                                <i class="fa fa-dashboard"></i>Finance <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.User_View))
-                                {
-                                    <li><a href="@Url.Action("Index", "User")">User Managment</a></li>}
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
-                                {
-                                    <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>}
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
-                                {
-                                    <li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>}
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
-                                {
-                                    <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>}
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
-                                {
-                                    <li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>}
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
-                                {
-                                    <li><a href="@Url.Action("Index", "BankTransaction")">Bank Transaction</a></li>}
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
 
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                               href="#">
-                                <i class="fa fa-dashboard"></i>Reports <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.PaymentAndCollectionReport_View))
-                                {
-                                    <li><a href="@Url.Action("PaymentAndCollection", "Report")">Payment And Collection</a></li>
-                                }
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.InterCompanyReconciliation_View))
-                                {
-                                    <li><a href="@Url.Action("InterCompanyReconciliation", "Report")">InterCompany Reconciliation</a></li>
-                                }
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.PaymentTypeWiseBankTransactionReport_View))
-                                {
-                                    <li><a href="@Url.Action("PaymentTypeWiseBankTransaction", "Report")">Payment Wise Bank Transaction</a></li>
-                                }
-                                @if (PermissionControl.CheckPermission(UserAppPermissions.BankReconciliationQBWiseReport_View))
-                                {
-                                    <li><a href="@Url.Action("BankReconciliationQBWise", "Report")">Bank Reconciliation QB Wise</a></li>
-                                }
-                            </ul>
-                        </li>
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div class="pull-left info">
+                    <p>@Html.Partial("_LoginPartial")</p>
 
-                        @*<li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                                   href="#">
-                                    <i class="fa fa-dashboard"></i>Consulting <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>EOB</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>Calculator</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>WC</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>Reports</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>Payments</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>Payroll</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>AR</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>Expenses</a></li>
-                                    <li><a href="#"><i class="fa fa-dashboard"></i>Timesheet</a></li>
-                                </ul>
-                            </li>*@
-                    </ul>
+
                 </div>
-
-
-                @RenderBody()
-
-                <div class="ajax-loader">
-                </div>
-                <input id="hdnUniqueSetUpRecord" type="hidden" />
-
-
             </div>
-        </div>
 
-        <div class="loader">
-            <center>
-                <img class="loading-image" src="~/Content/img/loading.gif" alt="loading..">
-            </center>
-        </div>
 
-    </section>
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Consulting And Finance - Arthur Lawrence</p>
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu">
+                <li class="active"><a href="@Url.Action("Index", "Home")"><i class="fa fa-th"></i> <span>Home</span></a></li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-share"></i> <span>Finance</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.User_View))
+                        {
+                            <li><a href="@Url.Action("Index", "User")"><span>User Managment</span></a></li>}
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
+                        {
+                            <li><a href="@Url.Action("Index", "PettyCash")">Petty Cash</a></li>}
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
+                        {
+                            <li><a href="@Url.Action("Index", "BankPosition")">Bank Position</a></li>}
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
+                        {
+                            <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>}
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
+                        {
+                            <li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>}
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
+                        {
+                            <li><a href="@Url.Action("Index", "BankTransaction")">Bank Transaction</a></li>}
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i> <span>Finance Reports</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.PaymentAndCollectionReport_View))
+                        {
+                            <li><a href="@Url.Action("PaymentAndCollection", "Report")">Payment And Collection</a></li>
+                        }
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.InterCompanyReconciliation_View))
+                        {
+                            <li><a href="@Url.Action("InterCompanyReconciliation", "Report")">InterCompany Reconciliation</a></li>
+                        }
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.PaymentTypeWiseBankTransactionReport_View))
+                        {
+                            <li><a href="@Url.Action("PaymentTypeWiseBankTransaction", "Report")">Payment Wise Bank Transaction</a></li>
+                        }
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.BankReconciliationQBWiseReport_View))
+                        {
+                            <li><a href="@Url.Action("BankReconciliationQBWise", "Report")">Bank Reconciliation QB Wise</a></li>
+                        }
+
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <div class="content-wrapper" style="min-height: 298px;">
+        <div class="notification"></div>
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                 @ViewBag.Title
+            </h1>
+            
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="ajax-loader">
+            </div>
+            <input id="hdnUniqueSetUpRecord" type="hidden" />
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <div class="loader">
+        <center>
+            <img class="loading-image" src="~/Content/img/loading.gif" alt="loading..">
+        </center>
+    </div>
+    <footer class="main-footer">
+        <strong>&copy; @DateTime.Now.Year - Consulting And Finance - <a href="http://www.arthurlawrence.net" target="_blank">Arthur Lawrence</a></strong> All rights
+        reserved.
     </footer>
-
+  
 
     @Scripts.Render("~/Bundles/Themes/Finance-1/Javascript")
     @Scripts.Render("~/bundles/jqueryval")

@@ -1,37 +1,38 @@
-﻿@{
-    ViewBag.Title = "Company Bank Transaction";
-}
-<div class="col-sm-9 nopadding">
+﻿<div class="col-sm-9">
     <div id="div-table">
 
         <div class="row">
         </div>
-        <h1 class="red list-inline"><span class="gray"></span> Bank Transaction Listing <button id="add_record" onclick="javascript:AddEditRecord(0);" title="Add New Record" class="pull-right btn btn-lg btn-theme bg_red"> Add New</button></h1>
+   
         <div class="clearfix"></div>
         <div class="row mr15">
             <div class="col-sm-12">
-                <div style="border: solid 1px #eaeaea; padding: 15px 0px;">
-                    <div class="col-sm-2 nopadding"></div>
-                    <div class="col-sm-4">
-                        <div class="input-group">
-                            <input id="datepicker_from" class="datepicker form-control" placeholder="Filter By From Date" type="datetime">
-                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                <div class="box">
+                    <div class="box-header with-border">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="datepicker_from" class="datepicker form-control" placeholder="Filter By From Date" type="datetime">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="input-group">
-                            <input id="datepicker_to" class="datepicker form-control" placeholder="Filter By To Date" type="datetime">
-                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="datepicker_to" class="datepicker form-control" placeholder="Filter By To Date" type="datetime">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            </div>
                         </div>
+                        <div class="col-sm-2 nopadding text-left">
+                            <button class="btn btn-theme btn-blue" id="btnSearch" type="button">Go</button>
+                        </div>
+                        <div class="col-sm-4 nopadding text-right">
+                            <button id="add_record" onclick="javascript:AddEditRecord(0);" title="Add New Record" class="pull-right btn btn-lg btn-theme bg_red"> Add New</button> 
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="col-sm-2 nopadding text-right">
-                        <button class="btn btn-theme btn-blue" id="btnSearch" type="button">Search</button>
-                    </div>
-                    <div class="clearfix"></div>
                 </div>
+                </div>
+                <div class="divider"></div>
             </div>
-            <div class="divider"></div>
-        </div>
         <div class="row">
             <div class="col-sm-12">
 

@@ -59,6 +59,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: PettyCash
         public ActionResult Index()
         {
+            ViewBag.Title = "Petty Cash Listing";
             if (!PermissionControl.CheckPermission(UserAppPermissions.PettyCash_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -153,6 +154,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("AddEdit")]
         public ActionResult AddEdit(int id)
         {
+            ViewBag.Title = "Add/Update New Petty Cash";
+
             var pettyCash = pettyCashManagement.GetPettyCash(id);
             return PartialView("_AddEditPettyCash", pettyCash);
         }

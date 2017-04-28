@@ -3,13 +3,7 @@
 @using (Html.BeginForm("AddEdit", "BankPosition", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
     {
     @Html.AntiForgeryToken()
-
      
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="red"><span class="gray"></span>Add Bank Position</h1>
-                    </div>
-                </div>
                 <div class="row">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="col-sm-12">

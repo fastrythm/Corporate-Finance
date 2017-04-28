@@ -1,127 +1,125 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
-<div class="col-sm-9 nopadding">
+﻿<div class="col-sm-9 nopadding">
     <div id="div-table">
-
-       
-        <h1 class="red list-inline"><span class="gray"></span> User Listing <button id="add_record" onclick="javascript:AddEditRecord(0);" title="Add New Record" class="pull-right btn btn-lg btn-theme bg_red"> Add New</button></h1>
-        <div class="clearfix"></div>
-        <div class="row">
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-
-                <div id="dialog_confirm" title="Delete the Selected Record?">
-                    <p>
-                        <span class="icon icon-warning-sign"></span>
-                        Selected Record will be permanently deleted and cannot be recovered. Are you sure?
-                    </p>
-                </div>
-                <!-- BEGIN FORM-->
-
-                <table id="tblUser" class="my_data_table data-table table table-striped table-bordered table-responsive table-hover">
-                    <thead>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
-
+        <div class="box">
+            <div class="box-header with-border">
+                <button id="add_record" onclick="javascript:AddEditRecord(0);" title="Add New Record" class="pull-right btn btn-lg btn-theme bg_red"> Add New</button>
+                <div class="clearfix"></div>
             </div>
         </div>
+                <div class="row">
+                </div>
+                <div class="row mr15">
+                    <div class="col-sm-12">
 
-    </div>
-    <div class="row-fluid">
-        <div id="divOperations"></div>
-    </div>
-    <!-- END FORM-->
-</div>
+                        <div id="dialog_confirm" title="Delete the Selected Record?">
+                            <p>
+                                <span class="icon icon-warning-sign"></span>
+                                Selected Record will be permanently deleted and cannot be recovered. Are you sure?
+                            </p>
+                        </div>
+                        <!-- BEGIN FORM-->
 
-@section Scripts{
-    <script type="text/javascript">
-       
-        $(document).ready(function () {
-
-
-            InitializeDialogConfirmation();
-            InitializeUserList();
-  
-
-        });
-
-        function InitializeUserList() {
+                        <table id="tblUser" class="my_data_table data-table table table-striped table-bordered table-responsive table-hover">
+                            <thead>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
 
 
-            GenerateDTManual('#tblUser', [
+                    </div>
+                </div>
 
-                      { "data": "FirstName", "sTitle": "First Name" },
-                      { "data": "LastName", "sTitle":  "Last Name" },
-                      { "data": "UserName", "sTitle": "Email" },
-                      { "data": "EmployeeNumber", "sTitle": "Employee Number" },
-                      { "data": "Mobile", "sTitle": "Mobile" },
-                      { "data": "Designation", "sTitle": "Designation" },
-                      { "data": "Department", "sTitle": "Department" },
-                       {
-                            "data": "Id",
-                            "bSearchable": false,
-                            "bSortable": false,
-                            "sWidth": "100px",
-                            "sTitle": 'Action',
-                            "render": function (data, type, full, meta) {
-                                return '<a onClick=\'javascript:AddEditRecord("' + data + '");\' data-toggle="tooltip" title="Edit"><button type="button" class="btn btn-action btn-info"><i class="glyphicon glyphicon-edit"></i></button></a>&nbsp;' + '<a onClick=\'javascript:DeleteRecord("' + data + '");\' data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
-                            }
-                        }
-            ], '/User/UserList', {
-                "order": [[0, "asc"]], "buttons": [{
-                    extend: 'excelHtml5',
-                    title: 'User',
-                    text: '<span class="fa fa-file-excel-o"></span> Excel Export',
-                    footer: true,
+            </div>
+            <div class="row-fluid">
+                <div id="divOperations"></div>
+            </div>
+            <!-- END FORM-->
+        </div>
 
-                    exportOptions: {
-                        columns: [0,1, 2,3]
-                    }
-                }]
-            });
-        }
+        @section Scripts{
+            <script type="text/javascript">
+
+                $(document).ready(function () {
 
 
-        function AddEditRecord(id) {
-            DTToggler();
-            $('#divOperations').load('@(Url.Action("AddEdit", "User", null, Request.Url.Scheme))?id=' + id, function () {
-                var $form = $(this).find('form');
-                $.validator.unobtrusive.parse($form);
-            });
-        }
+                    InitializeDialogConfirmation();
+                    InitializeUserList();
 
 
-        function DeleteRecord(id) {
-
-            $('#hdnUniqueSetUpRecord').val(id);
-            $("#dialog_confirm").dialog("open");
-            $('.ui-dialog button').blur();// avoid button autofocus
-
-        }
-
-        function DeleteConfirmation(obj) {
-            if (obj != null) {
-                obj.dialog("close");
-                $('#loader-wrapper').show();
-                $.post("@Url.Action("Delete", "User")", { id: $('#hdnUniqueSetUpRecord').val() }, function (data, status) {
-                    if (data != null) {
-                        if (data.Response) {
-                            oTable.fnDestroy();
-                            InitializeUserList();
-                        }
-                        ALGritter('', data.Message, false, false, data.MessageClass);
-                    }
-                    $('#hdnUniqueSetUpRecord').val('');
                 });
 
-            }
+                function InitializeUserList() {
+
+
+                    GenerateDTManual('#tblUser', [
+
+                              { "data": "FirstName", "sTitle": "First Name" },
+                              { "data": "LastName", "sTitle": "Last Name" },
+                              { "data": "UserName", "sTitle": "Email" },
+                              { "data": "EmployeeNumber", "sTitle": "Employee Number" },
+                              { "data": "Mobile", "sTitle": "Mobile" },
+                              { "data": "Designation", "sTitle": "Designation" },
+                              { "data": "Department", "sTitle": "Department" },
+                               {
+                                   "data": "Id",
+                                   "bSearchable": false,
+                                   "bSortable": false,
+                                   "sWidth": "100px",
+                                   "sTitle": 'Action',
+                                   "render": function (data, type, full, meta) {
+                                       return '<a onClick=\'javascript:AddEditRecord("' + data + '");\' data-toggle="tooltip" title="Edit"><button type="button" class="btn btn-action btn-info"><i class="glyphicon glyphicon-edit"></i></button></a>&nbsp;' + '<a onClick=\'javascript:DeleteRecord("' + data + '");\' data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
+                                   }
+                               }
+                    ], '/User/UserList', {
+                        "order": [[0, "asc"]], "buttons": [{
+                            extend: 'excelHtml5',
+                            title: 'User',
+                            text: '<span class="fa fa-file-excel-o"></span> Excel Export',
+                            footer: true,
+
+                            exportOptions: {
+                                columns: [0, 1, 2, 3]
+                            }
+                        }]
+                    });
+                }
+
+
+                function AddEditRecord(id) {
+                    DTToggler();
+                    $('#divOperations').load('@(Url.Action("AddEdit", "User", null, Request.Url.Scheme))?id=' + id, function () {
+                        var $form = $(this).find('form');
+                        $.validator.unobtrusive.parse($form);
+                    });
+                }
+
+
+                function DeleteRecord(id) {
+
+                    $('#hdnUniqueSetUpRecord').val(id);
+                    $("#dialog_confirm").dialog("open");
+                    $('.ui-dialog button').blur();// avoid button autofocus
+
+                }
+
+                function DeleteConfirmation(obj) {
+                    if (obj != null) {
+                        obj.dialog("close");
+                        $('#loader-wrapper').show();
+                        $.post("@Url.Action("Delete", "User")", { id: $('#hdnUniqueSetUpRecord').val() }, function (data, status) {
+                            if (data != null) {
+                                if (data.Response) {
+                                    oTable.fnDestroy();
+                                    InitializeUserList();
+                                }
+                                ALGritter('', data.Message, false, false, data.MessageClass);
+                            }
+                            $('#hdnUniqueSetUpRecord').val('');
+                        });
+
+                    }
+                }
+
+
+            </script>
         }
-
-
-    </script>
-}
