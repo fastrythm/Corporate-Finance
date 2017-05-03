@@ -63,6 +63,7 @@ namespace CorporateAndFinance.Data.Infrastructure
 
         }
 
+
         public virtual bool Delete(T entity)
         {
             try

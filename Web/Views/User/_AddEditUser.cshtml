@@ -91,21 +91,42 @@
         </div>
 
         <div class="form-group">
-            @foreach (CorporateAndFinance.Core.Helper.Structure.UserAppPermissions permission in Enum.GetValues(typeof(CorporateAndFinance.Core.Helper.Structure.UserAppPermissions)))
-            {
-                <div class="col-md-4">
-                    <label>@permission.ToString()</label>
-                    @if (Model.UserPermissions != null && Model.UserPermissions.Contains(permission))
-                    {
-                        <input type="checkbox" style="-webkit-appearance: checkbox; !important" checked name="UserPermissions" value="@(permission.ToString())" id="@((int)permission)" />
-                    }
-                    else
-                    {
-                    <input type="checkbox" style="-webkit-appearance: checkbox; !important" name="UserPermissions" value="@(permission.ToString())" id="@((int)permission)" />
-                    }
-                </div>
-            }
+            <label class="col-md-2 control-label">
+                @Html.LabelFor(model => model.RolesList, htmlAttributes: new { @class = "" })
+            </label>
+            <div class="col-md-10">
+                @foreach (var item in Model.RolesList)
+                {
+                     <div class="col-md-4">
+                    <input type="checkbox" name="SelectedRoles" id="SelectedRoles"
+                           value="@item.Value" style="-webkit-appearance: checkbox; !important" checked="@item.Selected" class="checkbox-inline" />
+                    @Html.Label(item.Value, new { @class = "control-label" })
+                    </div>
+                }
+            </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">
+                @Html.LabelFor(model => model.UserPermissions, htmlAttributes: new { @class = "" })
+            </label>
+            <div class="col-md-10">
+                @foreach (CorporateAndFinance.Core.Helper.Structure.UserAppPermissions permission in Enum.GetValues(typeof(CorporateAndFinance.Core.Helper.Structure.UserAppPermissions)))
+                {
+                    <div class="col-md-4">
+                        <label>@permission.ToString()</label>
+                        @if (Model.UserPermissions != null && Model.UserPermissions.Contains(permission))
+                    {
+                            <input type="checkbox" style="-webkit-appearance: checkbox; !important" checked name="UserPermissions" value="@(permission.ToString())" id="@((int)permission)" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" style="-webkit-appearance: checkbox; !important" name="UserPermissions" value="@(permission.ToString())" id="@((int)permission)" />
+                        }
+                    </div>
+                }
+                </div>
+            </div>
         <div class="form-group text-center">
 
             <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>

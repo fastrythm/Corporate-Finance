@@ -31,9 +31,9 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return bankPositionRepository.GetById(id);
         }
-        public bool Delete (CompanyBankPosition pettyCash)
+        public bool Delete (CompanyBankPosition model)
         {
-            return bankPositionRepository.Update(pettyCash);
+            return bankPositionRepository.Update(model);
            
         }
         public void SaveBankPosition()

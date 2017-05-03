@@ -26,5 +26,6 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return userRepository.GetAll();
         }
+
     }
 }

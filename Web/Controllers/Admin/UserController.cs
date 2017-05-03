@@ -5,6 +5,7 @@ using CorporateAndFinance.Service.Implementation;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Web;
 
 namespace CorporateAndFinance.Web.Controllers.Admin
@@ -29,10 +31,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         }
 
 
-        public UserController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public UserController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
         }
 
 
@@ -57,6 +60,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
             }
         }
 
@@ -118,16 +134,18 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
         }
 
-
         [Route("AddEdit")]
         public ActionResult AddEdit(string id)
         {
             ViewBag.Title = "Add/Update Users";
 
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
             var user = new UserVM();
             if (id != "0")
             {
                 var   appUser = UserManager.FindById(id);
+                var userRoles = UserManager.GetRoles(id);
+
                 user.Id = appUser.Id;
                 user.FirstName = appUser.FirstName;
                 user.LastName = appUser.LastName;
@@ -137,6 +155,20 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 user.Department = appUser.Department;
                 user.Designation = appUser.Designation;
                 user.UserPermissions = GetUserPermission(id);
+                user.RolesList = RoleManager.Roles.ToList().Select(x => new Core.ViewModel.SelectListItem()
+                {
+                    Selected = userRoles.Contains(x.Name),
+                    Text = x.Name,
+                    Value = x.Name
+                });
+            }
+            else
+            {
+                user.RolesList = user.RolesList = RoleManager.Roles.ToList().Select(x => new Core.ViewModel.SelectListItem()
+                {
+                    Text = x.Name,
+                    Value = x.Name
+                });
             }
 
             return PartialView("_AddEditUser", user);
@@ -148,7 +180,6 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             var permissions =  userPermissionManagement.GetAllPermissionByUserId(id);
             foreach (var userPerm in permissions)
             {
-                //UserAppPermissions perm = (UserAppPermissions)Enum.ToObject(typeof(UserAppPermissions), userPerm.PermissionID);
                 UserAppPermissions perm = (UserAppPermissions)userPerm.PermissionID;
                 appPerm.Add(perm);
             }
@@ -193,13 +224,21 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Department = model.Department;
                         user.Designation = model.Designation;
                         var isUpdate = UserManager.Update(user);
-                        if(isUpdate.Succeeded)
+                        var userRoles = UserManager.GetRoles(model.Id);
+                        
+                        if (isUpdate.Succeeded)
                         {
+                            UserManager.RemoveFromRoles(user.Id, userRoles.ToArray<string>());
+                            if (model.SelectedRoles != null)
+                            {
+                                var result = UserManager.AddToRoles(model.Id, model.SelectedRoles.ToArray<string>());
+                            }
+
                             UpdateUserPermission(model.UserPermissions, user.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
 
-                        return Json(new { Message = isUpdate.Errors, MessageClass = MessageClass.Success, Response = false });
+                        return Json(new { Message = isUpdate.Errors, MessageClass = MessageClass.Error, Response = false });
                     }
                     else
                     {
@@ -210,7 +249,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         }
 
                         user = new ApplicationUser();
-                      //  model.Id = Guid.NewGuid().ToString();
+                      // model.Id = Guid.NewGuid().ToString();
                         user.FirstName = model.FirstName;
                         user.LastName = model.LastName;
                         user.Email = model.Email;
@@ -221,13 +260,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Designation = model.Designation;
 
                        var isSaved = UserManager.Create(user, model.Password);
-                       if (isSaved.Succeeded)
-                       {
+
+                        if (isSaved.Succeeded)
+                        {
+                            if (model.SelectedRoles != null && model.SelectedRoles.Count() > 0)
+                            {
+                                var result = UserManager.AddToRoles(user.Id, model.SelectedRoles.ToArray<string>());
+                            }
+
                             UpdateUserPermission(model.UserPermissions, user.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
 
-                        return Json(new { Message = isSaved.Errors, MessageClass = MessageClass.Success, Response = false });
+                        return Json(new { Message = isSaved.Errors, MessageClass = MessageClass.Error, Response = false });
                     }
                  
                 }
@@ -246,6 +291,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         private void UpdateUserPermission(List<UserAppPermissions> userAppPermissions,string userId)
         {
+
             userPermissionManagement.DeleteAllByUserId(userId);
             if (userAppPermissions != null)
             {
@@ -254,8 +300,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     UserPermission userPerm = new UserPermission() { UserID = userId, PermissionID = ((int)appPermission) };
                     userPermissionManagement.Add(userPerm);
                 }
+                userPermissionManagement.SaveUserPermissions();
             }
-            userPermissionManagement.SaveUserPermissions();
+           
         }
     }
 }

@@ -14,6 +14,14 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string ErrorAndHide = "alert-error hide";
     }
 
+
+    public struct UserRoles
+    {
+        public static string Admin = "Admin";
+        public static string FinanceUser = "FinanceUser";
+        public static string FinanceManager = "FinanceManager";
+    }
+
     public class ExcelFileProcess
     {
         public string Message { get; set; }
@@ -98,7 +106,12 @@ namespace CorporateAndFinance.Core.Helper.Structure
         PaymentAndCollectionReport_View = 25,
         InterCompanyReconciliation_View = 26,
         PaymentTypeWiseBankTransactionReport_View = 27,
-        BankReconciliationQBWiseReport_View = 28
+        BankReconciliationQBWiseReport_View = 28,
+
+        UserTask_View = 29,
+        UserTask_Delete = 30,
+        UserTask_Add = 31,
+        UserTask_Edit = 32
     }
 
     public class ChartOfAccount

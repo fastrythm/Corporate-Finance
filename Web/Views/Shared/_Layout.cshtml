@@ -90,6 +90,10 @@
                         @if (PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
                         {
                             <li><a href="@Url.Action("Index", "BankTransaction")">Bank Transaction</a></li>}
+
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.UserTask_View))
+                        {
+                            <li><a href="@Url.Action("Index", "Task")">User Task</a></li>}
                     </ul>
                 </li>
 

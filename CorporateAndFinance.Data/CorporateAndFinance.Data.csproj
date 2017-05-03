@@ -119,10 +119,24 @@
     <Compile Include="Migrations\201704171154468_CompanyBankTransaction-CategoryType-Mandatory.Designer.cs">
       <DependentUpon>201704171154468_CompanyBankTransaction-CategoryType-Mandatory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705011100469_UserTask.cs" />
+    <Compile Include="Migrations\201705011100469_UserTask.Designer.cs">
+      <DependentUpon>201705011100469_UserTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705020825142_UserTask-Type-Field.cs" />
+    <Compile Include="Migrations\201705020825142_UserTask-Type-Field.Designer.cs">
+      <DependentUpon>201705020825142_UserTask-Type-Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705021142375_UserTaskDetail-IsActive.cs" />
+    <Compile Include="Migrations\201705021142375_UserTaskDetail-IsActive.Designer.cs">
+      <DependentUpon>201705021142375_UserTaskDetail-IsActive.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositoreis\BankTransactionRepository.cs" />
     <Compile Include="Repositoreis\ConsultantRepository.cs" />
+    <Compile Include="Repositoreis\UserTaskDetailRepository.cs" />
+    <Compile Include="Repositoreis\UserTaskRepository.cs" />
     <Compile Include="Repositoreis\UserPermissionRepository.cs" />
     <Compile Include="Repositoreis\UserRepository.cs" />
     <Compile Include="Repositoreis\UserCardRepository.cs" />
@@ -133,6 +147,7 @@
     <Compile Include="Repositoreis\PettyCashRepository.cs" />
     <Compile Include="Repositoreis\CategoryRepository.cs" />
     <Compile Include="Repositoreis\GadgetRepository.cs" />
+    <Compile Include="UserTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -178,11 +193,24 @@
     <EmbeddedResource Include="Migrations\201704171154468_CompanyBankTransaction-CategoryType-Mandatory.resx">
       <DependentUpon>201704171154468_CompanyBankTransaction-CategoryType-Mandatory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705011100469_UserTask.resx">
+      <DependentUpon>201705011100469_UserTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705020825142_UserTask-Type-Field.resx">
+      <DependentUpon>201705020825142_UserTask-Type-Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705021142375_UserTaskDetail-IsActive.resx">
+      <DependentUpon>201705021142375_UserTaskDetail-IsActive.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\add-bankbranch.sql" />
     <Content Include="Migrations\AddUserFields.sql" />
     <Content Include="Migrations\ChartOfAccountTitle.sql" />
+    <Content Include="Migrations\ComapnyBankTransaction-ToCompanyBankID-Field.sql" />
+    <Content Include="Migrations\CompanyBankTransaction-CategoryReferenceID-Field.sql" />
+    <Content Include="Migrations\CompanyBankTransaction-CategoryType-Mandatory.sql" />
+    <Content Include="Migrations\CompanyBankTransaction-TransactionStatus-Field.sql" />
     <Content Include="Migrations\companycompliance-amount-field.sql" />
     <Content Include="Migrations\CompanyNumber-ConsultantNumber-UserCardExpense.sql" />
     <Content Include="Migrations\companytype-field.sql" />
@@ -197,6 +225,8 @@
     <Content Include="Migrations\StoreProcedures\GetBankTransactionByPaymentTypes.sql" />
     <Content Include="Migrations\StoreProcedures\GetCompanyReconciliation.sql" />
     <Content Include="Migrations\UserPermissionTable.sql" />
+    <Content Include="Migrations\UserTask-Type-Field.sql" />
+    <Content Include="Migrations\UserTask.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CorporateAndFinance.Core\CorporateAndFinance.Core.csproj">

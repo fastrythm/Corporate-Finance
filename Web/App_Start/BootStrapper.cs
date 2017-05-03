@@ -57,9 +57,19 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(UserManagement).Assembly)
         .Where(t => t.Name.EndsWith("Management"))
         .AsImplementedInterfaces().InstancePerRequest();
-           builder.RegisterAssemblyTypes(typeof(BankTransactionManagement).Assembly)
-      .Where(t => t.Name.EndsWith("Management"))
-      .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(BankTransactionManagement).Assembly)
+       .Where(t => t.Name.EndsWith("Management"))
+       .AsImplementedInterfaces().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(UserTaskManagement).Assembly)
+     .Where(t => t.Name.EndsWith("Management"))
+     .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserTaskDetailManagement).Assembly)
+  .Where(t => t.Name.EndsWith("Management"))
+  .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(CommunicationManagement).Assembly)
+.Where(t => t.Name.EndsWith("Management"))
+.AsImplementedInterfaces().InstancePerRequest();
 
             // Repositories
             builder.RegisterAssemblyTypes(typeof(PettyCashRepository).Assembly)
@@ -86,6 +96,12 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(BankTransactionRepository).Assembly)
      .Where(t => t.Name.EndsWith("Repository"))
      .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserTaskRepository).Assembly)
+.Where(t => t.Name.EndsWith("Repository"))
+.AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserTaskDetailRepository).Assembly)
+.Where(t => t.Name.EndsWith("Repository"))
+.AsImplementedInterfaces().InstancePerRequest();
 
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

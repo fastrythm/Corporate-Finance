@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\Async.cs" />
     <Compile Include="Implementation\BankTransactionManagement.cs" />
+    <Compile Include="Implementation\CommunicationManagement.cs" />
     <Compile Include="Implementation\ConsultantManagement.cs" />
     <Compile Include="Implementation\UserCardManagement.cs" />
     <Compile Include="Implementation\UserCardExpenseManagement.cs" />
@@ -52,7 +54,10 @@
     <Compile Include="Implementation\PettyCashManagement.cs" />
     <Compile Include="Implementation\UserManagement.cs" />
     <Compile Include="Implementation\UserPermissionManagement.cs" />
+    <Compile Include="Implementation\UserTaskDetailManagement.cs" />
+    <Compile Include="Implementation\UserTaskManagement.cs" />
     <Compile Include="Interface\IBankTransactionManagement.cs" />
+    <Compile Include="Interface\ICommunicationManagement.cs" />
     <Compile Include="Interface\IConsultantManagement.cs" />
     <Compile Include="Interface\IUserCardManagement.cs" />
     <Compile Include="Interface\IUserCardExpenseManagement.cs" />
@@ -63,6 +68,8 @@
     <Compile Include="Interface\IBankPositionManagement.cs" />
     <Compile Include="Interface\IPettyCashManagement.cs" />
     <Compile Include="Interface\IUserManagement.cs" />
+    <Compile Include="Interface\IUserTaskDetailManagement.cs" />
+    <Compile Include="Interface\IUserTaskManagement.cs" />
     <Compile Include="Interface\IUserPermissionManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

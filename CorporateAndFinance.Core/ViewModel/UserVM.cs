@@ -11,6 +11,7 @@ namespace CorporateAndFinance.Core.ViewModel
 {
     public class UserVM
     {
+        
         public string Id { get; set; }
 
         [Required]
@@ -48,6 +49,12 @@ namespace CorporateAndFinance.Core.ViewModel
 
         public bool IsDeleted { get; set; }
 
-        public  List<UserAppPermissions> UserPermissions { get; set; }
+        [Display(Name = "Permissions")]
+        public  List<UserAppPermissions> UserPermissions { get; set; } 
+
+        [Display(Name = "Roles")]
+        public IEnumerable<SelectListItem> RolesList { get; set; }
+
+        public string[] SelectedRoles { get; set; }
     }
 }

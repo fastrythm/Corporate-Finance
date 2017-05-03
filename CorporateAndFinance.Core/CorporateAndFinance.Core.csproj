@@ -78,7 +78,9 @@
     <Compile Include="Model\Consultant.cs" />
     <Compile Include="Model\ConsultantDocument.cs" />
     <Compile Include="Model\ConsultantPlacement.cs" />
+    <Compile Include="Model\UserTask.cs" />
     <Compile Include="Model\UserPermission.cs" />
+    <Compile Include="Model\UserTaskDetail.cs" />
     <Compile Include="ViewModel\BankReconciliationQBWiseReport.cs" />
     <Compile Include="ViewModel\BankTransactionPaymentWiseReport.cs" />
     <Compile Include="ViewModel\BankTransactionReport.cs" />
@@ -98,7 +100,12 @@
     <Compile Include="ViewModel\InterCompanyReconciliationReport.cs" />
     <Compile Include="ViewModel\PettyCashOpenCloseBalance.cs" />
     <Compile Include="ViewModel\ReportVM.cs" />
+    <Compile Include="ViewModel\SelectListItem.cs" />
     <Compile Include="ViewModel\UserCardExpenseVM.cs" />
+    <Compile Include="ViewModel\UserTaskAndDetailVM.cs" />
+    <Compile Include="ViewModel\UserTaskDetailVM.cs" />
+    <Compile Include="ViewModel\UserTaskEmailVM.cs" />
+    <Compile Include="ViewModel\UserTaskVM.cs" />
     <Compile Include="ViewModel\UserVM.cs" />
   </ItemGroup>
   <ItemGroup>

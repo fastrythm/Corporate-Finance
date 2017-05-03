@@ -112,6 +112,10 @@
       <HintPath>..\packages\MicosoftReportViewerWebForms_v11.1.0.1\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.9.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ReportViewerForMvc, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReportViewerForMvc.1.0.1\lib\net45\ReportViewerForMvc.dll</HintPath>
       <Private>True</Private>
@@ -260,6 +264,7 @@
     <Compile Include="Controllers\Admin\PettyCashController.cs" />
     <Compile Include="Controllers\Admin\CardExpenseController.cs" />
     <Compile Include="Controllers\Admin\ReportController.cs" />
+    <Compile Include="Controllers\Admin\TaskController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="CorporateAndFinanceDataSet.cs">
@@ -587,6 +592,7 @@
     <None Include="Properties\PublishProfiles\CF-Release-006.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-007.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-008.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-009.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -739,6 +745,9 @@
     <Content Include="Views\Report\InterCompanyReconciliation.cshtml" />
     <Content Include="Views\Report\PaymentTypeWiseBankTransaction.cshtml" />
     <Content Include="Views\Report\BankReconciliationQBWise.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\Task\_AddEditUserTask.cshtml" />
+    <Content Include="Views\EmailTemplates\UserTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

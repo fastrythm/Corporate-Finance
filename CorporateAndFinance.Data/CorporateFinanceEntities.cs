@@ -41,6 +41,8 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<UserCompany> UserCompanies { get; set; }
         public virtual DbSet<VendorConsultant> VendorConsultants { get; set; }
        public virtual DbSet<UserPermission> UserPermissions { get; set; }
+        public virtual DbSet<UserTask> UserTasks { get; set; }
+        public virtual DbSet<UserTaskDetail> UserTaskDetails { get; set; }
 
         [NotMapped]
         public virtual DbSet<ApplicationUser> Users { get; set; }
@@ -89,6 +91,13 @@ namespace CorporateAndFinance.Data
                 .HasMany(e => e.CompanyCompliances)
                 .WithRequired(e => e.Company)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTask>()
+              .HasMany(e => e.UserTaskDetails)
+              .WithRequired(e => e.UserTask)
+              .WillCascadeOnDelete(false);
+
+            
 
             //modelBuilder.Entity<Company>()
             //    .HasMany(e => e.ConsultantPlacements)
