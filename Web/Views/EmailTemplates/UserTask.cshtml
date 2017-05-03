@@ -1,0 +1,110 @@
+﻿@model CorporateAndFinance.Core.ViewModel.UserTaskEmailVM
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User Task</title>
+
+</head>
+<body>
+    <div>
+        <table border="0" cellspacing="0" cellpadding="0" width="667">
+            <tbody>
+                <tr>
+                    <td>
+                        <p class="MsoNormal">
+                            <span style="font-size:11.0pt;font-family:Calibri,sans-serif">
+                                <img border="0" width="667" height="46" src="https://investors.ztwealth.com/Content/images/email/header.png">
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <h2>Ticket Information</h2>
+                            <table>
+                                <tr>
+                                    <td><b>Ticket No.</b></td>
+                                    <td>@Model.TicketNumber</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Title</b></td>
+                                    <td>@Model.Title</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Due Date</b></td>
+                                    <td>@Model.DueDate</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Priority</b></td>
+                                    @{
+
+                                        if (Model.Priority == 1)
+                                        {
+                                            <td>Low</td>}
+                                        else if (Model.Priority == 2)
+                                        {
+                                            <td>Medium</td>}
+                                        else
+                                        {
+                                            <td>High</td>
+                                        }
+                                    }
+                                </tr>
+                                <tr>
+                                    <td><b>Description</b></td>
+                                    <td>@Model.Description</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div>
+                            <h3>Details</h3>
+                            <table>
+                                <tr>
+                                    <td>From User</td>
+                                    <td>Assign To User</td>
+                                    <td>Status</td>
+                                    <td>Remarks</td>
+                                </tr>
+                                @foreach (var detail in Model.UserTaskDetails)
+                                {
+                                    <tr>
+
+                                        <td>@detail.FromUser</td>
+                                        <td>@detail.ToUser</td>
+                                        <td>@detail.Status</td>
+                                        <td>@detail.Remarks</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <p align="center">
+                            <span style="font-size:8.5pt;font-family:Arial,sans-serif;color:black">
+                                <strong>&copy; @DateTime.Now.Year - Consulting And Finance - <a href="http://www.arthurlawrence.net" target="_blank">Arthur Lawrence</a></strong> All rights
+                                reserved.
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
