@@ -72,6 +72,10 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -593,6 +597,10 @@
     <None Include="Properties\PublishProfiles\CF-Release-007.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-008.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-009.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-010.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-011.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-012.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-013.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -625,6 +633,7 @@
     <Content Include="Themes\finance-1\css\colors.css" />
     <Content Include="Themes\finance-1\css\data-table.css" />
     <Content Include="Themes\finance-1\css\datatables.min.css" />
+    <Content Include="Themes\finance-1\css\emailstyle.css" />
     <Content Include="Themes\finance-1\css\font-awesome.css" />
     <Content Include="Themes\finance-1\css\google_Open_San_Verdana.css" />
     <Content Include="Themes\finance-1\css\images\ui-bg_diagonal-maze_40_000000_10x10.png" />
@@ -752,6 +761,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadFiles\" />
+    <Folder Include="Views\StaticContent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

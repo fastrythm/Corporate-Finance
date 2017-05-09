@@ -17,5 +17,7 @@ namespace CorporateAndFinance.Core.ViewModel
              ApplyFormatInEditMode = true)]
         public DateTime DueDate { get; set; }
         public List<UserTaskDetailVM> UserTaskDetails { get; set; } = new List<UserTaskDetailVM>();
+
+        public string StyleSheet { get; set; } 
     }
 }

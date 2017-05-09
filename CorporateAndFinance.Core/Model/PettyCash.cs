@@ -30,6 +30,7 @@ namespace CorporateAndFinance.Core.Model
         public string TransactionType { get; set; }
 
         [Display(Name = "Amount")]
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         public decimal Amount { get; set; }
 
         public bool IsDeleted { get; set; }

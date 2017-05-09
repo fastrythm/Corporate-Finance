@@ -16,6 +16,8 @@ namespace CorporateAndFinance.Core.Model
 
         public DateTime Date { get; set; }
 
+
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         public decimal Amount { get; set; }
 
         [NotMapped]

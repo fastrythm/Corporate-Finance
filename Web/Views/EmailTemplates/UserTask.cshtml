@@ -1,0 +1,108 @@
+﻿@model CorporateAndFinance.Core.ViewModel.UserTaskEmailVM
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User Task</title>
+    
+    <style>
+        @Model.StyleSheet
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+<body>
+ 
+            <table border="0" cellspacing="0" cellpadding="0" >
+                <tbody>
+                    <tr class="main-header">
+                        <td>
+                            <p class="MsoNormal">
+                                <span style="font-size:11.0pt;font-family:Calibri,sans-serif">
+                                    <img border="0" src="cid:header-logo">
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 !important">
+                            <div>
+                                <h2>Ticket Information</h2>
+                                <table>
+                                    <tr>
+                                        <td style="width:50%"><b>Ticket No.</b></td>
+                                        <td style="width:50%">@Model.TicketNumber</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Title</b></td>
+                                        <td>@Model.Title</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Due Date</b></td>
+                                        <td>@Model.DueDate.ToShortDateString()</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Priority</b></td>
+                                        @{
+
+                                        if (Model.Priority == 1)
+                                        {
+                                                <td>Low</td>}
+                                        else if (Model.Priority == 2)
+                                        {
+                                                <td>Medium</td>}
+                                        else
+                                        {
+                                                <td>High</td>
+                                        }
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td><b>Description</b></td>
+                                        <td>@Model.Description</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div>
+                                <h3>Details</h3>
+                                <table>
+                                    <tr>
+                                        <td style="width:25%"><b>From User</b></td>
+                                        <td style="width:25%"><b>Assign To User</b></td>
+                                        <td style="width:15%"><b>Status</b></td>
+                                        <td style="width:35%"><b>Remarks</b></td>
+                                    </tr>
+                                    @foreach (var detail in Model.UserTaskDetails)
+                                {
+                                        <tr>
+
+                                            <td>@detail.FromUser</td>
+                                            <td>@detail.ToUser</td>
+                                            <td>@detail.Status</td>
+                                            <td>@detail.Remarks</td>
+                                        </tr>
+                                }
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="main-footer">
+
+                        <td>
+                            <p align="center">
+                                <span>
+                                    &copy; @DateTime.Now.Year - Consulting And Finance - <a href="http://www.arthurlawrence.net" target="_blank">Arthur Lawrence</a> All rights reserved.
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+       
+</body>
+</html>

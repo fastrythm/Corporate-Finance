@@ -61,9 +61,9 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="active"><a href="@Url.Action("Index", "Home")"><i class="fa fa-th"></i> <span>Home</span></a></li>
+                <li class="liclass active"><a href="@Url.Action("Index", "Home")"><i class="fa fa-th"></i> <span>Home</span></a></li>
 
-                <li class="treeview">
+                <li class="treeview liclass" >
                     <a href="#">
                         <i class="fa fa-share"></i> <span>Finance</span>
                         <span class="pull-right-container">
@@ -86,18 +86,18 @@
                             <li><a href="@Url.Action("Index", "Compliance")">Compliance Management</a></li>}
                         @if (PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
                         {
-                            <li><a href="@Url.Action("Index", "CardExpense")">AMEX Management</a></li>}
+                            <li><a href="@Url.Action("Index", "CardExpense")">Amex Management</a></li>}
                         @if (PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
                         {
                             <li><a href="@Url.Action("Index", "BankTransaction")">Bank Transaction</a></li>}
 
                         @if (PermissionControl.CheckPermission(UserAppPermissions.UserTask_View))
                         {
-                            <li><a href="@Url.Action("Index", "Task")">User Task</a></li>}
+                            <li><a href="@Url.Action("Index", "Task")">Issue Log</a></li>}
                     </ul>
                 </li>
 
-                <li class="treeview">
+                <li class="treeview liclass">
                     <a href="#">
                         <i class="fa fa-files-o"></i> <span>Finance Reports</span>
                         <span class="pull-right-container">
@@ -168,9 +168,34 @@
   
 
     @Scripts.Render("~/Bundles/Themes/Finance-1/Javascript")
+    @Scripts.Render("~/Bundles/Scripts/Javascript")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Bundles/jquery-admin-custom")
-
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function(){
+            setActiveClass();
+        });
+
+
+        function setActiveClass() {
+
+            $("[href]").each(function () {
+                if (this.href != window.location.href) {
+                    $(this).parents('.liclass').removeClass("active");
+                    $(this).parent().removeClass("active");
+                }
+            });
+
+            $("[href]").each(function () {
+                if (this.href == window.location.href) {
+                    $(this).parents('.liclass').addClass("active");
+                    $(this).parent().addClass("active");
+                }
+                 
+            });
+        }
+    </script>
 </body>
 </html>

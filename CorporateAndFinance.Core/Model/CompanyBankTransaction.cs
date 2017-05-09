@@ -32,9 +32,11 @@ namespace CorporateAndFinance.Core.Model
         public string PaymentType { get; set; }
 
         [StringLength(50)]
+        [Required]
         [Display(Name = "Receipt Number")]
         public string ReceiptNumber { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
+        [Required]
         public decimal Amount { get; set; }
 
         [StringLength(128)]
@@ -52,6 +54,7 @@ namespace CorporateAndFinance.Core.Model
         public Guid? CategoryReferenceID { get; set; }
 
         [Display(Name = "Status")]
+        [Required]
         public int TransactionStatus { get; set; }
 
         public bool IsDeleted { get; set; }

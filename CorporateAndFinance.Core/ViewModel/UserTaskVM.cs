@@ -26,6 +26,8 @@ namespace CorporateAndFinance.Core.ViewModel
  
         public string Status { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public DataTablesViewModel DTObject { get; set; }
 
         public UserTaskVM()

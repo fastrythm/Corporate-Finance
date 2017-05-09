@@ -1,0 +1,230 @@
+﻿@model CorporateAndFinance.Core.ViewModel.UserTaskAndDetailVM
+
+@using (Html.BeginForm("AddEdit", "Task", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div id="someinner">
+            <div class="row">
+
+                <h1 class="red list-inline"><span class="gray"></span> Add New Task </h1>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Title)
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Title" } })
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-file"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.Priority)
+                    <div class="input-group">
+                        @Html.DropDownListFor(model => model.Priority, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Select Priority", Value = "" },
+                                    new SelectListItem{ Text="Low", Value =  "1" },
+                                     new SelectListItem{ Text="Medium", Value =  "2" },
+                                      new SelectListItem{ Text="High", Value =  "3" }
+                                }, new { @class = "form-control", @placeholder = "Select Priority" })
+
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.DueDate)
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "datepicker form-control", @placeholder = "Due Date" } })
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(model => model.Type)
+                        <div class="input-group">
+                            @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Select Type", Value = "" },
+                                    new SelectListItem{ Text="Issue", Value =  "Issue" }
+                                }, new { @class = "form-control", @placeholder = "Select Type" })
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.LabelFor(model => model.Description)
+                        <div class="input-group">
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", @style = "resize: none" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.UserTaskDetails.Status)
+                    <div class="input-group">
+                        @Html.DropDownListFor(model => model.UserTaskDetails.Status, new List<SelectListItem>
+                         {
+                            new SelectListItem{ Text="Open", Value = "Open", Selected = (Model.UserTaskDetails.Status == "Open")   },
+                            new SelectListItem{ Text="Inprogress", Value = "Inprogress" , Selected = (Model.UserTaskDetails.Status == "Inprogress")},
+                            new SelectListItem{ Text="Closed", Value = "Closed" , Selected = (Model.UserTaskDetails.Status == "Closed")}
+                         },new { @class = "form-control", @placeholder = "Select Status" })
+                        
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.UserTaskDetails.Status, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-sm-6">
+                    @Html.LabelFor(model => model.UserTaskDetails.ToUserID)
+                    <div class="input-group">
+                        @Html.DropDownListFor(model => model.UserTaskDetails.ToUserID, Model.Users.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.Users.Select(
+                         x => new SelectListItem()
+                         {
+                             Value = x.Id,
+                             Text = x.FirstName +" "+x.LastName,
+                             Selected = x.Id == Model.UserTaskDetails.ToUserID.ToString()
+                         }), new { @class = "form-control", @placeholder = "Select User" })
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.UserTaskDetails.ToUserID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.LabelFor(model => model.UserTaskDetails.Remarks)
+                    <div class="input-group">
+                        @Html.TextAreaFor(model => model.UserTaskDetails.Remarks, new { @class = "form-control", @placeholder = "Remarks", @style = "resize: none" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.UserTaskDetails.Remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.UserTaskID)
+        
+
+        </div>
+
+        <div class="form-group text-center">
+            <div class="col-sm-9">
+                <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+                <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+            </div>
+            <br /><br />
+        </div>
+
+        @*<div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DueDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
+        }
+
+
+<script type="text/javascript">
+
+    //@@ sourceURL=_AddEditPettyCash.cshtml
+    $(document).ready(function () {
+
+
+        $(this).find('.datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:+10',
+            minDate: 0,
+            setDate: new Date()
+        });
+        if ($(".datepicker").val() == "")
+        $(".datepicker").datepicker().datepicker("setDate", new Date());
+
+        $("#btnSave").click(function (evt) {
+            var $form = $('.data_form');
+
+            if ($form.valid()) {
+                AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
+            }
+        })
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+
+    });
+
+    function OnSuccess(response) {
+
+        DTToggler(); $("#divOperations").empty();
+        oTable.fnDraw(false);
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>
+

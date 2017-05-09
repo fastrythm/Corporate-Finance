@@ -24,6 +24,7 @@ namespace CorporateAndFinance.Core.Model
 
         [Required]
         public string Status { get; set; }
+        public Guid ChangeBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime LastModified { get; set; }
         public virtual UserTask UserTask { get; set; }

@@ -3,6 +3,7 @@ using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -18,6 +19,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
     [Authorize]
     public class ComplianceController : Controller
     {
+        private static ILog logger = LogManager.GetLogger(typeof(ComplianceController));
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IComplianceManagement complianceManagement;
@@ -30,7 +33,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             this.complianceManagement = complianceManagement;
             this.companyManagement = companyManagement;
         }
-        
+
         public ApplicationSignInManager SignInManager
         {
             get
@@ -59,9 +62,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         public ActionResult Index()
         {
             ViewBag.Title = "Compliance Listing";
-
+            logger.Info("Compliance Page Access");
             if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
-            { return RedirectToAction("Restricted", "Home"); }
+            {
+                logger.Info("Don't have rights to access  Compliance Page");
+                return RedirectToAction("Restricted", "Home");
+            }
 
             return View();
         }
@@ -70,28 +76,39 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("ComplianceList")]
         public ActionResult ComplianceList(DataTablesViewModel param, string fromDate, string toDate)
         {
-            if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
-            { return RedirectToAction("Restricted", "Home"); }
-
-            DateTime frdate = DateTime.Now;
-            if (!string.IsNullOrWhiteSpace(fromDate))
-                frdate = DateTime.Parse(fromDate);
-
-            DateTime tdate = DateTime.Now;
-            if (!string.IsNullOrWhiteSpace(toDate))
-                tdate = DateTime.Parse(toDate);
-
-            CompanyComplianceVM compliance = new CompanyComplianceVM();
-            compliance.DTObject = param;
-            var list = complianceManagement.GetAllCompliancesByParam(compliance, frdate, tdate);
-
-            return Json(new
+            try
             {
-                sEcho = param.draw,
-                iTotalRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(),
-                iTotalDisplayRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(), // Filtered Count
-                aaData = list
-            });
+                if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_View))
+                { return RedirectToAction("Restricted", "Home"); }
+
+                DateTime frdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(fromDate))
+                    frdate = DateTime.Parse(fromDate);
+
+                DateTime tdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(toDate))
+                    tdate = DateTime.Parse(toDate);
+
+                logger.DebugFormat("Getting Company Compliance List with From Date [{0}] and To Date [{1}]", frdate.ToShortDateString(), tdate.ToShortDateString());
+
+                CompanyComplianceVM compliance = new CompanyComplianceVM();
+                compliance.DTObject = param;
+                var list = complianceManagement.GetAllCompliancesByParam(compliance, frdate, tdate);
+                logger.DebugFormat("Successfully Retrieve  Company Compliance List Records [{2}] with From Date [{0}] and To Ddate [1]", frdate.ToShortDateString(), tdate.ToShortDateString(), list.Count());
+
+                return Json(new
+                {
+                    sEcho = param.draw,
+                    iTotalRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(),
+                    iTotalDisplayRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(), // Filtered Count
+                    aaData = list
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return null;
+            }
         }
 
         [Route("Delete")]
@@ -100,27 +117,34 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                logger.DebugFormat("Deleting Compliance With ComplianceID [{0}] ", id);
+
+
                 if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Delete))
                 {
+                    logger.Info("Don't have right to delete compliance record");
                     return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                 }
 
                 CompanyCompliance compliance = complianceManagement.GetCompliance(id);
 
- 
+
                 if (complianceManagement.Delete(compliance))
                 {
                     complianceManagement.SaveCompliance();
+                    logger.Info("Compliance record Successfully Deleted");
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
                 }
                 else
                 {
+                    logger.Info("Compliance record not deleted");
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex )
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
@@ -152,39 +176,53 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     model.Remarks1UserID = new Guid(User.Identity.GetUserId());
                     if (model.CompanyComplianceID == 0)
                     {
+                        logger.DebugFormat("Add Compliance with CompanyID [{0}],  Date [{1}],  Description [{2}], FilePath [{3}],  LegalAuthorityName [{4}] , Status [{5}] , Amount[{6}]",
+                            model.CompanyID, model.Date, model.Description, model.FilePath,model.LegalAuthorityName,model.Status,model.Amount);
+
                         if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Add))
                         {
+                            logger.Info("Don't have rights to add  Compliance");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
                         if (complianceManagement.Add(model))
                         {
                             complianceManagement.SaveCompliance();
+                            logger.Info("Successfully Saved Company Compliance");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Compliance"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
                             if (model != null)
                                 model.Companies = companyManagement.GetAllCompanies();
+
+                            logger.Info("Company Compliance Not Saved");
                             return Json(new { Message = string.Format("Validation Failded", "Compliance"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
                     else
                     {
+                        logger.DebugFormat("Update Compliance with CompanyID [{0}],  Date [{1}],  Description [{2}], FilePath [{3}],  LegalAuthorityName [{4}] , Status [{5}] , Amount[{6}] , CompanyComplianceID [{7}]",
+                     model.CompanyID, model.Date, model.Description, model.FilePath, model.LegalAuthorityName, model.Status, model.Amount,model.CompanyComplianceID);
+
                         if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Edit))
                         {
+                            logger.Info("Don't have rights to update  Compliance");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
                         if (complianceManagement.Update(model))
                         {
                             complianceManagement.SaveCompliance();
+                            logger.Info("Successfully Updated Company Compliance");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "Compliance"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
                             if (model != null)
                                 model.Companies = companyManagement.GetAllCompanies();
+
+                            logger.Info("Not Updated Company Compliance");
                             return Json(new { Message = string.Format("Validation Failded", "Compliance"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
@@ -199,14 +237,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
             catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
 
-      
+
 
         public ActionResult Uploader()
         {
+  
             if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Edit) || !PermissionControl.CheckPermission(UserAppPermissions.Compliance_Add))
             {
                 return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
@@ -226,7 +266,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         //string filename = Path.GetFileName(Request.Files[i].FileName);  
 
                         HttpPostedFileBase file = files[i];
-                       
+
 
                         // Checking for Internet Explorer  
                         if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
@@ -246,11 +286,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         file.SaveAs(fname);
                     }
                     // Returns message that successfully uploaded  
-                    return Json(String.Format("/UploadFiles/{0}",tempFname));
-                    
+                    return Json(String.Format("/UploadFiles/{0}", tempFname));
+
                 }
                 catch (Exception ex)
                 {
+                    logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                     return Json("Error occurred. Error details: " + ex.Message);
                 }
             }
@@ -260,7 +301,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
 
         }
-       
+
     }
 
     public static class ExtensionMethods

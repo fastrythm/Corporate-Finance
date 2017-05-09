@@ -3,6 +3,7 @@ using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
+using log4net;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
     [Authorize]
     public class CardExpenseController : Controller
     {
+        private static ILog logger = LogManager.GetLogger(typeof(CardExpenseController));
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IUserCardExpenseManagement userCardExpenseManagement;
@@ -69,10 +72,14 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         public ActionResult Index()
         {
+            logger.Info("Card Expense Page Accessed");
             ViewBag.Title = "User Card Expense Listing";
 
             if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
-            { return RedirectToAction("Restricted", "Home"); }
+            {
+                logger.Info("Don't have rights to access  Card Expense Page");
+                return RedirectToAction("Restricted", "Home");
+            }
 
 
             return View();
@@ -87,8 +94,14 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                logger.DebugFormat("Deleting Card Expense With CardExpenseID [{0}] ", id);
+
+
                 if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_Delete))
-                { return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false }); }
+                {
+                    logger.Info("Don't have right to delete Card Expense record");
+                    return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                }
 
                 var userCard = userCardExpenseManagement.GetUserCardExpense(id);
 
@@ -96,16 +109,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 if (userCardExpenseManagement.Delete(userCard))
                 {
                     userCardExpenseManagement.SaveUserCardExpense();
+                    logger.Info("Card Expense record Successfully Deleted");
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
                 }
                 else
                 {
+                    logger.Info("Card Expense record Not Deleted");
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
@@ -117,7 +133,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             ViewBag.Title = "Upload New User Card Expense Sheet";
 
             if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_Add))
-            { return RedirectToAction("Restricted", "Home"); }
+            {
+                return RedirectToAction("Restricted", "Home");
+            }
 
             return PartialView("_UploadUserCardExpense");
         }
@@ -127,7 +145,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("UserCardExpenseList")]
      
         public ActionResult UserCardExpenseList(DataTablesViewModel param, string fromDate, string toDate)
-        {
+        {try { 
             if (!PermissionControl.CheckPermission(UserAppPermissions.UserCardExpense_View))
             { return RedirectToAction("Restricted", "Home"); }
 
@@ -139,9 +157,14 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             if (!string.IsNullOrWhiteSpace(toDate))
                 tdate = DateTime.Parse(toDate);
 
+            logger.DebugFormat("Getting Card Expense List with From Date [{0}] and To Ddate [{1}]", frdate.ToShortDateString(), tdate.ToShortDateString());
+
+
             UserCardExpenseVM userCardExpenseVM = new UserCardExpenseVM();
             userCardExpenseVM.DTObject = param;
             var list = userCardExpenseManagement.GetAllUserCardExpensesByParam(userCardExpenseVM, frdate, tdate);
+
+            logger.DebugFormat("Successfully Retrieve Card Expense List Records [{2}] with From Date [{0}] and To Ddate [{1}]", frdate.ToShortDateString(), tdate.ToShortDateString(), list.Count());
 
             return Json(new
             {
@@ -151,6 +174,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 aaData = list
             });
         }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return null;
+            }
+}
 
         [HttpPost]
         
@@ -166,10 +195,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 var fileExtension = string.Empty;
                 if (expenseSheet.ContentLength > 0)
                 {
+                    logger.DebugFormat("Uploading New Expense Sheet with Name [{0}]", expenseSheet.FileName);
+
+
                     fileName = Path.GetFileName(expenseSheet.FileName);
                     fileExtension = Path.GetExtension(expenseSheet.FileName);
                     string path = string.Format("{0}{1}{2}",Server.MapPath("~/UploadFiles/"), DateTime.Now.Ticks.ToString(),fileExtension);
                     expenseSheet.SaveAs(path);
+
+                    logger.DebugFormat("Expense Sheet successfully uploaded with Name [{0}] and new Path [{1}]", expenseSheet.FileName, path);
+
 
                     var result =   ProcessExpenseSheet(path, fileName);
 
@@ -179,22 +214,28 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
             catch (Exception ex)
             {
-                //return Json(new { Message = ex.m, MessageClass = MessageClass.Error, Response = false });
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPLOAD_ERROR, fileName), MessageClass = MessageClass.Error, Response = false });
             }
         }
 
         private ExcelFileProcess ProcessExpenseSheet(string path,string fileName)
         {
+            logger.DebugFormat("Processing Expense Sheet Name [{0}]", fileName);
+
             DataSet ds =  ExcelFileReader.Read(path);
             if(ds.Tables.Count == 0)
             {
+                logger.DebugFormat("No rows found in file [{0}]", fileName);
+
                 return new ExcelFileProcess { Message = "No rows to insert.", Response = false, MessageType = MessageClass.Error };
             }
 
             string missingcolumn = ExcelFileReader.CheckAllColumnExist(ds.Tables[0], ColumnList);
             if(!string.IsNullOrWhiteSpace(missingcolumn))
             {
+                logger.Debug(string.Format(Resources.Messages.MSG_GENERIC_COLUMN_MISSING, missingcolumn));
+
                 return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_COLUMN_MISSING, missingcolumn), Response = false, MessageType = MessageClass.Error };
             }
 
@@ -202,12 +243,14 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
             if(!string.IsNullOrWhiteSpace(info))
             {
+                logger.Debug(info);
                 return new ExcelFileProcess { Message = info, Response = false, MessageType = MessageClass.Error };
             }
 
             string errors =  ExcelFileReader.ValidateDataFormat(ds.Tables[0]);
             if (!string.IsNullOrWhiteSpace(errors))
             {
+                logger.Debug(errors);
                 return new ExcelFileProcess { Message = errors, Response = false, MessageType = MessageClass.Error };
             }
 
@@ -215,6 +258,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             string accNumberError = ExcelFileReader.ValidateAccountNumber(ds.Tables[0], userCards);
             if (!string.IsNullOrWhiteSpace(accNumberError))
             {
+                logger.Debug(accNumberError);
                 return new ExcelFileProcess { Message = accNumberError, Response = false, MessageType = MessageClass.Error };
             }
 
@@ -225,6 +269,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         private ExcelFileProcess InsertData(DataTable dt, string fileName,IEnumerable<UserCard> userCards)
         {
+            logger.DebugFormat("Inserting Expense Sheet Data from File [{0}]", fileName);
             foreach (DataRow row in dt.Rows)
             {
                 UserCardExpense userCardExp = new UserCardExpense();
@@ -233,6 +278,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 UserCard userCard = userCards.Where(x => x.CardNumber.ToLower() == Convert.ToString(row[UserCardExpenseEnum.Account_Number]).ToLower()).FirstOrDefault();
                 if (userCard == null)
                 {
+                    logger.DebugFormat(string.Format(Resources.Messages.MSG_GENERIC_UPLOAD_USERCARD_ERROR, Convert.ToString(row[UserCardExpenseEnum.Account_Number]), Convert.ToString(row[UserCardExpenseEnum.Card_Member])));
                     return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_UPLOAD_USERCARD_ERROR, Convert.ToString(row[UserCardExpenseEnum.Account_Number]), Convert.ToString(row[UserCardExpenseEnum.Card_Member])), Response = true, MessageType = MessageClass.Error };
                 }
                 userCardExp.UserCardID = userCard.UserCardID;
@@ -254,6 +300,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     Guid companyId = Guid.NewGuid();
                     if (company == null)
                     {
+                        logger.DebugFormat("Company Not Found Creating New Company With Name [{0}] and Number [{1}] and ID [{2}]", Convert.ToString(row[UserCardExpenseEnum.Client]), Convert.ToInt64(row[UserCardExpenseEnum.Client_Number]), companyId);
+
                         CreateNewCompany(Convert.ToString(row[UserCardExpenseEnum.Client]), Convert.ToInt64(row[UserCardExpenseEnum.Client_Number]), companyId);
                     }
                     else
@@ -270,6 +318,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     Guid consultantId = Guid.NewGuid();
                     if (consultant == null)
                     {
+                        logger.DebugFormat("Consultant Not Found Creating New Consultant With Name [{0}] and Number [{1}] and ID [{2}]", Convert.ToString(row[UserCardExpenseEnum.Consultant]), Convert.ToInt64(row[UserCardExpenseEnum.Consultant_Number]), consultantId);
                         CreateNewConsultant(Convert.ToString(row[UserCardExpenseEnum.Consultant]), Convert.ToInt32(row[UserCardExpenseEnum.Consultant_Number]), consultantId);
                     }
                     else
@@ -284,6 +333,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
             userCardExpenseManagement.SaveUserCardExpense();
 
+            logger.DebugFormat("Successfully Inserted Expense Sheet Data from File [{0}]", fileName);
             return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_UPLOAD_SUCCESS, fileName), Response = true, MessageType = MessageClass.Success };
         }
 

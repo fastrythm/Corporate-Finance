@@ -44,7 +44,7 @@ namespace CorporateAndFinance.Core.Model
 
         public Guid? Remarks2UserID { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.####}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:0.###}", ApplyFormatInEditMode = true)]
         public Decimal? Amount { get; set; }
 
         [StringLength(128), Display(Name = "File")]

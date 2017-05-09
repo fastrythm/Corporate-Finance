@@ -1,67 +1,68 @@
 ﻿@model CorporateAndFinance.Core.Model.CompanyBankPosition
- 
+
 @using (Html.BeginForm("AddEdit", "BankPosition", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
-    {
+{
     @Html.AntiForgeryToken()
-     
-                <div class="row">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="col-sm-12">
-                        <div class="bank_branch">
 
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Account No</label>
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Account No", @readonly="readonly" } })
-                                            <span class="input-group-addon" id="basic-addon4"><i class="fa fa-plus-square"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-sm-12">
+            <div class="bank_branch">
 
-                                    </div>
-                                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Account No</label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Account No", @readonly = "readonly" } })
+                                <span class="input-group-addon" id="basic-addon4"><i class="fa fa-plus-square"></i></span>
                             </div>
-                            <div class="divider"><hr></div>
-                          
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "" })
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @placeholder = "Select Date" , @readonly = "readonly" } })
-                                            <span class="input-group-addon" id="basic-addon4"><i class="fa fa-calendar"></i></span>
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-sm-6">
-                                      
-                                        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "" })
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount" } })
-                                            <span class="input-group-addon" id="basic-addon4"><i class="fa fa-dollar"></i></span>
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            @Html.HiddenFor(model => model.CompanyBankID)
-                            @Html.HiddenFor(model => model.CompanyBankPositionID)
-                            <div class="divider"><hr></div>
-                            <div class="form-group text-center">
-                                <div class="col-sm-10">
-                                    <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
-                                    <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
-                                </div>
-                                <br><br><br><br>
-                            </div>
+                        </div>
+                        <div class="col-sm-6">
+
                         </div>
                     </div>
                 </div>
+                <div class="divider"><hr></div>
 
- 
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "" })
+                            <div class="input-group">
+                            
+                                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @placeholder = "Select Date", @readonly = "readonly" } })   
+                                 <span class="input-group-addon" id="basic-addon4"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6">
+
+                                @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "" })
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount" } })
+                                    <span class="input-group-addon" id="basic-addon4"><i class="fa fa-dollar"></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.CompanyBankID)
+                    @Html.HiddenFor(model => model.CompanyBankPositionID)
+                    <div class="divider"><hr></div>
+                    <div class="form-group text-center">
+                        <div class="col-sm-10">
+                            <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+                            <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+                        </div>
+                        <br><br><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 }
 
 
@@ -82,9 +83,9 @@
         $("#btnSave").click(function (evt) {
             var $form = $('.data_form');
 
-              if ($form.valid()) {
-                  AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
-              }
+            if ($form.valid()) {
+                AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
+            }
         })
 
         $("#btnCancel").click(function () {
@@ -92,8 +93,7 @@
         })
     });
 
-    function OnSuccess(response)
-    {
+    function OnSuccess(response) {
         if (response.Response) {
             DTToggler(); $("#divOperations").empty();
             oTable.fnDraw(false);

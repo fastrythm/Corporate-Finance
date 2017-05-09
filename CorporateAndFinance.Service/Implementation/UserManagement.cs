@@ -24,7 +24,7 @@ namespace CorporateAndFinance.Service.Implementation
 
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            return userRepository.GetAll();
+            return userRepository.GetMany(x=>x.IsDeleted == false);
         }
 
     }

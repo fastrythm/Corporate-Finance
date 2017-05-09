@@ -625,20 +625,26 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>BankTransactionPaymentTypeWise</DataSetName>
         <Height>0.75in</Height>
-        <Width>6.20833in</Width>
+        <Width>6.20834in</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
+          <TextAlign>Center</TextAlign>
+          <PaddingLeft>10pt</PaddingLeft>
+          <PaddingRight>10pt</PaddingRight>
+          <PaddingTop>10pt</PaddingTop>
+          <PaddingBottom>10pt</PaddingBottom>
         </Style>
       </Tablix>
     </ReportItems>
     <Height>0.76736in</Height>
     <Style />
   </Body>
-  <Width>6.20833in</Width>
+  <Width>6.20834in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

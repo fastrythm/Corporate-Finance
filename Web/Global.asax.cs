@@ -1,6 +1,8 @@
 ﻿
 using CorporateAndFinance.Data;
 using CorporateAndFinance.Web.App_Start;
+using log4net;
+using log4net.Config;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,9 +17,12 @@ namespace Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        protected static readonly ILog logger = LogManager.GetLogger(typeof(MvcApplication));
         protected void Application_Start()
         {
-            //BundleTable.EnableOptimizations = true;
+            logger.Info("Application_Start is invoked");
+            //DOMConfigurator.Configure();
+            XmlConfigurator.Configure();
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

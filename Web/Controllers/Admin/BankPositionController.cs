@@ -4,6 +4,7 @@ using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Implementation;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -18,6 +19,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
     [Authorize]
     public class BankPositionController : Controller
     {
+        private static ILog logger = LogManager.GetLogger(typeof(BankPositionController));
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IBankPositionManagement bankPositionManagement;
@@ -59,10 +61,14 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: PettyCash
         public ActionResult Index()
         {
+            logger.Info("Bank Position Page Access");
             ViewBag.Title = "Bank Position Listing";
 
             if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
-            { return RedirectToAction("Restricted", "Home"); }
+            {
+                logger.Info("Don't have rights to access  Bank Position Page");
+                return RedirectToAction("Restricted", "Home");
+            }
 
             return View();
             
@@ -73,18 +79,33 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("BankPositionList")]
         public ActionResult BankPositionList(string fromDate)
         {
-            if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
-            { return RedirectToAction("Restricted", "Home"); }
-
-            DateTime frdate = DateTime.Now;
-            if (!string.IsNullOrWhiteSpace(fromDate))
-                frdate = DateTime.Parse(fromDate);
-
-            var jsonObj = bankPositionManagement.GetAllBankPositionByParam(frdate);
-             return Json(new
+            try
             {
-                aaData = jsonObj
-            });
+                if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_View))
+                { return RedirectToAction("Restricted", "Home"); }
+
+                DateTime frdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(fromDate))
+                    frdate = DateTime.Parse(fromDate);
+
+
+                logger.DebugFormat("Getting Bank Postion List with From Date [{0}]", frdate.ToShortDateString());
+
+
+                var jsonObj = bankPositionManagement.GetAllBankPositionByParam(frdate);
+
+                logger.DebugFormat("Retrieve Bank Postion [{0}] Records with From Date [{1}]", jsonObj.Count(),frdate.ToShortDateString());
+
+                return Json(new
+                {
+                    aaData = jsonObj
+                });
+            }
+            catch(Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return null;
+            }
         }
 
         
@@ -118,6 +139,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                if (model.Date < DateTime.Now.AddDays(-1).Date)
+                    return Json(new { Message = Resources.Messages.MSG_GENERIC_RESTRICTED_UPDATE_RECORD, MessageClass = MessageClass.Error, Response = false });
+
+
+                logger.DebugFormat("Add/Update Bank Postion Account No [{0}],  CompanyBankID [{1}],  CompanyBankPositionID [{2}], Date [{3}],  Amount [{4}]", model.AccountNumber, model.CompanyBankID,model.CompanyBankPositionID,model.Date,model.Amount);
+
 
                 if (ModelState.IsValid)
                 {
@@ -125,16 +152,20 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     {
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_Add))
                         {
+                            logger.Info("Dont have Add permission.");
+
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
                         if (bankPositionManagement.Add(model))
                         {
                             bankPositionManagement.SaveBankPosition();
+                            logger.Info("Successfully Bank Position Saved.");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Bank Position"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
+                            logger.Info("Bank Position Not Saved.");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "Bank Position"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
@@ -142,16 +173,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     {
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankPosition_Edit))
                         {
+                            logger.Info("Dont have Update permission.");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
                         if (bankPositionManagement.Update(model))
                         {
                             bankPositionManagement.SaveBankPosition();
+                            logger.Info("Successfully Bank Position Updated.");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "Bank Position"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
                         {
+                            logger.Info("Bank Position Not Update.");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_FAILED, "Bank Position"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
@@ -166,6 +200,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
             catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }

@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You dont have rights to delete this record..
+        ///   Looks up a localized string similar to You dont have rights to delete older record..
         /// </summary>
         internal static string MSG_GENERIC_DELETE_RECORD {
             get {
@@ -129,6 +129,15 @@ namespace Resources {
         internal static string MSG_GENERIC_FAILED {
             get {
                 return ResourceManager.GetString("MSG_GENERIC_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You dont have rights to update older record..
+        /// </summary>
+        internal static string MSG_GENERIC_RESTRICTED_UPDATE_RECORD {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_RESTRICTED_UPDATE_RECORD", resourceCulture);
             }
         }
         
