@@ -38,6 +38,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -131,6 +135,14 @@
     <Compile Include="Migrations\201705021142375_UserTaskDetail-IsActive.Designer.cs">
       <DependentUpon>201705021142375_UserTaskDetail-IsActive.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705081222104_BankTransaction-Mandator-Fields.cs" />
+    <Compile Include="Migrations\201705081222104_BankTransaction-Mandator-Fields.Designer.cs">
+      <DependentUpon>201705081222104_BankTransaction-Mandator-Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705090756041_UserTaskDetail-ChangeBy-Field.cs" />
+    <Compile Include="Migrations\201705090756041_UserTaskDetail-ChangeBy-Field.Designer.cs">
+      <DependentUpon>201705090756041_UserTaskDetail-ChangeBy-Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositoreis\BankTransactionRepository.cs" />
@@ -145,8 +157,6 @@
     <Compile Include="Repositoreis\CompanyRepository.cs" />
     <Compile Include="Repositoreis\ComplianceRepository.cs" />
     <Compile Include="Repositoreis\PettyCashRepository.cs" />
-    <Compile Include="Repositoreis\CategoryRepository.cs" />
-    <Compile Include="Repositoreis\GadgetRepository.cs" />
     <Compile Include="UserTasks.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +211,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705021142375_UserTaskDetail-IsActive.resx">
       <DependentUpon>201705021142375_UserTaskDetail-IsActive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081222104_BankTransaction-Mandator-Fields.resx">
+      <DependentUpon>201705081222104_BankTransaction-Mandator-Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705090756041_UserTaskDetail-ChangeBy-Field.resx">
+      <DependentUpon>201705090756041_UserTaskDetail-ChangeBy-Field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

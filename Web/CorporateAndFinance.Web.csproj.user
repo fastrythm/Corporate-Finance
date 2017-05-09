@@ -11,7 +11,7 @@
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
     <WebStackScaffolding_DbContextTypeFullName>CorporateAndFinance.Data.CorporateFinanceEntities</WebStackScaffolding_DbContextTypeFullName>
     <ProjectView>ProjectFiles</ProjectView>
-    <NameOfLastUsedPublishProfile>CF-Release-009</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>CF-Release-013</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

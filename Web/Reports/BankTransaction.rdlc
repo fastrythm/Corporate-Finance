@@ -947,6 +947,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>GetBankTransaction</DataSetName>
         <PageBreak>
           <BreakLocation>Start</BreakLocation>
@@ -957,6 +958,11 @@
           <Border>
             <Style>None</Style>
           </Border>
+          <TextAlign>Center</TextAlign>
+          <PaddingLeft>10pt</PaddingLeft>
+          <PaddingRight>10pt</PaddingRight>
+          <PaddingTop>10pt</PaddingTop>
+          <PaddingBottom>10pt</PaddingBottom>
         </Style>
       </Tablix>
     </ReportItems>

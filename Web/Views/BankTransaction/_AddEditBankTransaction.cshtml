@@ -60,11 +60,15 @@
                     <div class="col-sm-6">
                         @Html.LabelFor(model => model.TransactionType)
                         <div class="input-group">
-                            <select class="form-control" name="TransactionType" id="TransactionType">
-                                <option value="">Select Transaction Type</option>
-                                <option value="Receipt" @(Model.TransactionType == "Receipt" ? "selected=selected" : "")>Receipt</option>
-                                <option value="Payment" @(Model.TransactionType == "Payment" ? "selected=selected" : "")>Payment</option>
-                            </select>
+
+                            @Html.DropDownListFor(model => model.TransactionType, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Transaction Type", Value = "" },
+                                    new SelectListItem{ Text="Receipt", Value =  "Receipt" },
+                                     new SelectListItem{ Text="Payment", Value =  "Payment" },
+                                }, new { @class = "form-control", @placeholder = "Transaction Type" })
+
+
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
                         @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
@@ -72,12 +76,16 @@
                     <div class="col-sm-6">
                         @Html.LabelFor(model => model.PaymentType)
                         <div class="input-group">
-                            <select class="form-control" name="PaymentType" id="PaymentType">
-                                <option value="">Select Payment Type</option>
-                                <option value="WIRE" @(Model.PaymentType == "WIRE" ? "selected=selected" : "")>Wire</option>
-                                <option value="ACH" @(Model.PaymentType == "ACH" ? "selected=selected" : "")>ACH</option>
-                                <option value="CHECK" @(Model.PaymentType == "CHECK" ? "selected=selected" : "")>Check</option>
-                            </select>
+
+                            @Html.DropDownListFor(model => model.PaymentType, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Payment Type", Value = "" },
+                                    new SelectListItem{ Text="WIRE", Value =  "WIRE" },
+                                     new SelectListItem{ Text="ACH", Value =  "ACH" },
+                                     new SelectListItem{ Text="CHECK", Value =  "CHECK" },
+                                }, new { @class = "form-control", @placeholder = "Payment Type" })
+
+
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
                         @Html.ValidationMessageFor(model => model.PaymentType, "", new { @class = "text-danger" })
@@ -91,15 +99,21 @@
                     <div class="col-sm-6">
                         <label>Transaction status </label>
                         <div class="input-group">
-                            <select class="form-control" name="TransactionStatus" id="TransactionStatus">
-                                <option value="">Select Transaction status</option>
-                                <option value="1" @(Model.TransactionStatus == 1 ? "selected=selected" : "")>Cleared</option>
-                                <option value="2" @(Model.TransactionStatus == 2 ? "selected=selected" : "")>QB pending</option>
-                                <option value="3" @(Model.TransactionStatus == 3 ? "selected=selected" : "")>Bank pending</option>
-                            </select>
+                         
+                            @Html.DropDownListFor(model => model.TransactionStatus, new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text="Transaction Status", Value = "" },
+                                    new SelectListItem{ Text="Cleared", Value =  "1" },
+                                     new SelectListItem{ Text="QB pending", Value =  "2" },
+                                     new SelectListItem{ Text="Bank pending", Value =  "3" },
+                                }, new { @class = "form-control", @placeholder = "Transaction Status" })
+
+
+
 
                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
                         </div>
+                        @Html.ValidationMessageFor(model => model.TransactionStatus, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="col-sm-6">
@@ -129,7 +143,9 @@
                                     new SelectListItem{ Text=@EntityType.Consultant, Value = @EntityType.Consultant },
                                     new SelectListItem{ Text=@EntityType.AutoDebit, Value = @EntityType.AutoDebit },
                                     new SelectListItem{ Text=@EntityType.Other, Value = @EntityType.Other },
-                                }, new { @class = "form-control", @placeholder = "Select Category", @disabled = "disabled" })
+                                }, new { @class = "form-control", @placeholder = "Select Category", @disabled = "true" })
+
+                             
                             }
                             else
                             {
@@ -290,8 +306,8 @@
 
         $("#btnSave").click(function (evt) {
             var $form = $('.data_form');
-
             if ($form.valid()) {
+                $(":disabled", $form).removeAttr("disabled");
                 AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
             }
         })
@@ -301,10 +317,7 @@
         })
 
         $("#CategoryType").change(function () {
-
             SetCategoryType();
-
-
         });
 
         SetCategoryType();
@@ -324,9 +337,19 @@
     }
 
     function OnSuccess(response) {
+        if (response.Response) {
 
-        DTToggler(); $("#divOperations").empty();
-        oTable.fnDraw(false);
+            DTToggler(); $("#divOperations").empty();
+            oTable.fnDraw(false);
+        }
         ALGritter('', response.Message, false, false, response.MessageClass);
+
+        if($("#CompanyBankTransactionID").val() != "0")
+        {
+            $("#CompanyBankID").attr("disabled", "true");
+            $("#ToCompanyBankID").attr("disabled", "true");
+            $("#CategoryType").attr("disabled", "true");
+            
+        }
     }
 </script>

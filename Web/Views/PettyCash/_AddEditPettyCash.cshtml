@@ -107,7 +107,7 @@
             var $form = $('.data_form');
 
               if ($form.valid()) {
-                  AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccess);
+                  AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccessPettyCash);
               }
         })
 
@@ -116,11 +116,13 @@
         })
     });
 
-    function OnSuccess(response)
+    function OnSuccessPettyCash(response)
     {
-        DTToggler(); $("#divOperations").empty();
-        oTable.fnDraw(false);
-        GetOpeningClosingBalance();
+        if (response.Response) {
+            DTToggler(); $("#divOperations").empty();
+            oTable.fnDraw(false);
+            GetOpeningClosingBalance();
+        }
         ALGritter('', response.Message, false, false, response.MessageClass);
     }
 </script>

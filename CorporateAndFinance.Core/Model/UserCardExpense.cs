@@ -25,7 +25,7 @@ namespace CorporateAndFinance.Core.Model
         [Required]
         [StringLength(50)]
         public string BillType { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         public decimal Amount { get; set; }
 
         public bool IsSalesRelated { get; set; }

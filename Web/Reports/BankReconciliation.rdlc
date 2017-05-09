@@ -8,7 +8,7 @@
             <TablixCornerRow>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox4">
+                  <Textbox Name="Textbox28">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -28,7 +28,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox4</rd:DefaultName>
+                    <rd:DefaultName>Textbox28</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>Orange</Color>
@@ -41,15 +41,50 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <ColSpan>2</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell />
+              <TablixCornerCell>
+                <CellContents>
+                  <Textbox Name="Textbox27">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value />
+                            <Style>
+                              <FontSize>9pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                              <Color>Yellow</Color>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox27</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>Orange</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>Blue</BackgroundColor>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixCornerCell>
             </TablixCornerRow>
             <TablixCornerRow>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox102">
+                  <Textbox Name="Textbox29">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -68,7 +103,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox102</rd:DefaultName>
+                    <rd:DefaultName>Textbox29</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>Orange</Color>
@@ -81,15 +116,49 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <ColSpan>2</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell />
+              <TablixCornerCell>
+                <CellContents>
+                  <Textbox Name="Textbox26">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value />
+                            <Style>
+                              <FontSize>9pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox26</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>Orange</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#ffd679</BackgroundColor>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixCornerCell>
             </TablixCornerRow>
             <TablixCornerRow>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox103">
+                  <Textbox Name="Textbox30">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -108,7 +177,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox103</rd:DefaultName>
+                    <rd:DefaultName>Textbox30</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>Orange</Color>
@@ -121,10 +190,44 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <ColSpan>2</ColSpan>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell />
+              <TablixCornerCell>
+                <CellContents>
+                  <Textbox Name="Textbox25">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value />
+                            <Style>
+                              <FontSize>9pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox25</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Color>Orange</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>#ffd679</BackgroundColor>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixCornerCell>
             </TablixCornerRow>
           </TablixCornerRows>
         </TablixCorner>
@@ -608,9 +711,9 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.52084in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox104">
+                  <Textbox Name="Textbox31">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -629,7 +732,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox104</rd:DefaultName>
+                    <rd:DefaultName>Textbox31</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -643,12 +746,62 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                   </Textbox>
                 </CellContents>
               </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox24">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox24</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
             </TablixMember>
             <TablixMember>
+              <Group Name="CategoryReference">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!CategoryReference.Value</Value>
+                </SortExpression>
+              </SortExpressions>
               <TablixHeader>
-                <Size>0.63542in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="TransactionDate">
+                  <Textbox Name="TransactionDate2">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -667,12 +820,13 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>TransactionDate</rd:DefaultName>
+                    <rd:DefaultName>TransactionDate2</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>LightGrey</Color>
+                        <Color>Gray</Color>
                         <Style>Solid</Style>
                       </Border>
+                      <BackgroundColor>LightGrey</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -683,16 +837,6 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
               </TablixHeader>
               <TablixMembers>
                 <TablixMember>
-                  <Group Name="CategoryReference">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!CategoryReference.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
                   <TablixHeader>
                     <Size>0.88542in</Size>
                     <CellContents>
@@ -715,7 +859,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         <rd:DefaultName>CategoryReference</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>LightGrey</Color>
+                            <Color>Gray</Color>
                             <Style>Solid</Style>
                           </Border>
                           <BackgroundColor>LightGrey</BackgroundColor>
@@ -725,19 +869,20 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
-                  <Visibility>
-                    <Hidden>=IIF(Fields!TransactionStatus.Value = "BANK",FALSE,TRUE)</Hidden>
-                  </Visibility>
                 </TablixMember>
               </TablixMembers>
+              <Visibility>
+                <Hidden>=IIF(Fields!TransactionStatus.Value = "BANK",FALSE,TRUE)</Hidden>
+              </Visibility>
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.63542in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox106">
+                  <Textbox Name="Textbox33">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -753,7 +898,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox106</rd:DefaultName>
+                    <rd:DefaultName>Textbox33</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -806,10 +951,20 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
               </TablixMembers>
             </TablixMember>
             <TablixMember>
+              <Group Name="CategoryReference1">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!CategoryReference.Value</Value>
+                </SortExpression>
+              </SortExpressions>
               <TablixHeader>
-                <Size>0.63542in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="TransactionDate1">
+                  <Textbox Name="TransactionDate3">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -828,12 +983,13 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>TransactionDate1</rd:DefaultName>
+                    <rd:DefaultName>TransactionDate3</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
                         <Style>Solid</Style>
                       </Border>
+                      <BackgroundColor>=IIF(Fields!TransactionStatus.Value = "BANK", "#f76868" ,"Transparent")</BackgroundColor>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -844,16 +1000,6 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
               </TablixHeader>
               <TablixMembers>
                 <TablixMember>
-                  <Group Name="CategoryReference1">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!CategoryReference.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!CategoryReference.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
                   <TablixHeader>
                     <Size>0.88542in</Size>
                     <CellContents>
@@ -888,17 +1034,17 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                       </Textbox>
                     </CellContents>
                   </TablixHeader>
-                  <Visibility>
-                    <Hidden>=IIF(Fields!TransactionStatus.Value ="QB",FALSE,TRUE)</Hidden>
-                  </Visibility>
                 </TablixMember>
               </TablixMembers>
+              <Visibility>
+                <Hidden>=IIF(Fields!TransactionStatus.Value ="QB",FALSE,TRUE)</Hidden>
+              </Visibility>
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.63542in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox108">
+                  <Textbox Name="Textbox35">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -914,7 +1060,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox108</rd:DefaultName>
+                    <rd:DefaultName>Textbox35</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -968,9 +1114,9 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.52084in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox37">
+                  <Textbox Name="Textbox36">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -989,7 +1135,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox34</rd:DefaultName>
+                    <rd:DefaultName>Textbox36</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -1003,12 +1149,52 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                   </Textbox>
                 </CellContents>
               </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox39">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox39</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.52084in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox38">
+                  <Textbox Name="Textbox42">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -1027,7 +1213,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox35</rd:DefaultName>
+                    <rd:DefaultName>Textbox42</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -1041,12 +1227,52 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                   </Textbox>
                 </CellContents>
               </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox43">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox43</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.52084in</Size>
+                <Size>1in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox111">
+                  <Textbox Name="Textbox40">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -1065,7 +1291,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox111</rd:DefaultName>
+                    <rd:DefaultName>Textbox40</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -1079,23 +1305,69 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                   </Textbox>
                 </CellContents>
               </TablixHeader>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>0.88542in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox41">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value />
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox41</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>BankReconciliation</DataSetName>
         <Height>2.75in</Height>
-        <Width>2.21876in</Width>
+        <Width>2.58334in</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
+          <TextAlign>Center</TextAlign>
+          <PaddingLeft>10pt</PaddingLeft>
+          <PaddingRight>10pt</PaddingRight>
+          <PaddingTop>10pt</PaddingTop>
+          <PaddingBottom>10pt</PaddingBottom>
         </Style>
       </Tablix>
     </ReportItems>
     <Height>2.75in</Height>
     <Style />
   </Body>
-  <Width>2.22917in</Width>
+  <Width>2.58334in</Width>
   <Page>
     <PageHeight>8.5in</PageHeight>
     <PageWidth>11in</PageWidth>

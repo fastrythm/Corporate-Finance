@@ -133,13 +133,16 @@
     <value>Record couldn't be delete. Please try again or contact your site Administrator.</value>
   </data>
   <data name="MSG_GENERIC_DELETE_RECORD" xml:space="preserve">
-    <value>You dont have rights to delete this record.</value>
+    <value>You dont have rights to delete older record.</value>
   </data>
   <data name="MSG_GENERIC_DELETE_SUCCESS" xml:space="preserve">
     <value>Record deleted successfully.</value>
   </data>
   <data name="MSG_GENERIC_FAILED" xml:space="preserve">
     <value>Changes couldn't be saved. Please try again or contact your software vendor.</value>
+  </data>
+  <data name="MSG_GENERIC_RESTRICTED_UPDATE_RECORD" xml:space="preserve">
+    <value>You dont have rights to update older record.</value>
   </data>
   <data name="MSG_GENERIC_SUCCESS" xml:space="preserve">
     <value>Changes saved successfully.</value>

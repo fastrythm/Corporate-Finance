@@ -3,6 +3,7 @@ using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
+using log4net;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
     [Authorize]
     public class BankTransactionController : Controller
     {
+        private static ILog logger = LogManager.GetLogger(typeof(BankTransactionController));
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IBankTransactionManagement bankTransactionManagement;
@@ -59,10 +61,14 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         // GET: BankTransaction
         public ActionResult Index()
         {
+            logger.Info("Bank Transaction Page Access");
             ViewBag.Title = "Bank Transaction Listing";
 
             if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
-            { return RedirectToAction("Restricted", "Home"); }
+            {
+                logger.Info("Don't have rights to access  Bank Transaction Page");
+                return RedirectToAction("Restricted", "Home");
+            }
 
             return View();
         }
@@ -92,13 +98,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+             
 
                 if (ModelState.IsValid)
                 {
                     if (model.CompanyBankTransactionID == 0)
                     {
+
+                        logger.DebugFormat("Add  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
+                            model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus);
+
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Add))
                         {
+                            logger.Info("Don't have rights to add  Bank Transaction");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
                         SetCategoryTypeID(model);
@@ -106,6 +118,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         if (bankTransactionManagement.Add(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
+                            logger.Info("Successfully Saved  Bank Transaction");
                             //Reversal entery for Inter Company case.
                             if (model.CategoryType == CompanyType.Inter)
                             {
@@ -116,6 +129,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                                 model.TransactionType = model.TransactionType == "Receipt" ? "Payment" : "Receipt";
                                 bankTransactionManagement.Add(model);
                                 bankTransactionManagement.SaveCompanyBankTransaction();
+
+                                logger.Info("Successfully Saved Inter Company 2nd  Bank Transaction");
                             }
 
 
@@ -130,20 +145,27 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                                 model.CategoryClients = companyManagment.GetAllClientCompanies();
                                 model.CategoryConsultants = consultantManagment.GetAllConsultants();
                             }
+
+                            logger.Info("Not Saved  Bank Transaction");
                             return Json(new { Message = string.Format("Validation Failded", "Transaction"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
                     else
                     {
+                        logger.DebugFormat("Update  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}], CompanyBankTransactionID[{9}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
+                          model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus, model.CompanyBankTransactionID);
+
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Edit))
                         {
+                            logger.Info("Don't have rights to update  Bank Transaction");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
-
+                     
                         SetCategoryTypeID(model);
                         if (bankTransactionManagement.Update(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
+                            logger.Info("Successfully Updated  Bank Transaction");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "Transaction"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
@@ -155,6 +177,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                                 model.CategoryClients = companyManagment.GetAllClientCompanies();
                                 model.CategoryConsultants = consultantManagment.GetAllConsultants();
                             }
+                            logger.Info("Not Updated  Bank Transaction");
                             return Json(new { Message = string.Format("Validation Failded", "Transaction"), MessageClass = MessageClass.Error, Response = false });
                         }
                     }
@@ -168,12 +191,15 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         model.CategoryClients = companyManagment.GetAllClientCompanies();
                         model.CategoryConsultants = consultantManagment.GetAllConsultants();
                     }
+
+                    logger.Info("Validation Issue Found  Bank Transaction");
                     return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "Transaction"), MessageClass = MessageClass.Error, Response = false });
                 }
 
             }
             catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
@@ -181,7 +207,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private void SetCategoryTypeID(CompanyBankTransaction model)
         {
             if (model.CategoryType == CompanyType.Client)
-            { model.CategoryReferenceID = model.CategoryClientID;
+            {
+                model.CategoryReferenceID = model.CategoryClientID;
                 model.ToCompanyBankID = null;
             }
             else if (model.CategoryType == CompanyType.Vendor)
@@ -196,28 +223,45 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         [Route("BankTransaction")]
         public ActionResult BankTransactionList(DataTablesViewModel param, string fromDate, string toDate)
         {
-            if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
-            { return RedirectToAction("Restricted", "Home"); }
-
-            DateTime frdate = DateTime.Now;
-            if (!string.IsNullOrWhiteSpace(fromDate))
-                frdate = DateTime.Parse(fromDate);
-
-            DateTime tdate = DateTime.Now;
-            if (!string.IsNullOrWhiteSpace(toDate))
-                tdate = DateTime.Parse(toDate);
-
-            CompanyBankTransactionVM transaction = new CompanyBankTransactionVM();
-            transaction.DTObject = param;
-            var list = bankTransactionManagement.GetAllBankTransactionByParam(transaction, frdate, tdate);
-
-            return Json(new
+            try
             {
-                sEcho = param.draw,
-                iTotalRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(),
-                iTotalDisplayRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(), // Filtered Count
-                aaData = list
-            });
+               
+                if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_View))
+                {
+                    return RedirectToAction("Restricted", "Home");
+                }
+
+                DateTime frdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(fromDate))
+                    frdate = DateTime.Parse(fromDate);
+
+                DateTime tdate = DateTime.Now;
+                if (!string.IsNullOrWhiteSpace(toDate))
+                    tdate = DateTime.Parse(toDate);
+
+
+
+                logger.DebugFormat("Getting Bank Trasaction List with From Date [{0}] and To Date [{1}]", frdate.ToShortDateString(), tdate.ToShortDateString());
+
+                CompanyBankTransactionVM transaction = new CompanyBankTransactionVM();
+                transaction.DTObject = param;
+                var list = bankTransactionManagement.GetAllBankTransactionByParam(transaction, frdate, tdate);
+
+                logger.DebugFormat("Successfully Retrieve Bank Trasaction List Records [{2}] with From Date [{0}] and To Ddate [{1}]", frdate.ToShortDateString(), tdate.ToShortDateString(), list.Count());
+                return Json(new
+                {
+                    sEcho = param.draw,
+                    iTotalRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(),
+                    iTotalDisplayRecords = list.Select(i => i.DTObject.TotalRecordsCount).FirstOrDefault(), // Filtered Count
+                    aaData = list
+                });
+
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return null;
+            }
         }
 
 
@@ -227,8 +271,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                logger.DebugFormat("Deleting Bank Transaction With BankTransactionId [{0}] ", id);
+
+
                 if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Delete))
                 {
+                    logger.Info("Don't have right to delete bank transaction.");
                     return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                 }
 
@@ -243,16 +291,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 if (bankTransactionManagement.Delete(transaction))
                 {
                     bankTransactionManagement.SaveCompanyBankTransaction();
+                    logger.Info("Bank Transaction Successfully Deleted");
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
                 }
                 else
                 {
+                    logger.Info("Bank Transaction Not Deleted");
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }

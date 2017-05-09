@@ -4,6 +4,7 @@ using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Implementation;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -21,6 +22,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
     [Authorize]
     public class UserController : Controller
     {
+        private static ILog logger = LogManager.GetLogger(typeof(UserController));
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IUserPermissionManagement userPermissionManagement;
@@ -79,9 +81,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         public ActionResult Index()
         {
             ViewBag.Title = "Users Listing";
-
+            logger.Info("User Listing Page Access");
             if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
-            { return RedirectToAction("Restricted", "Home"); }
+            {
+                logger.Info("Don't have rights to access User Listing Page");
+                return RedirectToAction("Restricted", "Home");
+            }
 
             return View();
         }
@@ -91,18 +96,26 @@ namespace CorporateAndFinance.Web.Controllers.Admin
       //  [HasPermission(UserAppPermissions.User_View)]
         public ActionResult UserList()
         {
+            try {
 
             if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
             {
                 return RedirectToAction("Restricted", "Home");
             }
-             
+            logger.DebugFormat("Getting User List ");
             var jsonObj  =  UserManager.Users.Where(x=>x.IsDeleted == false).ToList();
-          
+            logger.DebugFormat("Successfully Retrieve User List Records [{0}]",jsonObj.Count());
+
             return Json(new
             {
                 aaData = jsonObj
             });
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return null;
+            }
         }
 
         [Route("Delete")]
@@ -111,25 +124,30 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
+                logger.DebugFormat("Deleting User With UserID [{0}] ", id);
+
                 if (!PermissionControl.CheckPermission(UserAppPermissions.User_Delete))
                 {
+                    logger.Info("Don't have right to delete User record");
                     return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                 }
 
                 var user = UserManager.FindById(id);
                 if (user == null)
                 {
+                    logger.DebugFormat("User not found With UserID [{0}] ", id);
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
                 }
 
                 user.IsDeleted = true;
                 UserManager.Update(user);
-
+                logger.Info("User record Successfully Deleted");
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
@@ -201,15 +219,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     ApplicationUser user = null;
                     if (model.Id != null && model.Id != "0")
                     {
+                        logger.DebugFormat("Update  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}], Department [{3}],  Designation [{4}] UserID [{5}] ",
+               model.FirstName, model.LastName, model.SelectedRoles, model.Department, model.Designation, model.Id);
 
                         if (!PermissionControl.CheckPermission(UserAppPermissions.User_Edit))
                         {
-                           return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                            logger.Info("Don't have rights to update  User ");
+                            return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
                         user = UserManager.FindById(model.Id);
                         if(user == null)
                         {
+                            logger.DebugFormat("User not found With UserID [{0}] ", model.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "User"), MessageClass = MessageClass.Error, Response = false });
                         }
 
@@ -228,6 +250,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         
                         if (isUpdate.Succeeded)
                         {
+                           
                             UserManager.RemoveFromRoles(user.Id, userRoles.ToArray<string>());
                             if (model.SelectedRoles != null)
                             {
@@ -235,16 +258,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             }
 
                             UpdateUserPermission(model.UserPermissions, user.Id);
+                            logger.Info("Successfully Updated User Record");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
-
+                        logger.DebugFormat("User Not Updated Due to Error [{0}]", isUpdate.Errors);
                         return Json(new { Message = isUpdate.Errors, MessageClass = MessageClass.Error, Response = false });
                     }
                     else
                     {
-
+                        logger.DebugFormat("Add New  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}], Department [{3}],  Designation [{4}] ",
+            model.FirstName, model.LastName, model.SelectedRoles, model.Department, model.Designation);
                         if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
                         {
+                            logger.Info("Don't have rights to add  User ");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
@@ -269,9 +295,11 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             }
 
                             UpdateUserPermission(model.UserPermissions, user.Id);
+
+                            logger.DebugFormat("Successfully Create New User Record with UserID [{0}]",user.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
-
+                        logger.DebugFormat("User Not Create Due to Error [{0}]", isSaved.Errors);
                         return Json(new { Message = isSaved.Errors, MessageClass = MessageClass.Error, Response = false });
                     }
                  
@@ -284,6 +312,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
             catch (Exception ex)
             {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
@@ -291,6 +320,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         private void UpdateUserPermission(List<UserAppPermissions> userAppPermissions,string userId)
         {
+            try
+            {
 
             userPermissionManagement.DeleteAllByUserId(userId);
             if (userAppPermissions != null)
@@ -302,7 +333,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 }
                 userPermissionManagement.SaveUserPermissions();
             }
-           
+
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+            }
         }
     }
 }

@@ -14,3 +14,5 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\obj\Debug\CorporateAndFinance.Service.pdb
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\log4net.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Service\bin\Debug\log4net.xml

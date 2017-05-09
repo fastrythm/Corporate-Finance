@@ -58,8 +58,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>Starting Balance : <span  id="tblPettyCash_OpeningBal"   class="numericCol">0.000</span></th>
-                            <th>Close Balance : <span id="tblPettyCash_ClosingBal" class="numericCol">0.000</span></th>
+                            <th>Starting Balance : <span  id="tblPettyCash_OpeningBal"   class="OpeningBal numericCol">0.000</span></th>
+                            <th>Close Balance : <span id="tblPettyCash_ClosingBal" class="ClosingBal numericCol">0.000</span></th>
                             <th></th>
                         </tr>
                     <tfoot>
@@ -221,8 +221,8 @@
             $.post("@Url.Action("GetOpeningClosingBalance", "PettyCash")", { fromDate: frDate, toDate: tDate }, function (data, status) {
                     if (data != null) {
                        
-                        $("#tblPettyCash_OpeningBal").html(ALCurrencyFormat(data.OpeningBalance));
-                        $("#tblPettyCash_ClosingBal").html(ALCurrencyFormat(data.ClosingBalance));
+                        $(".OpeningBal").html(ALCurrencyFormat(data.OpeningBalance));
+                        $(".ClosingBal").html(ALCurrencyFormat(data.ClosingBalance));
                     }
                    
                 });

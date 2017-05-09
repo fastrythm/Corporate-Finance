@@ -73,8 +73,8 @@ AS
          FROM dbo.CompanyBank cb
               INNER JOIN dbo.Bank bak ON cb.BankID = bak.BankID
               LEFT OUTER JOIN dbo.CompanyBankTransaction cbt ON cb.CompanyBankID = cbt.CompanyBankID
-                                                                AND cbt.TransactionDate >= @FromDate
-                                                                AND cbt.TransactionDate <= @ToDate
+                                                              --  AND cbt.TransactionDate >= @FromDate
+                                                             --   AND cbt.TransactionDate <= @ToDate
                                                                 AND cbt.TransactionStatus != @Status_Cleared
          ORDER BY cbt.TransactionStatus  DESC;
      END;
