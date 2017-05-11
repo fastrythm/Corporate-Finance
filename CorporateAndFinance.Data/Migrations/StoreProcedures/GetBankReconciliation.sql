@@ -76,6 +76,7 @@ AS
                                                               --  AND cbt.TransactionDate >= @FromDate
                                                              --   AND cbt.TransactionDate <= @ToDate
                                                                 AND cbt.TransactionStatus != @Status_Cleared
+																AND  cbt.IsDeleted = 0 
          ORDER BY cbt.TransactionStatus  DESC;
      END;
 GO

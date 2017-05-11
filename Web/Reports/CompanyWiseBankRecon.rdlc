@@ -255,20 +255,12 @@
               <TablixHeader>
                 <Size>0.25in</Size>
                 <CellContents>
-                  <Textbox Name="Textbox5">
-                    <CanGrow>true</CanGrow>
+                  <Textbox Name="Textbox1">
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
-                          <TextRun>
-                            <Value xml:space="preserve"> </Value>
-                            <Style>
-                              <FontSize>9pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                              <Color>Yellow</Color>
-                            </Style>
-                          </TextRun>
                           <TextRun>
                             <Value>Intercompany bank reconciliation report</Value>
                             <Style>
@@ -283,7 +275,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox5</rd:DefaultName>
+                    <rd:DefaultName>Textbox1</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>Orange</Color>
@@ -480,6 +472,8 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
         <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>GetCompanyReconciliation</DataSetName>
         <Height>1in</Height>
@@ -501,6 +495,8 @@
   </Body>
   <Width>2.32292in</Width>
   <Page>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>

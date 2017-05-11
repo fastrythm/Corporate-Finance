@@ -4,6 +4,7 @@ using CorporateAndFinance.Core.ViewModel;
 using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
 using log4net;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -104,9 +105,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 {
                     if (model.CompanyBankTransactionID == 0)
                     {
-
-                        logger.DebugFormat("Add  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
-                            model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus);
+                        Guid referenceId = Guid.NewGuid();
+                        logger.DebugFormat("Add  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}], ReferenceId [{9}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
+                            model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus, referenceId);
 
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Add))
                         {
@@ -114,7 +115,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
                         SetCategoryTypeID(model);
-
+                        model.CreatedBy = new Guid(User.Identity.GetUserId());
+                        model.LastModifiedBy = new Guid(User.Identity.GetUserId());
+                        model.ReferenceID = referenceId;
                         if (bankTransactionManagement.Add(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
@@ -152,8 +155,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     }
                     else
                     {
-                        logger.DebugFormat("Update  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}], CompanyBankTransactionID[{9}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
-                          model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus, model.CompanyBankTransactionID);
+                        logger.DebugFormat("Update  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}], CompanyBankTransactionID[{9}] , ReferenceId [{10}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
+                          model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus, model.CompanyBankTransactionID, model.ReferenceID);
 
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Edit))
                         {
@@ -162,10 +165,37 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         }
                      
                         SetCategoryTypeID(model);
+                        model.LastModifiedBy = new Guid(User.Identity.GetUserId());
                         if (bankTransactionManagement.Update(model))
                         {
                             bankTransactionManagement.SaveCompanyBankTransaction();
                             logger.Info("Successfully Updated  Bank Transaction");
+                            if (model.CategoryType == CompanyType.Inter)
+                            {
+                                var reversal = bankTransactionManagement.GetInterCompanyReversalTransaction(model.ReferenceID, model.CompanyBankTransactionID);
+                                if (reversal != null)
+                                {   long companyId = model.CompanyBankID;
+                                    long? toCompanyId = model.ToCompanyBankID;
+                                    reversal.CompanyBankID = Convert.ToInt64(toCompanyId);
+                                    reversal.ToCompanyBankID = companyId;
+                                    reversal.TransactionType = model.TransactionType == "Receipt" ? "Payment" : "Receipt";
+                                    reversal.PaymentType = model.PaymentType;
+                                    reversal.Description = model.Description;
+                                    reversal.Amount = model.Amount;
+                                    reversal.TransactionDate = model.TransactionDate;
+                                    reversal.TransactionStatus = model.TransactionStatus;
+                                    reversal.CreatedOn = model.CreatedOn;
+                                    reversal.LastModified = model.LastModified;
+                                    reversal.ReceiptNumber = model.ReceiptNumber;
+                                    reversal.LastModifiedBy = new Guid(User.Identity.GetUserId());
+                                    bankTransactionManagement.Update(reversal);
+                                    bankTransactionManagement.SaveCompanyBankTransaction();
+                                    logger.Info("Successfully Updated Inter Company 2nd  Bank Transaction");
+                                }
+                            }
+
+                              
+                          
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "Transaction"), MessageClass = MessageClass.Success, Response = true });
                         }
                         else
@@ -288,10 +318,25 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
 
                 transaction.IsDeleted = true;
+                transaction.LastModifiedBy = new Guid(User.Identity.GetUserId());
                 if (bankTransactionManagement.Delete(transaction))
                 {
                     bankTransactionManagement.SaveCompanyBankTransaction();
                     logger.Info("Bank Transaction Successfully Deleted");
+                    if (transaction.CategoryType == CompanyType.Inter)
+                    {
+                        var reversal = bankTransactionManagement.GetInterCompanyReversalTransaction(transaction.ReferenceID, transaction.CompanyBankTransactionID);
+                        if(reversal != null)
+                        {
+                            reversal.LastModifiedBy = new Guid(User.Identity.GetUserId());
+                            reversal.IsDeleted = true;
+                            bankTransactionManagement.Delete(reversal);
+                            bankTransactionManagement.SaveCompanyBankTransaction();
+                            logger.Info("Successfully Deleted Inter Company 2nd  Bank Transaction");
+                        }
+                    }
+
+
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
                 }
                 else

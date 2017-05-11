@@ -44,8 +44,7 @@ namespace CorporateAndFinance.Service.Implementation
             {
              
                 var message = new MailMessage();
-                message.From = !string.IsNullOrEmpty(Sender) ? new MailAddress(Sender) : new MailAddress("support@arthurlawrence.net", "Consulting And Finance");
-
+                message.From = !string.IsNullOrEmpty(Sender) ? new MailAddress(Sender) : new MailAddress("finance.portal@arthurlawrence.net", "Consulting And Finance");
                 message.To.Add(new MailAddress(Recipient));
                 message.Subject = Subject;
                 message.Body = Body;
@@ -94,14 +93,15 @@ namespace CorporateAndFinance.Service.Implementation
                         message.Attachments.Add(att);
                     }
                 }
-               logger.DebugFormat("Sending Email From Communication Class with parameters From [{0}] , To [{1}] , Subject [{2}]", message.From, message.To, message.Subject);
+                logger.DebugFormat("Sending Email From Communication Class with parameters From [{0}] , To [{1}] , Subject [{2}]", message.From, message.To, message.Subject);
                 var smtp = new SmtpClient();
                 smtp.Send(message);
-                logger.DebugFormat("Email Send From Communication");
+                logger.DebugFormat("Email Successfully Send From Communication");
             }
 
             catch (Exception ex)
             {
+                logger.DebugFormat("Email Not Send From Communication");
                 logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
             }
         }

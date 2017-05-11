@@ -143,7 +143,6 @@ namespace CorporateAndFinance.Data.Repositories
     public interface IBankPositionRepository : IRepository<CompanyBankPosition>
     {
         IEnumerable<CompanyBankPositionVM> GetAllBankPositionByParam(DateTime fromDate);
-
     }
 
 

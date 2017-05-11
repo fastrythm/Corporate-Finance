@@ -168,7 +168,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.52084in</Width>
+              <Width>0.63542in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -411,7 +411,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.20833in</Height>
+              <Height>0.22916in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -461,19 +461,11 @@
                 <Size>0.25in</Size>
                 <CellContents>
                   <Textbox Name="Textbox5">
-                    <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
-                          <TextRun>
-                            <Value xml:space="preserve"> </Value>
-                            <Style>
-                              <FontSize>9pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
-                              <Color>Yellow</Color>
-                            </Style>
-                          </TextRun>
                           <TextRun>
                             <Value>Collection &amp; Payment Report</Value>
                             <Style>
@@ -947,13 +939,16 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
+        <KeepTogether>true</KeepTogether>
         <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>GetBankTransaction</DataSetName>
         <PageBreak>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
-        <Height>2.48958in</Height>
-        <Width>1.62501in</Width>
+        <Height>2.51041in</Height>
+        <Width>1.73959in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -969,7 +964,7 @@
     <Height>2.51041in</Height>
     <Style />
   </Body>
-  <Width>1.63416in</Width>
+  <Width>1.77084in</Width>
   <Page>
     <PageHeight>8.27in</PageHeight>
     <PageWidth>11.69in</PageWidth>

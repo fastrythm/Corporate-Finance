@@ -37,7 +37,7 @@ BEGIN
 	   FROM dbo.CompanyBank cb
 	   INNER JOIN dbo.Company c ON cb.CompanyID = c.CompanyID
 	   LEFT OUTER JOIN dbo.CompanyBankTransaction cbt ON cb.CompanyBankID = cbt.CompanyBankID
-	   AND  cbt.TransactionDate >= @FromDate AND  cbt.TransactionDate <= @ToDate AND cbt.TransactionStatus != @BANK_PENDING
+	   AND  cbt.TransactionDate >= @FromDate AND  cbt.TransactionDate <= @ToDate AND cbt.TransactionStatus != @BANK_PENDING AND  cbt.IsDeleted = 0
 	   ORDER BY (case when cbt.CategoryType ='Inter' then 1 
 	   when cbt.CategoryType ='Vendor' then 2 
 	   when cbt.CategoryType ='Client' then 3 when cbt.CategoryType ='Consultant' then 4 when cbt.CategoryType ='Auto-Debit' then 5 else 6 end)  Desc

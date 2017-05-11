@@ -14,20 +14,20 @@
 	  SELECT     ( (
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus != @QB_PENDING ) -
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus != @QB_PENDING AND cbt.IsDeleted = 0 ) -
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus !=  @QB_PENDING )
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND cbt.TransactionDate < @FromDate AND cbt.TransactionStatus !=  @QB_PENDING AND cbt.IsDeleted = 0 )
 				 ) 
 					
 			 	+	
 				 (
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus != @QB_PENDING ) -
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Receipt') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus != @QB_PENDING AND cbt.IsDeleted = 0 ) -
                              (SELECT        ISNULL(SUM(Amount), 0) AS Expr1
                                FROM            dbo.CompanyBankTransaction AS cbt
-                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus !=  @QB_PENDING )
+                               WHERE        (CompanyBankID = @CompanyBankId) AND (TransactionType = 'Payment') AND ( cbt.TransactionDate >= @FromDate AND cbt.TransactionDate <= @ToDate ) AND cbt.TransactionStatus !=  @QB_PENDING AND cbt.IsDeleted = 0 )
 				 ) )		 
 						 
 						   AS ClosingBalance

@@ -81,5 +81,10 @@ namespace CorporateAndFinance.Core.Model
 
         [NotMapped]
         public Guid? CategoryConsultantID { get; set; }
+
+        public Guid? ReferenceID { get; set; }
+
+        public Guid CreatedBy { get; set; }
+        public Guid LastModifiedBy { get; set; }
     }
 }

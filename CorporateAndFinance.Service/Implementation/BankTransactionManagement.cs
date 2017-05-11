@@ -68,5 +68,10 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return bankTransactionRepository.BankReconciliationQBWise(frdate, tdate);
         }
+
+        public CompanyBankTransaction GetInterCompanyReversalTransaction(Guid? referenceID, long companyBankTransactionID)
+        {
+            return bankTransactionRepository.Get(x=>x.ReferenceID == referenceID && x.CompanyBankTransactionID != companyBankTransactionID);
+        }
     }
 }

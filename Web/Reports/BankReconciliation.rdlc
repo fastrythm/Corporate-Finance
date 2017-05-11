@@ -569,7 +569,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                 <Size>0.25in</Size>
                 <CellContents>
                   <Textbox Name="Textbox116">
-                    <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -869,7 +869,6 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -1348,6 +1347,8 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
         <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>BankReconciliation</DataSetName>
         <Height>2.75in</Height>
