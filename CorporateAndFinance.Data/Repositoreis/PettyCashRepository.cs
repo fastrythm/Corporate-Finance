@@ -156,15 +156,15 @@ namespace CorporateAndFinance.Data.Repositories
                                          where (DbFunctions.TruncateTime(Record.TransactionDate) <= DbFunctions.TruncateTime(temporaryDate))
                                          select Record).ToList();
 
-                decimal creditedAmount = query.Where(a => a.TransactionType.Equals("Credit") && a.TransactionDate.Date < fromDate.Date).Select(x => x.Amount).Sum();
-                decimal debitedAmount = query.Where(a => a.TransactionType.Equals("Debit") && a.TransactionDate.Date < fromDate.Date).Select(x => x.Amount).Sum();
+                decimal debitedAmount  = query.Where(a => a.TransactionType.Equals("Credit") && a.TransactionDate.Date < fromDate.Date).Select(x => x.Amount).Sum();
+                decimal creditedAmount = query.Where(a => a.TransactionType.Equals("Debit") && a.TransactionDate.Date < fromDate.Date).Select(x => x.Amount).Sum();
 
                 PettyCashOpenCloseBalance openCloseBalance = new PettyCashOpenCloseBalance();
                 openCloseBalance.OpeningBalance = creditedAmount - debitedAmount;
 
 
-                debitedAmount = query.Where(a => a.TransactionType.Equals("Debit") && a.TransactionDate.Date >= fromDate.Date && a.TransactionDate.Date <= toDate.Date).Select(x => x.Amount).Sum();
-                creditedAmount = query.Where(a => a.TransactionType.Equals("Credit") && a.TransactionDate.Date >= fromDate.Date && a.TransactionDate.Date <= toDate.Date).Select(x => x.Amount).Sum();
+                creditedAmount  = query.Where(a => a.TransactionType.Equals("Debit") && a.TransactionDate.Date >= fromDate.Date && a.TransactionDate.Date <= toDate.Date).Select(x => x.Amount).Sum();
+                debitedAmount = query.Where(a => a.TransactionType.Equals("Credit") && a.TransactionDate.Date >= fromDate.Date && a.TransactionDate.Date <= toDate.Date).Select(x => x.Amount).Sum();
 
                 openCloseBalance.ClosingBalance = openCloseBalance.OpeningBalance - debitedAmount + creditedAmount;
 

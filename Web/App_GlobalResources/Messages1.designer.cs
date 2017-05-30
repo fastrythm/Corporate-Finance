@@ -61,11 +61,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client is required..
+        /// </summary>
+        internal static string MSG_CATEGORY_CLIENT_REQUIRED {
+            get {
+                return ResourceManager.GetString("MSG_CATEGORY_CLIENT_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consultant is required..
+        /// </summary>
+        internal static string MSG_CATEGORY_CONSULTANT_REQUIRED {
+            get {
+                return ResourceManager.GetString("MSG_CATEGORY_CONSULTANT_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor is required..
+        /// </summary>
+        internal static string MSG_CATEGORY_VENDOR_REQUIRED {
+            get {
+                return ResourceManager.GetString("MSG_CATEGORY_VENDOR_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Someone already has that email. Try another?.
         /// </summary>
         internal static string MSG_EMAIL_NA {
             get {
                 return ResourceManager.GetString("MSG_EMAIL_NA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From inter company to same inter company bank transaction not allowed..
+        /// </summary>
+        internal static string MSG_FROM_INTER_COMAPNY_TO_SAME_COMAPANY_NOTALLOWED {
+            get {
+                return ResourceManager.GetString("MSG_FROM_INTER_COMAPNY_TO_SAME_COMAPANY_NOTALLOWED", resourceCulture);
             }
         }
         

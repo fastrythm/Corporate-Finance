@@ -782,6 +782,17 @@ div.dataTables_wrapper div.dataTables_filter input{
    width :97%;
 }
 
+.notification.alert-success.success{
+	width:85% !important;
+}
+input[type="checkbox"]{
+    float:right !important;
+}
+
+.user_add input{
+    margin: 5px 0;
+}
+
 
 .dataTables_scrollBody::-webkit-scrollbar		 {background:#f00 !important; width:8px; height:8px}
 .dataTables_scrollBody::-webkit-scrollbar-track-piece  { background:#ccc !important; color:#fff !important; }
@@ -799,6 +810,7 @@ div.dataTables_wrapper div.dataTables_filter input{
 	input#datepicker_from {
  	   margin-bottom: 10px;
 	}
+   
 }
 
 @media only screen and (min-width : 1500px){
@@ -812,9 +824,7 @@ div.dataTables_wrapper div.dataTables_filter input{
 	.last_row #Department {
 	    width: 38%;
 	}
-	#divOperations input{
-		margin:5px 0;
-	}
+	
 	.box.user_page {
    	 width: 97% !important;
    	 margin-left: 15px;

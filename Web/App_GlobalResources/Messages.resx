@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MSG_CATEGORY_CLIENT_REQUIRED" xml:space="preserve">
+    <value>Client is required.</value>
+  </data>
+  <data name="MSG_CATEGORY_CONSULTANT_REQUIRED" xml:space="preserve">
+    <value>Consultant is required.</value>
+  </data>
+  <data name="MSG_CATEGORY_VENDOR_REQUIRED" xml:space="preserve">
+    <value>Vendor is required.</value>
+  </data>
   <data name="MSG_EMAIL_NA" xml:space="preserve">
     <value>Someone already has that email. Try another?</value>
+  </data>
+  <data name="MSG_FROM_INTER_COMAPNY_TO_SAME_COMAPANY_NOTALLOWED" xml:space="preserve">
+    <value>From inter company to same inter company bank transaction not allowed.</value>
   </data>
   <data name="MSG_GENERIC_ADD_FAILED" xml:space="preserve">
     <value>Sorry, System couldn't add new {0}. Please try again or contact your site Administrator.</value>

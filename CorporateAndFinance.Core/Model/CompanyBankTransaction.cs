@@ -33,7 +33,7 @@ namespace CorporateAndFinance.Core.Model
 
         [StringLength(50)]
         [Required]
-        [Display(Name = "Receipt Number")]
+        [Display(Name = "Reference Number")]
         public string ReceiptNumber { get; set; }
         [DisplayFormat(DataFormatString = "{0:0.000}", ApplyFormatInEditMode = true)]
         [Required]

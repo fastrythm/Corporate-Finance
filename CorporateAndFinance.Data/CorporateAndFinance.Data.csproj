@@ -241,6 +241,7 @@
     <Content Include="Migrations\ComapnyBankTransaction-ToCompanyBankID-Field.sql" />
     <Content Include="Migrations\CompanyBankTransaction-CategoryReferenceID-Field.sql" />
     <Content Include="Migrations\CompanyBankTransaction-CategoryType-Mandatory.sql" />
+    <Content Include="Migrations\CompanyBankTransaction-CreatedBy-LastModifiedBy.sql" />
     <Content Include="Migrations\CompanyBankTransaction-ReferenceID.sql" />
     <Content Include="Migrations\CompanyBankTransaction-TransactionStatus-Field.sql" />
     <Content Include="Migrations\companycompliance-amount-field.sql" />

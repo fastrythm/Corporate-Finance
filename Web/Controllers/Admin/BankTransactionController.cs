@@ -99,10 +99,21 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
-             
 
                 if (ModelState.IsValid)
                 {
+                    if (model.CategoryType == CompanyType.Inter && model.CompanyBankID == model.ToCompanyBankID)
+                    {
+                        return Json(new { Message = Resources.Messages.MSG_FROM_INTER_COMAPNY_TO_SAME_COMAPANY_NOTALLOWED, MessageClass = MessageClass.Error, Response = false });
+                    }
+
+                    string message = CheckCategoryValidation(model);
+                    if(!string.IsNullOrEmpty(message))
+                    {
+                        return Json(new { Message = message, MessageClass = MessageClass.Error, Response = false });
+                    }
+                  
+
                     if (model.CompanyBankTransactionID == 0)
                     {
                         Guid referenceId = Guid.NewGuid();
@@ -125,6 +136,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             //Reversal entery for Inter Company case.
                             if (model.CategoryType == CompanyType.Inter)
                             {
+
                                 long companyId = model.CompanyBankID;
                                 long? toCompanyId = model.ToCompanyBankID;
                                 model.CompanyBankID = Convert.ToInt64(toCompanyId);
@@ -172,6 +184,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             logger.Info("Successfully Updated  Bank Transaction");
                             if (model.CategoryType == CompanyType.Inter)
                             {
+                             
                                 var reversal = bankTransactionManagement.GetInterCompanyReversalTransaction(model.ReferenceID, model.CompanyBankTransactionID);
                                 if (reversal != null)
                                 {   long companyId = model.CompanyBankID;
@@ -232,6 +245,24 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
+        }
+
+        private string CheckCategoryValidation(CompanyBankTransaction model)
+        {
+            if ((model.CategoryType == CompanyType.Client) && (model.CategoryClientID == null))
+            {
+                return Resources.Messages.MSG_CATEGORY_CLIENT_REQUIRED;
+            }
+            else if ((model.CategoryType == CompanyType.Vendor) && (model.CategoryVendorID == null))
+            {
+                return Resources.Messages.MSG_CATEGORY_VENDOR_REQUIRED;
+            }
+            else if ((model.CategoryType == EntityType.Consultant) && (model.CategoryConsultantID == null))
+            {
+                return Resources.Messages.MSG_CATEGORY_CONSULTANT_REQUIRED;
+            }
+   
+            return string.Empty;
         }
 
         private void SetCategoryTypeID(CompanyBankTransaction model)

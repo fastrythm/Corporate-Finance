@@ -234,7 +234,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.69792in</Width>
+              <Width>1.13542in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1352,7 +1352,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
         <NoRowsMessage>No Record Found.</NoRowsMessage>
         <DataSetName>BankReconciliation</DataSetName>
         <Height>2.75in</Height>
-        <Width>2.58334in</Width>
+        <Width>3.02084in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1368,7 +1368,7 @@ IIF(Fields!TransactionType.Value = "Receipt",Fields!Amount.Value,IIF(Fields!Tran
     <Height>2.75in</Height>
     <Style />
   </Body>
-  <Width>2.58334in</Width>
+  <Width>3.02084in</Width>
   <Page>
     <PageHeight>8.5in</PageHeight>
     <PageWidth>11in</PageWidth>
