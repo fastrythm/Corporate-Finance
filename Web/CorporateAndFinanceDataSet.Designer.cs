@@ -1475,6 +1475,8 @@ namespace CorporateAndFinance.Web {
             
             private global::System.Data.DataColumn columnTransactionStatus;
             
+            private global::System.Data.DataColumn columnReceiptNumber;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public BankReconciliationDataTable() {
@@ -1582,6 +1584,14 @@ namespace CorporateAndFinance.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ReceiptNumberColumn {
+                get {
+                    return this.columnReceiptNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1617,7 +1627,7 @@ namespace CorporateAndFinance.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public BankReconciliationRow AddBankReconciliationRow(string Bank, string AccountNumber, System.DateTime TransactionDate, string TransactionType, decimal Amount, string CategoryReference, decimal QBClosingBalance, decimal BankClosingBalance, string TransactionStatus) {
+            public BankReconciliationRow AddBankReconciliationRow(string Bank, string AccountNumber, System.DateTime TransactionDate, string TransactionType, decimal Amount, string CategoryReference, decimal QBClosingBalance, decimal BankClosingBalance, string TransactionStatus, string ReceiptNumber) {
                 BankReconciliationRow rowBankReconciliationRow = ((BankReconciliationRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Bank,
@@ -1628,7 +1638,8 @@ namespace CorporateAndFinance.Web {
                         CategoryReference,
                         QBClosingBalance,
                         BankClosingBalance,
-                        TransactionStatus};
+                        TransactionStatus,
+                        ReceiptNumber};
                 rowBankReconciliationRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowBankReconciliationRow);
                 return rowBankReconciliationRow;
@@ -1660,6 +1671,7 @@ namespace CorporateAndFinance.Web {
                 this.columnQBClosingBalance = base.Columns["QBClosingBalance"];
                 this.columnBankClosingBalance = base.Columns["BankClosingBalance"];
                 this.columnTransactionStatus = base.Columns["TransactionStatus"];
+                this.columnReceiptNumber = base.Columns["ReceiptNumber"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1683,6 +1695,8 @@ namespace CorporateAndFinance.Web {
                 base.Columns.Add(this.columnBankClosingBalance);
                 this.columnTransactionStatus = new global::System.Data.DataColumn("TransactionStatus", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTransactionStatus);
+                this.columnReceiptNumber = new global::System.Data.DataColumn("ReceiptNumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReceiptNumber);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2712,6 +2726,22 @@ namespace CorporateAndFinance.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ReceiptNumber {
+                get {
+                    try {
+                        return ((string)(this[this.tableBankReconciliation.ReceiptNumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReceiptNumber\' in table \'BankReconciliation\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableBankReconciliation.ReceiptNumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsBankNull() {
                 return this.IsNull(this.tableBankReconciliation.BankColumn);
             }
@@ -2816,6 +2846,18 @@ namespace CorporateAndFinance.Web {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTransactionStatusNull() {
                 this[this.tableBankReconciliation.TransactionStatusColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsReceiptNumberNull() {
+                return this.IsNull(this.tableBankReconciliation.ReceiptNumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetReceiptNumberNull() {
+                this[this.tableBankReconciliation.ReceiptNumberColumn] = global::System.Convert.DBNull;
             }
         }
         

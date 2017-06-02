@@ -17,6 +17,7 @@ namespace CorporateAndFinance.Core.Model
             ConsultantPlacements = new HashSet<ConsultantPlacement>();
             UserCardExpenses = new HashSet<UserCardExpense>();
             UserCompanies = new HashSet<UserCompany>();
+            Departments = new HashSet<Department>();
         }
 
         public Guid CompanyID { get; set; }
@@ -52,5 +53,7 @@ namespace CorporateAndFinance.Core.Model
 
  
         public virtual ICollection<UserCompany> UserCompanies { get; set; }
+
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

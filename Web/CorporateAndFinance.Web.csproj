@@ -602,6 +602,7 @@
     <None Include="Properties\PublishProfiles\CF-Release-012.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-013.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-014.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-015.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -696,7 +697,9 @@
     <Content Include="Themes\finance-1\js\jquery.js" />
     <Content Include="Themes\finance-1\js\jquery.metro-btn.js" />
     <Content Include="Themes\finance-1\js\script.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

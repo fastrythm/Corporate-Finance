@@ -138,6 +138,7 @@
               <xs:element name="QBClosingBalance" msprop:Generator_ColumnVarNameInTable="columnQBClosingBalance" msprop:Generator_ColumnPropNameInRow="QBClosingBalance" msprop:Generator_ColumnPropNameInTable="QBClosingBalanceColumn" msprop:Generator_UserColumnName="QBClosingBalance" type="xs:decimal" minOccurs="0" />
               <xs:element name="BankClosingBalance" msprop:Generator_ColumnVarNameInTable="columnBankClosingBalance" msprop:Generator_ColumnPropNameInRow="BankClosingBalance" msprop:Generator_ColumnPropNameInTable="BankClosingBalanceColumn" msprop:Generator_UserColumnName="BankClosingBalance" type="xs:decimal" minOccurs="0" />
               <xs:element name="TransactionStatus" msprop:Generator_ColumnVarNameInTable="columnTransactionStatus" msprop:Generator_ColumnPropNameInRow="TransactionStatus" msprop:Generator_ColumnPropNameInTable="TransactionStatusColumn" msprop:Generator_UserColumnName="TransactionStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="ReceiptNumber" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="ReceiptNumber" msprop:Generator_ColumnVarNameInTable="columnReceiptNumber" msprop:Generator_ColumnPropNameInTable="ReceiptNumberColumn" msprop:Generator_UserColumnName="ReceiptNumber" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

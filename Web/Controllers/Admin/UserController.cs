@@ -170,7 +170,6 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 user.Email = appUser.Email;
                 user.EmployeeNumber = appUser.EmployeeNumber;
                 user.Mobile = appUser.Mobile;
-                user.Department = appUser.Department;
                 user.Designation = appUser.Designation;
                 user.UserPermissions = GetUserPermission(id);
                 user.RolesList = RoleManager.Roles.ToList().Select(x => new Core.ViewModel.SelectListItem()
@@ -243,7 +242,6 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
-                        user.Department = model.Department;
                         user.Designation = model.Designation;
                         var isUpdate = UserManager.Update(user);
                         var userRoles = UserManager.GetRoles(model.Id);
@@ -282,7 +280,6 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.UserName = model.Email;
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
-                        user.Department = model.Department;
                         user.Designation = model.Designation;
 
                        var isSaved = UserManager.Create(user, model.Password);

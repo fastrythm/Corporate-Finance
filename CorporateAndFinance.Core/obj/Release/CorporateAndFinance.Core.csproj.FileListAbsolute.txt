@@ -34,3 +34,4 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\bin\Release\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\obj\Release\CorporateAndFinance.Core.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\obj\Release\CorporateAndFinance.Core.pdb
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Core\obj\Release\CorporateAndFinance.Core.csprojResolveAssemblyReference.cache

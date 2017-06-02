@@ -36,9 +36,7 @@ namespace CorporateAndFinance.Core.Model
         public string Mobile { get; set; }
 
         public string Designation { get; set;}
-
-        public string Department { get; set; }
-
+ 
         public bool IsDeleted { get; set; }
 
         public virtual ICollection<UserCard> UserCards { get; set; }
@@ -50,8 +48,10 @@ namespace CorporateAndFinance.Core.Model
         public virtual ICollection<VendorConsultant> VendorConsultants { get; set; }
 
         public virtual ICollection<UserPermission> UserPermissions { get; set; }
-         
 
+        public virtual ICollection<Department> Departments { get; set; }
+
+        public virtual ICollection<UserExpense> UserExpenses { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

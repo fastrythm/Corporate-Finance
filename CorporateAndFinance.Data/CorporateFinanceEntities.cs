@@ -40,10 +40,13 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<UserCardExpense> UserCardExpenses { get; set; }
         public virtual DbSet<UserCompany> UserCompanies { get; set; }
         public virtual DbSet<VendorConsultant> VendorConsultants { get; set; }
-       public virtual DbSet<UserPermission> UserPermissions { get; set; }
+        public virtual DbSet<UserPermission> UserPermissions { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
         public virtual DbSet<UserTaskDetail> UserTaskDetails { get; set; }
-
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Expense> Expenses { get; set; }
+        public virtual DbSet<UserDepartment> UserDepartments { get; set; }
+        public virtual DbSet<UserExpense> UserExpenses { get; set; }
         [NotMapped]
         public virtual DbSet<ApplicationUser> Users { get; set; }
 
@@ -177,6 +180,11 @@ namespace CorporateAndFinance.Data
                .Property(e => e.Amount)
                .HasPrecision(18, 6);
 
+
+            modelBuilder.Entity<UserExpense>()
+                .Property(e => e.Amount)
+                .HasPrecision(18, 6);
+
             //modelBuilder.Entity<Role>()
             //    .HasMany(e => e.UserInRoles)
             //    .WithRequired(e => e.Role)
@@ -228,7 +236,8 @@ namespace CorporateAndFinance.Data
                 .WithRequired(e => e.VendorConsultant)
                 .WillCascadeOnDelete(false);
 
-        
+         
+
             modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers").Property(p => p.Id).HasColumnName("Id");
             modelBuilder.Entity<IdentityUserRole>().ToTable("AspNetUserRoles");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("AspNetUserLogins");

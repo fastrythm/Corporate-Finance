@@ -22,5 +22,6 @@ namespace CorporateAndFinance.Core.ViewModel
         public decimal? QBClosingBalance { get; set; }
         public decimal? BankClosingBalance { get; set; }
         public string TransactionStatus { get; set; }
+        public string ReceiptNumber { get; set; }
     }
 }
