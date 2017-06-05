@@ -1,0 +1,192 @@
+﻿<div class="col-sm-9">
+    <div id="div-table">
+
+        <div class="row">
+        </div>
+        <div class="clearfix"></div>
+        <div class="row mr15">
+            <div class="col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="datepicker_from" class="datepicker form-control" placeholder="Filter By From Date" type="datetime">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="datepicker_to" class="datepicker form-control" placeholder="Filter By To Date" type="datetime">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 nopadding text-left">
+                            <button class="btn btn-theme btn-blue" id="btnSearch" type="button">Go</button>
+                        </div>
+                        <div class="col-sm-4 nopadding text-right">
+                            <button id="add_record" onclick="javascript:Uploader();" title="Uploade Expense Sheet" class="pull-right btn btn-lg btn-theme bg_red"> Upload Expense Sheet</button>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div id="dialog_confirm" title="Delete the Selected Record?">
+                    <p>
+                        <span class="icon icon-warning-sign"></span>
+                        Selected Record will be permanently deleted and cannot be recovered. Are you sure?
+                    </p>
+                </div>
+                <!-- BEGIN FORM-->
+
+                <table id="tblUserExpenses" class="my_data_table data-table table table-striped table-bordered table-responsive table-hover">
+                    <thead>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row-fluid">
+        <div id="divOperations"></div>
+    </div>
+    <!-- END FORM-->
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        ajaxEnable = false;
+        $(document).ready(function () {
+
+
+            InitializeDialogConfirmation();
+            InitializeUserExpenseList('', '');
+
+            $('.datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1900:+10',
+                setDate: new Date()
+            })
+
+            $(".datepicker").datepicker().datepicker("setDate", new Date());
+
+            $("#btnSearch").click(function () {
+
+                oTable.fnDestroy();
+                $('#tblUserCardExpenses thead tr, #tblUserCardExpenses tbody tr').remove();
+                InitializeUserExpenseList($("#datepicker_from").val(), $("#datepicker_to").val());
+
+            });
+
+
+        });
+
+        function InitializeUserExpenseList(fromDate, toDate) {
+
+
+            GenerateDTVersion1('#tblUserExpenses', [
+
+                     {
+                         "data": "UserExpenseID",
+                         "sTitle": 'Doc #',
+                         "render": function (data, type, full, meta) {
+                             return "UE-" + addLeadingZeros(data, 6);
+                         }
+                     },
+                      { "data": "UserNumber", "sTitle": "Employee Number" },
+                      { "data": "UserName", "sTitle": "Employee Name" },
+                      {
+                          "data": "Date",
+                          "sTitle": 'Date',
+                          "render": function (data, type, full, meta) {
+                              return DateFormat(full.Date);
+                          }
+                      },
+                      { "data": "DepartmentName", "sTitle": "Department" },
+                      {
+                          "data": "Billable_Salary_PKR", "sTitle": "Total Cost PKR", "sClass": "numericCol",
+                          "render": function (data, type, full, meta) {
+                              return ALCurrencyFormat(data);
+                          }
+                      },
+                      {
+                          "data": "Billable_Salary_USD", "sTitle": "Total Cost USD", "sClass": "numericCol",
+                          "render": function (data, type, full, meta) {
+                              return ALCurrencyFormat(data);
+                          }
+                      },
+                      {
+                          "data": "UserExpenseID",
+                          "bSearchable": false,
+                          "bSortable": false,
+                          "sWidth": "100px",
+                          "sTitle": 'Action',
+                          "render": function (data, type, full, meta) {
+                              return '<a onClick="javascript:DeleteRecord(' + data + ');" data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
+                          }
+                      }
+            ], '/UserExpense/UserExpenseList?fromDate=' + fromDate + '&toDate=' + toDate, {
+                "order": [[0, "asc"]], "buttons": [{
+                    extend: 'excelHtml5',
+                    title: 'Users Expense Sheet',
+                    text: '<span class="fa fa-file-excel-o"></span> Excel Export',
+                    footer: true,
+
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5,6]
+                    }
+                }]
+            });
+
+
+        }
+
+
+        function Uploader() {
+            DTToggler();
+            $('#divOperations').load('@(Url.Action("UploadNew", "UserExpense", null, Request.Url.Scheme))', function () {
+                var $form = $(this).find('form');
+                $.validator.unobtrusive.parse($form);
+            });
+        }
+
+
+        function DeleteRecord(id) {
+
+            $('#hdnUniqueSetUpRecord').val(id);
+            $("#dialog_confirm").dialog("open");
+            $('.ui-dialog button').blur();// avoid button autofocus
+
+        }
+
+        function DeleteConfirmation(obj) {
+            if (obj != null) {
+                obj.dialog("close");
+                $('#loader-wrapper').show();
+                $.post("@Url.Action("Delete", "CardExpense")", { id: $('#hdnUniqueSetUpRecord').val() }, function (data, status) {
+                    if (data != null) {
+                        if (data.Response) {
+                            oTable.fnDraw(false);
+                        }
+                        ALGritter('', data.Message, false, false, data.MessageClass);
+
+                    }
+                    $('#hdnUniqueSetUpRecord').val('');
+                });
+
+            }
+        }
+
+
+    </script>
+}

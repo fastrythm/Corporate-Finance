@@ -45,7 +45,9 @@ namespace CorporateAndFinance.Core.ViewModel
 
         public string Designation { get; set; }
 
-        public string Department { get; set; }
+        [Display(Name = "Department")]
+        [Required]
+        public long? DepartmentID { get; set; }
 
         public bool IsDeleted { get; set; }
 
@@ -56,5 +58,7 @@ namespace CorporateAndFinance.Core.ViewModel
         public IEnumerable<SelectListItem> RolesList { get; set; }
 
         public string[] SelectedRoles { get; set; }
+
+        public IEnumerable<Department> Departments { get; set; } = new List<Department>();
     }
 }

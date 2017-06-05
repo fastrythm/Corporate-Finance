@@ -64,6 +64,26 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string AutoDebit = "Auto-Debit"; 
     }
 
+    public struct UserExpenseType
+    {
+        public static string Monthly_Salary = "Monthly Salary";
+        public static string Monthly_Salary2 = "Monthly Salary - 2";
+        public static string EOBI_Employer = "EOBI - Employer";
+        public static string PF_Employer = "PF - Employer";
+        public static string Mobile_Allowance = "Mobile Allowance";
+        public static string Bonus = "Bonus";
+        public static string Meal_Reimbursement = "Meal Reimbursement";
+        public static string Transportation = "Transportation";
+        public static string Leave_Encashment = "Leave Encashment";
+        public static string Incentive_PSM = "Incentive / PSM";
+        public static string Health_Insurance = "Health Insurance";
+        public static string Medical_OPD = "Medical OPD";
+        public static string Billable_Salary_PKR = "Billable Salary (Rs.)";
+        public static string Billable_Salary_USD = "Billable Salary($)";
+ 
+    }
+
+
     public enum BankTransactionStatus
     {
         Cleared = 1,
@@ -111,7 +131,11 @@ namespace CorporateAndFinance.Core.Helper.Structure
         UserTask_View = 29,
         UserTask_Delete = 30,
         UserTask_Add = 31,
-        UserTask_Edit = 32
+        UserTask_Edit = 32,
+
+        UserExpense_View = 33,
+        UserExpense_Add = 34,
+        UserExpense_Delete = 35,
     }
 
     public class ChartOfAccount

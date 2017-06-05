@@ -270,6 +270,7 @@
     <Compile Include="Controllers\Admin\ReportController.cs" />
     <Compile Include="Controllers\Admin\TaskController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
+    <Compile Include="Controllers\Admin\UserExpenseController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="CorporateAndFinanceDataSet.cs">
       <DependentUpon>CorporateAndFinanceDataSet.xsd</DependentUpon>
@@ -761,11 +762,13 @@
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\Task\_AddEditUserTask.cshtml" />
     <Content Include="Views\EmailTemplates\UserTask.cshtml" />
+    <Content Include="Views\UserExpense\Index.cshtml" />
+    <Content Include="Views\UserExpense\_UploadUserExpense.cshtml" />
+    <Content Include="Template\Excel\ALP_Costing_Sheet.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadFiles\" />
-    <Folder Include="Views\StaticContent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

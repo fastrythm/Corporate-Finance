@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -26,10 +27,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IUserPermissionManagement userPermissionManagement;
+        private readonly IDepartmentManagement departmentManagement;
 
-        public UserController(IUserPermissionManagement userPermissionManagement)
+        public UserController(IUserPermissionManagement userPermissionManagement,IDepartmentManagement departmentManagement)
         {
             this.userPermissionManagement = userPermissionManagement;
+            this.departmentManagement = departmentManagement;
         }
 
 
@@ -103,7 +106,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return RedirectToAction("Restricted", "Home");
             }
             logger.DebugFormat("Getting User List ");
-            var jsonObj  =  UserManager.Users.Where(x=>x.IsDeleted == false).ToList();
+            var jsonObj  =  UserManager.Users.Where(x=>x.IsDeleted == false).Include(x=>x.UserDepartment).ToList();
             logger.DebugFormat("Successfully Retrieve User List Records [{0}]",jsonObj.Count());
 
             return Json(new
@@ -158,6 +161,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             ViewBag.Title = "Add/Update Users";
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
+            var departments = departmentManagement.GetAllDepartments();
             var user = new UserVM();
             if (id != "0")
             {
@@ -172,6 +176,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 user.Mobile = appUser.Mobile;
                 user.Designation = appUser.Designation;
                 user.UserPermissions = GetUserPermission(id);
+                user.DepartmentID = appUser.DepartmentID;
+                user.Departments = departments;
+
                 user.RolesList = RoleManager.Roles.ToList().Select(x => new Core.ViewModel.SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -219,7 +226,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     if (model.Id != null && model.Id != "0")
                     {
                         logger.DebugFormat("Update  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}], Department [{3}],  Designation [{4}] UserID [{5}] ",
-               model.FirstName, model.LastName, model.SelectedRoles, model.Department, model.Designation, model.Id);
+               model.FirstName, model.LastName, model.SelectedRoles, model.DepartmentID, model.Designation, model.Id);
 
                         if (!PermissionControl.CheckPermission(UserAppPermissions.User_Edit))
                         {
@@ -243,6 +250,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
                         user.Designation = model.Designation;
+                        user.DepartmentID = model.DepartmentID;
                         var isUpdate = UserManager.Update(user);
                         var userRoles = UserManager.GetRoles(model.Id);
                         
@@ -264,8 +272,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     }
                     else
                     {
+                     
                         logger.DebugFormat("Add New  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}], Department [{3}],  Designation [{4}] ",
-            model.FirstName, model.LastName, model.SelectedRoles, model.Department, model.Designation);
+            model.FirstName, model.LastName, model.SelectedRoles, model.DepartmentID, model.Designation);
                         if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
                         {
                             logger.Info("Don't have rights to add  User ");
@@ -281,7 +290,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
                         user.Designation = model.Designation;
-
+                        user.DepartmentID = model.DepartmentID;
+                      
                        var isSaved = UserManager.Create(user, model.Password);
 
                         if (isSaved.Succeeded)

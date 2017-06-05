@@ -48,6 +48,8 @@
     <Compile Include="Implementation\BankTransactionManagement.cs" />
     <Compile Include="Implementation\CommunicationManagement.cs" />
     <Compile Include="Implementation\ConsultantManagement.cs" />
+    <Compile Include="Implementation\DepartmentManagement.cs" />
+    <Compile Include="Implementation\UserExpenseManagement.cs" />
     <Compile Include="Implementation\UserCardManagement.cs" />
     <Compile Include="Implementation\UserCardExpenseManagement.cs" />
     <Compile Include="Implementation\CompanyManagement.cs" />
@@ -61,6 +63,8 @@
     <Compile Include="Interface\IBankTransactionManagement.cs" />
     <Compile Include="Interface\ICommunicationManagement.cs" />
     <Compile Include="Interface\IConsultantManagement.cs" />
+    <Compile Include="Interface\IDepartmentManagement.cs" />
+    <Compile Include="Interface\IUserExpenseManagement.cs" />
     <Compile Include="Interface\IUserCardManagement.cs" />
     <Compile Include="Interface\IUserCardExpenseManagement.cs" />
     <Compile Include="Interface\ICompanyManagement.cs" />

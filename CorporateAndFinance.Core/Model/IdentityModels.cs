@@ -39,17 +39,18 @@ namespace CorporateAndFinance.Core.Model
  
         public bool IsDeleted { get; set; }
 
+        public long? DepartmentID { get; set; }
+
         public virtual ICollection<UserCard> UserCards { get; set; }
  
         public virtual ICollection<UserCompany> UserCompanies { get; set; }
  
+        public virtual Department UserDepartment { get; set; }
       //  public virtual ICollection<UserInRole> UserInRoles { get; set; }
  
         public virtual ICollection<VendorConsultant> VendorConsultants { get; set; }
 
         public virtual ICollection<UserPermission> UserPermissions { get; set; }
-
-        public virtual ICollection<Department> Departments { get; set; }
 
         public virtual ICollection<UserExpense> UserExpenses { get; set; }
     }

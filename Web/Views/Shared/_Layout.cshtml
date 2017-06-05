@@ -101,6 +101,10 @@
                         @if (PermissionControl.CheckPermission(UserAppPermissions.UserTask_View))
                         {
                             <li><a href="@Url.Action("Index", "Task")">Issue Log</a></li>}
+
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.UserExpense_View))
+                        {
+                            <li><a href="@Url.Action("Index", "UserExpense")">User Expense</a></li>}
                     </ul>
                 </li>
 
