@@ -10,5 +10,8 @@ namespace CorporateAndFinance.Service.Interface
     public interface IDepartmentManagement
     {
         IEnumerable<Department> GetAllDepartments();
+        bool Add(Department model);
+        void SaveDepartment();
+        Department GetDepartment(string name);
     }
 }

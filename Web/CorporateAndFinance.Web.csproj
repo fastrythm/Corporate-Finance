@@ -246,7 +246,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Messages1.designer.cs">
+    <Compile Include="App_GlobalResources\Messages.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
@@ -268,6 +268,7 @@
     <Compile Include="Controllers\Admin\PettyCashController.cs" />
     <Compile Include="Controllers\Admin\CardExpenseController.cs" />
     <Compile Include="Controllers\Admin\ReportController.cs" />
+    <Compile Include="Controllers\Admin\RequisitionController.cs" />
     <Compile Include="Controllers\Admin\TaskController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
     <Compile Include="Controllers\Admin\UserExpenseController.cs" />
@@ -765,6 +766,9 @@
     <Content Include="Views\UserExpense\Index.cshtml" />
     <Content Include="Views\UserExpense\_UploadUserExpense.cshtml" />
     <Content Include="Template\Excel\ALP_Costing_Sheet.xlsx" />
+    <Content Include="Views\User\_UserDepartment.cshtml" />
+    <Content Include="Views\Requisition\Index.cshtml" />
+    <Content Include="Views\Requisition\_AddEditRequisition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -794,7 +798,7 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\Messages.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Messages1.designer.cs</LastGenOutput>
+      <LastGenOutput>Messages.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

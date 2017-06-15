@@ -21,9 +21,25 @@ namespace CorporateAndFinance.Service.Implementation
             this.departmentRepository = departmentRepository;
             this.unitOfWork = unitOfWork;
         }
+
+        public bool Add(Department model)
+        {
+           return departmentRepository.Add(model);
+        }
+
         public IEnumerable<Department> GetAllDepartments()
         {
             return departmentRepository.GetMany(dept => dept.IsActive == true);
+        }
+
+        public Department GetDepartment(string name)
+        {
+            return departmentRepository.Get(dept => dept.IsActive == true && dept.Name.Equals(name));
+        }
+
+        public void SaveDepartment()
+        {
+            unitOfWork.Commit();
         }
     }
 }

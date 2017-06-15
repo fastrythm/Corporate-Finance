@@ -46,7 +46,11 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<UserExpense> UserExpenses { get; set; }
         [NotMapped]
         public virtual DbSet<ApplicationUser> Users { get; set; }
+        public virtual DbSet<UserDepartment> UserDepartments { get; set; }
 
+        public virtual DbSet<Requisition> Requisitions { get; set; }
+        public virtual DbSet<UserAllocation> UserAllocations { get; set; }
+        public virtual DbSet<RequisitionApproval> RequisitionApprovals { get; set; }
 
         public virtual void Commit()
         {
@@ -217,17 +221,17 @@ namespace CorporateAndFinance.Data
           .Property(e => e.Health_Insurance)
           .HasPrecision(18, 6);
 
-                    modelBuilder.Entity<UserExpense>()
-             .Property(e => e.Medical_OPD)
-             .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+     .Property(e => e.Medical_OPD)
+     .HasPrecision(18, 6);
 
-                    modelBuilder.Entity<UserExpense>()
-            .Property(e => e.Billable_Salary_PKR)
-            .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+    .Property(e => e.Billable_Salary_PKR)
+    .HasPrecision(18, 6);
 
-                    modelBuilder.Entity<UserExpense>()
-         .Property(e => e.Billable_Salary_USD)
-         .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+ .Property(e => e.Billable_Salary_USD)
+ .HasPrecision(18, 6);
 
 
 
@@ -240,7 +244,19 @@ namespace CorporateAndFinance.Data
                 .Property(e => e.Amount)
                 .HasPrecision(18, 6);
 
-            modelBuilder.Entity<VendorConsultant>()
+            modelBuilder.Entity<Requisition>()
+             .Property(e => e.ProjectedRevenue)
+             .HasPrecision(18, 6);
+
+            modelBuilder.Entity<Requisition>()
+           .Property(e => e.AllocatedBudget)
+           .HasPrecision(18, 6);
+
+            modelBuilder.Entity<UserAllocation>()
+           .Property(e => e.Percentage)
+           .HasPrecision(18, 6);
+
+                modelBuilder.Entity<VendorConsultant>()
                 .HasMany(e => e.ConsultantPlacements)
                 .WithRequired(e => e.VendorConsultant)
                 .WillCascadeOnDelete(false);

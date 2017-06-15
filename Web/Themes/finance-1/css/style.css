@@ -681,6 +681,7 @@ table-layout: fixed;
   .dataTables_scrollBody{
       height:auto;
       max-height:400px;
+        z-index: 9;
   }
   span.logo-mini {
     text-align: center;

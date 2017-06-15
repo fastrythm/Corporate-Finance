@@ -106,19 +106,93 @@
                       { "data": "UserNumber", "sTitle": "Employee Number" },
                       { "data": "UserName", "sTitle": "Employee Name" },
                       {
-                          "data": "Date",
+                          "data": "ExpenseDate",
                           "sTitle": 'Date',
                           "render": function (data, type, full, meta) {
-                              return DateFormat(full.Date);
+                              return DateFormat(data);
                           }
                       },
                       { "data": "DepartmentName", "sTitle": "Department" },
                       {
-                          "data": "Billable_Salary_PKR", "sTitle": "Total Cost PKR", "sClass": "numericCol",
+                          "data": "Monthly_Salary", "sTitle": "Monthly Salary", "sClass": "numericCol",
                           "render": function (data, type, full, meta) {
                               return ALCurrencyFormat(data);
                           }
                       },
+                       {
+                           "data": "Monthly_Salary2", "sTitle": "Monthly Salary 2", "sClass": "numericCol",
+                           "render": function (data, type, full, meta) {
+                               return ALCurrencyFormat(data);
+                           }
+                       },
+                      {
+                          "data": "EOBI_Employer", "sTitle": "EOBI Employer", "sClass": "numericCol",
+                          "render": function (data, type, full, meta) {
+                              return ALCurrencyFormat(data);
+                          }
+                      },
+                       {
+                           "data": "PF_Employer", "sTitle": "PF Employer", "sClass": "numericCol",
+                           "render": function (data, type, full, meta) {
+                               return ALCurrencyFormat(data);
+                           }
+                       },
+                       {
+                           "data": "Mobile_Allowance", "sTitle": "Mobile Allowance", "sClass": "numericCol",
+                           "render": function (data, type, full, meta) {
+                               return ALCurrencyFormat(data);
+                           }
+                       },
+
+                        {
+                            "data": "Bonus", "sTitle": "Bonus", "sClass": "numericCol",
+                            "render": function (data, type, full, meta) {
+                                return ALCurrencyFormat(data);
+                            }
+                        },
+                        {
+                            "data": "Meal_Reimbursement", "sTitle": "Meal Reimbursement", "sClass": "numericCol",
+                            "render": function (data, type, full, meta) {
+                                return ALCurrencyFormat(data);
+                            }
+                        },
+                        {
+                            "data": "Transportation", "sTitle": "Transportation", "sClass": "numericCol",
+                            "render": function (data, type, full, meta) {
+                                return ALCurrencyFormat(data);
+                            }
+                        },
+                         {
+                             "data": "Leave_Encashment", "sTitle": "Leave Encashment", "sClass": "numericCol",
+                             "render": function (data, type, full, meta) {
+                                 return ALCurrencyFormat(data);
+                             }
+                         },
+                             {
+                                 "data": "Incentive_PSM", "sTitle": "Incentive PSM", "sClass": "numericCol",
+                                 "render": function (data, type, full, meta) {
+                                     return ALCurrencyFormat(data);
+                                 }
+                             },
+                             {
+                                 "data": "Health_Insurance", "sTitle": "Health Insurance", "sClass": "numericCol",
+                                 "render": function (data, type, full, meta) {
+                                     return ALCurrencyFormat(data);
+                                 }
+                             },
+                        {
+                            "data": "Medical_OPD", "sTitle": "Medical OPD", "sClass": "numericCol",
+                            "render": function (data, type, full, meta) {
+                                return ALCurrencyFormat(data);
+                            }
+                        },
+
+                        {
+                            "data": "Billable_Salary_PKR", "sTitle": "Total Cost PKR", "sClass": "numericCol",
+                            "render": function (data, type, full, meta) {
+                                return ALCurrencyFormat(data);
+                            }
+                        },
                       {
                           "data": "Billable_Salary_USD", "sTitle": "Total Cost USD", "sClass": "numericCol",
                           "render": function (data, type, full, meta) {
@@ -143,7 +217,7 @@
                     footer: true,
 
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5,6]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,17,18]
                     }
                 }]
             });
@@ -173,7 +247,7 @@
             if (obj != null) {
                 obj.dialog("close");
                 $('#loader-wrapper').show();
-                $.post("@Url.Action("Delete", "CardExpense")", { id: $('#hdnUniqueSetUpRecord').val() }, function (data, status) {
+                $.post("@Url.Action("Delete", "UserExpense")", { id: $('#hdnUniqueSetUpRecord').val() }, function (data, status) {
                     if (data != null) {
                         if (data.Response) {
                             oTable.fnDraw(false);

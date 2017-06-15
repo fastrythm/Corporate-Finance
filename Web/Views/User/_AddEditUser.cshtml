@@ -83,39 +83,19 @@
         </div>
 
         <div>
-            @Html.LabelFor(model => model.DepartmentID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-4 last_row">
-                <div class="input-group">
-                    @Html.DropDownListFor(model => model.DepartmentID, Model.Departments.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.Departments.Select(
-                  x => new SelectListItem()
-                  {
-                      Value = x.DepartmentID.ToString(),
-                      Text = x.Name,
-                      Selected = x.DepartmentID == Model.DepartmentID
-                  }), new { @class = "form-control", @placeholder = "Select Department" })
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
-                </div>
-                @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
-	       </div>
+ 
+                <input type="button" id="adddept"  title="Add Department" value="Add Department" class="pull-right btn btn-lg btn-theme bg_red">  
+                <div class="clearfix"></div>
+           
         </div>
-
-        <div class="form-group">
-	   <label class="col-md-2 control-label">
-                @Html.LabelFor(model => model.RolesList, htmlAttributes: new { @class = "" })
-            </label>
-            <div class="col-md-10">
-                <div class="input-group">
-                    @foreach (var item in Model.RolesList)
-                {
-                        <div class="col-md-4">
-                            <input type="checkbox" name="SelectedRoles" id="SelectedRoles"
-                                   value="@item.Value" style="-webkit-appearance: checkbox; !important" checked="@item.Selected" class="checkbox-inline" />
-                            @Html.Label(item.Value, new { @class = "control-label" })
-                        </div>
-                    }
-                </div>
-                </div>
-	</div>
+       <div id="divUserDepartment">
+           @if (Model.UserDepartments != null)
+           { foreach (var userDepartment in Model.UserDepartments)
+               {
+                   Html.RenderPartial("_UserDepartment", userDepartment);
+               }
+           }
+       </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">
@@ -144,11 +124,13 @@
             <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
         </div>
     </div>
+    
+  
 }
  
 <script type="text/javascript">
 
-    
+
     $(document).ready(function () {
 
         $("#btnSave").click(function (evt) {
@@ -161,7 +143,26 @@
         $("#btnCancel").click(function () {
             DTToggler(); $("#divOperations").empty();
         })
+
+        $("#adddept").click(function () {
+
+          //  $('#divUserDepartment').append('@(Url.Action("AddDepartment", "User", null, Request.Url.Scheme))');
+ 
+
+            $.ajax({
+                url: '/User/AddDepartment/',
+                type: 'POST',
+                contentType: 'application/html',
+                //data: JSON.stringify(model),
+                success: function (content) {
+                    $('#divUserDepartment').append(content);
+                },
+                error: function (e) { }
+            });
+        })
     });
+
+
 
     function OnSuccessUser(response)
     {
@@ -169,10 +170,13 @@
             DTToggler(); $("#divOperations").empty();
             oTable.fnDestroy();
             InitializeUserList();
-         
+
         }
         ALGritter('', response.Message, false, false, response.MessageClass);
     }
+
+
+
 </script>
 
  

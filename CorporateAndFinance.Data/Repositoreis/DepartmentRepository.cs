@@ -14,7 +14,24 @@ namespace CorporateAndFinance.Data.Repositoreis
     {
         private static ILog logger = LogManager.GetLogger(typeof(DepartmentRepository));
         public DepartmentRepository(IDbFactory dbFactory) : base(dbFactory) { }
-    
+       
+        public override bool Add(Department entity)
+        {
+            try
+            {
+                entity.IsActive = true;
+                entity.CreatedOn = DateTime.Now;
+                entity.LastModified = DateTime.Now;
+                return base.Add(entity);
+
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return false;
+            }
+
+        }
     }
     public interface IDepartmentRepository : IRepository<Department>
     { 

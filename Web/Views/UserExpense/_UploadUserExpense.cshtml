@@ -23,7 +23,7 @@
                             <div class="col-sm-5">
                                 <label>Select Month/Year</label>
                                 <div class="input-group">
-                                    <input id="datepicker_upload" class="datepicker form-control" placeholder="Select Month/year" readonly="readonly" type="datetime">
+                                    <input id="expenseMonth" name="expenseMonth" class="datepicker form-control" placeholder="Select Month/year" readonly="readonly" type="datetime">
                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
             var data = new FormData();
             var files = $("#file").get(0).files;
 
-            if (files.length > 0) { data.append("expenseSheet", files[0]); }
+            if (files.length > 0) { data.append("expenseSheet", files[0]); data.append("expenseMonth", $("#expenseMonth").val()); }
             else {
                 ALGritter('', "Please select file to upload.", false, false, "alert-error error");
                 return false;
@@ -92,7 +92,7 @@
                 return false;
             }
             $.ajax({
-                url: '/CardExpense/Uploader', type: "POST", processData: false,
+                url: '/UserExpense/Uploader', type: "POST", processData: false,
                 data: data, dataType: 'json',
                 contentType: false,
                 success: OnSuccess,

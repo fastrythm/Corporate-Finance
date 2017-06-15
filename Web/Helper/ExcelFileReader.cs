@@ -125,5 +125,46 @@ namespace CorporateAndFinance.Web.Helper
 
             return sb.ToString();
         }
+
+        public static string ValidateAmount(DataTable dataTable, List<string> ValidateColumnList)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                foreach (string column in ValidateColumnList)
+                {
+                    if (!string.IsNullOrWhiteSpace(Convert.ToString(dataTable.Rows[i][column])) && !Convert.ToString(dataTable.Rows[i][column]).Equals("-") &&  !regexCurrencyFormat.IsMatch(dataTable.Rows[i][column].ToString()))
+                    {
+                        sb.AppendFormat(Messages.MSG_UPLOAD_INVALID_DECIMAL_FORMAT, column, i + 2);
+                    }
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        public static string ValidateDepartmentAndUsers(DataTable dataTable,IEnumerable<Department> deparments, List<ApplicationUser> users)
+        {
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                string department = Convert.ToString(dataTable.Rows[i][UserExpenseMandatoryColumn.Department]);
+                string employeeNumber = Convert.ToString(dataTable.Rows[i][UserExpenseMandatoryColumn.Employee_Number]);
+                string employeeName = Convert.ToString(dataTable.Rows[i][UserExpenseMandatoryColumn.Employee_Name]);
+                var dept = deparments.Where(x => x.Name == department).SingleOrDefault();
+                 if (dept == null)
+                 {
+                        sb.AppendFormat(Messages.MSG_UPLOAD_DEPARTMENT_NOT_FOUND, department, i + 2);
+                 }
+                var user = users.Where(x => x.EmployeeNumber == employeeNumber).SingleOrDefault();
+                if (user == null)
+                {
+                    sb.AppendFormat(Messages.MSG_UPLOAD_USER_NOT_FOUND, employeeNumber, employeeName,  i + 2);
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }

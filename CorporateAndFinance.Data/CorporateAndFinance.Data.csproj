@@ -165,9 +165,21 @@
     <Compile Include="Migrations\201706050956549_Update-UserExpense-Fields.Designer.cs">
       <DependentUpon>201706050956549_Update-UserExpense-Fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706080923474_UserDepartment_Table.cs" />
+    <Compile Include="Migrations\201706080923474_UserDepartment_Table.Designer.cs">
+      <DependentUpon>201706080923474_UserDepartment_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706140846018_Requisition_UserAllocation_Tables.cs" />
+    <Compile Include="Migrations\201706140846018_Requisition_UserAllocation_Tables.Designer.cs">
+      <DependentUpon>201706140846018_Requisition_UserAllocation_Tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositoreis\BankTransactionRepository.cs" />
+    <Compile Include="Repositoreis\RequisitionApprovalRepository.cs" />
+    <Compile Include="Repositoreis\UserAllocationRepository.cs" />
+    <Compile Include="Repositoreis\RequisitionRepository.cs" />
+    <Compile Include="Repositoreis\UserDepartmentRepository.cs" />
     <Compile Include="Repositoreis\DepartmentRepository.cs" />
     <Compile Include="Repositoreis\ConsultantRepository.cs" />
     <Compile Include="Repositoreis\UserExpenseRepository.cs" />
@@ -260,6 +272,12 @@
     <EmbeddedResource Include="Migrations\201706050956549_Update-UserExpense-Fields.resx">
       <DependentUpon>201706050956549_Update-UserExpense-Fields.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706080923474_UserDepartment_Table.resx">
+      <DependentUpon>201706080923474_UserDepartment_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706140846018_Requisition_UserAllocation_Tables.resx">
+      <DependentUpon>201706140846018_Requisition_UserAllocation_Tables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\add-bankbranch.sql" />
@@ -284,10 +302,13 @@
     <Content Include="Migrations\Functions\fnGetCompanyOpeningBalance.sql" />
     <Content Include="Migrations\Functions\fnSplit.sql" />
     <Content Include="Migrations\InitialDBSetup.sql" />
+    <Content Include="Migrations\Requisition_UserAllocation_Tables.sql" />
     <Content Include="Migrations\StoreProcedures\GetBankReconciliation.sql" />
     <Content Include="Migrations\StoreProcedures\GetBankTransaction.sql" />
     <Content Include="Migrations\StoreProcedures\GetBankTransactionByPaymentTypes.sql" />
     <Content Include="Migrations\StoreProcedures\GetCompanyReconciliation.sql" />
+    <Content Include="Migrations\Update-UserExpense-Fields.sql" />
+    <Content Include="Migrations\UserDepartment_Table.sql" />
     <Content Include="Migrations\UserPermissionTable.sql" />
     <Content Include="Migrations\UserTask-Type-Field.sql" />
     <Content Include="Migrations\UserTask.sql" />

@@ -16,6 +16,7 @@ namespace CorporateAndFinance.Service.Interface
         bool Delete(UserExpense model);
         bool Add(UserExpense model);
         bool Update(UserExpense model);
-
+        IEnumerable<UserExpense> GetAllExpenseByDate(DateTime expenseDate);
+        void DeleteAllByDate(DateTime expenseDate);
     }
 }

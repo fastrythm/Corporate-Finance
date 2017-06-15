@@ -54,5 +54,15 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return userExpenseRepository.Update(model);
         }
+
+        public IEnumerable<UserExpense> GetAllExpenseByDate(DateTime expenseDate)
+        {
+            return userExpenseRepository.GetMany(x => x.ExpenseDate.Month == expenseDate.Month && x.ExpenseDate.Year == expenseDate.Year);
+        }
+
+        public void DeleteAllByDate(DateTime expenseDate)
+        {
+            userExpenseRepository.Delete(x => x.ExpenseDate.Month == expenseDate.Month && x.ExpenseDate.Year == expenseDate.Year);
+        }
     }
 }

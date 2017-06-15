@@ -20,6 +20,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Admin = "Admin";
         public static string FinanceUser = "FinanceUser";
         public static string FinanceManager = "FinanceManager";
+        public static string Employee = "Employee";
     }
 
     public class ExcelFileProcess
@@ -64,6 +65,13 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string AutoDebit = "Auto-Debit"; 
     }
 
+    public struct UserExpenseMandatoryColumn
+    {
+        public static string Department = "Department";
+        public static string Department_Type = "Department Type";
+        public static string Employee_Number = "Employee Number";
+        public static string Employee_Name = "Employee Name";
+    }
     public struct UserExpenseType
     {
         public static string Monthly_Salary = "Monthly Salary";
@@ -79,7 +87,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Health_Insurance = "Health Insurance";
         public static string Medical_OPD = "Medical OPD";
         public static string Billable_Salary_PKR = "Billable Salary (Rs.)";
-        public static string Billable_Salary_USD = "Billable Salary($)";
+        public static string Billable_Salary_USD = "Billable Salary ($)";
  
     }
 
@@ -133,9 +141,14 @@ namespace CorporateAndFinance.Core.Helper.Structure
         UserTask_Add = 31,
         UserTask_Edit = 32,
 
-        UserExpense_View = 33,
-        UserExpense_Add = 34,
-        UserExpense_Delete = 35,
+        ALP_Costing_View = 33,
+        ALP_Costing_Add = 34,
+        ALP_Costing_Delete = 35,
+
+        Requisition_View = 36,
+        Requisition_Delete = 37,
+        Requisition_Add = 38,
+        Requisition_Edit = 39,
     }
 
     public class ChartOfAccount

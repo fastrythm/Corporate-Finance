@@ -82,7 +82,7 @@
             $("#btnSearch").click(function () {
 
                 oTable.fnDestroy();
-                $('#tblPettyCash thead tr, #tblPettyCash tbody tr').remove();
+                $('#tblBankTransaction thead tr, #tblBankTransaction tbody tr').remove();
                 InitializeTransactionList($("#datepicker_from").val(), $("#datepicker_to").val());
 
             });
