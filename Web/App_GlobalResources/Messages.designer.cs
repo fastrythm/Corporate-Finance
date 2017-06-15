@@ -205,6 +205,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Department with the name {0} is not found. .
+        /// </summary>
+        internal static string MSG_GENERIC_UPLOAD_DEPARTMENT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_UPLOAD_DEPARTMENT_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with the employee number {0} and name {1} is not found..
+        /// </summary>
+        internal static string MSG_GENERIC_UPLOAD_EMP_NUMBER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_GENERIC_UPLOAD_EMP_NUMBER_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, System couldn&apos;t upload new {0} file. Please try again or contact your site Administrator..
         /// </summary>
         internal static string MSG_GENERIC_UPLOAD_ERROR {
@@ -340,6 +358,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department {0} not found  at row number {1} . &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_DEPARTMENT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_DEPARTMENT_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid date format exist on column {0} at row number {1}.  &lt;br /&gt;.
         /// </summary>
         internal static string MSG_UPLOAD_INVALID_DATE_FORMAT {
@@ -363,6 +390,15 @@ namespace Resources {
         internal static string MSG_UPLOAD_INVALID_NUMBER_FORMAT {
             get {
                 return ResourceManager.GetString("MSG_UPLOAD_INVALID_NUMBER_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Employee number {0}  and Name {1} not found  at row number {2} . &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_USER_NOT_FOUND", resourceCulture);
             }
         }
     }
