@@ -1,0 +1,506 @@
+﻿@model CorporateAndFinance.Core.Model.Requisition
+
+@using (Html.BeginForm("AddEdit", "Requisition", FormMethod.Post, new { @class = "data_form", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add / Update Requisition</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsBudgeted, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.IsBudgeted, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.IsBudgeted, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequisitionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RequisitionDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.RequisitionDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequestNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RequestNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RequestNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownListFor(model => model.DepartmentID, Model.UserDepartments.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.UserDepartments.Select(
+                  x => new SelectListItem()
+                  {
+                      Value = x.DepartmentID.ToString(),
+                      Text = x.DepartmentName,
+                      Selected = x.DepartmentID == Model.DepartmentID
+                  }), new { @class = "form-control", @placeholder = "Select Departments" })
+
+                @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClientServices, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ClientServices, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ClientServices, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Division, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Division, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Division, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewProject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NewProject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NewProject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tenure, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tenure, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GradeLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GradeLevel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GradeLevel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReportedToJobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReportedToJobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReportedToJobTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsTravelling, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.IsTravelling, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.IsTravelling, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoOfPosition, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoOfPosition, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoOfPosition, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AdditionalBenefits, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdditionalBenefits, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdditionalBenefits, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypeOfEmployement, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.TypeOfEmployement, new List<SelectListItem>
+                                {
+                                     new SelectListItem{ Text="Permanent", Value =  "Permanent" },
+                                     new SelectListItem{ Text="Contractual", Value =  "Contractual" },
+                                }, new { @class = "form-control", @placeholder = "Type Of Employement" })
+
+
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                @Html.ValidationMessageFor(model => model.TypeOfEmployement, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsNewPosition, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.IsNewPosition, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.IsNewPosition, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RevisedOrganogram, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.JobProfileFilePath, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.HiddenFor(model => model.RevisedOrganogram)
+                <input type="file" name="upload" id="OrganogramFileAttachment" class="form-control" placeholder="Revised Organogram" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2"><i class="fa fa-upload"></i></span>
+                @Html.ValidationMessageFor(model => model.RevisedOrganogram, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReplacePersonName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReplacePersonName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReplacePersonName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReplacePersonJobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReplacePersonJobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReplacePersonJobTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobProfileFilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.JobProfileFilePath, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.HiddenFor(model => model.JobProfileFilePath)
+                <input type="file" name="upload" id="FileAttachment" class="form-control" placeholder="Job Profile" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2"><i class="fa fa-upload"></i></span>
+                @Html.ValidationMessageFor(model => model.JobProfileFilePath, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OtherDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OtherDetail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OtherDetail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsBillable, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.IsBillable, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.IsBillable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectedRevenue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectedRevenue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectedRevenue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AllocatedBudget, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AllocatedBudget, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AllocatedBudget, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasLaptopPC, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.HasLaptopPC, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.HasLaptopPC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LaptopDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LaptopDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LaptopDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasHeadset, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.HasHeadset, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.HasHeadset, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasMouse, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.HasMouse, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.HasMouse, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.HasEmail, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.HasEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmailDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmailDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmailDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasUSDID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.HasUSDID, new { @style = "-webkit-appearance: checkbox; !important" })
+                    @Html.ValidationMessageFor(model => model.HasUSDID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasInternetAccess, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.HasInternetAccess, new { @style = "-webkit-appearance: checkbox; !important" })
+
+                    @Html.ValidationMessageFor(model => model.HasInternetAccess, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InternetAccessDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InternetAccessDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.InternetAccessDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApplicationSoftwareSecurityDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApplicationSoftwareSecurityDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApplicationSoftwareSecurityDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+
+                <input type="button" id="adddept" title="Add Department Allocation" value="Add Department Allocation" class="pull-right btn btn-lg btn-theme bg_red">
+                <div class="clearfix"></div>
+
+            </div>
+            <div id="divUserDepartment">
+                @if (Model.UserDepartments != null)
+                {
+                    foreach (var userAllocation in Model.UserAllocatedDepartments)
+                    {
+                        Html.RenderPartial("_UserAllocatedDepartment", userAllocation);
+                    }
+                }
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.RequisitionID)
+        @Html.HiddenFor(model => model.CreatedBy)
+        @Html.HiddenFor(model => model.CreatedOn)
+        <div class="form-group text-center">
+
+            <button class="btn btn-theme btn-blue" id="btnSave" type="button">Save</button>
+            <button type="button" class="btn btn-theme btn-red" id="btnCancel">Close</button>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+
+    //@@ sourceURL=_AddEditPettyCash.cshtml
+    $(document).ready(function () {
+
+        $(this).find('.datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: -1,
+            yearRange: '1900:+10'
+        });
+
+        $("#btnSave").click(function (evt) {
+            var $form = $('.data_form');
+
+            if ($form.valid()) {
+                AjaxCall($form.prop('action'), $form.prop('method'), $form.serialize(), OnSuccessRequisition);
+            }
+        })
+
+        $("#btnCancel").click(function () {
+            DTToggler(); $("#divOperations").empty();
+        })
+
+        $("#adddept").click(function () {
+
+            $.ajax({
+                url: '/Requisition/AddDepartmentAllocation/',
+                type: 'POST',
+                contentType: 'application/html',
+                //data: JSON.stringify(model),
+                success: function (content) {
+                    $('#divUserDepartment').append(content);
+                },
+                error: function (e) { }
+            });
+        })
+
+        $('#OrganogramFileAttachment').fileupload({
+            add: function (e, data) {
+                var uploadErrors = [];
+
+                if (uploadErrors.length > 0) {
+
+                } else {
+                    data.submit();
+                }
+            },
+            url: "/Requisition/Uploader",
+            dataType: 'json',
+            maxNumberOfFiles: 1,
+            accept: 'application/json',
+            start: function (e, data) {
+                //  $('.loading-spinner').fadeIn();
+            },
+            done: function (e, data) {
+
+
+                if (data.result != "") {
+
+                    $('#RevisedOrganogram').val(data.result);
+
+                }
+            }
+        }).on('fileuploadprocessalways', function (e, data) {
+            var currentFile = data.files[data.index];
+            if (data.files.error && currentFile.error) {
+                // there was an error, do something about it
+                console.log(currentFile.error);
+            }
+        }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+
+        $('#FileAttachment').fileupload({
+            add: function (e, data) {
+                var uploadErrors = [];
+                //var acceptFileTypes = /(\.|\/)(vnd.openxmlformats-officedocument.wordprocessingml.document|msword|pdf)$/i;
+                //if (data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                //    uploadErrors.push('Not an accepted file type');
+                //}
+                //if (data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 5000000) {
+                //    uploadErrors.push('Filesize is too big');
+                //}
+                if (uploadErrors.length > 0) {
+
+                } else {
+                    data.submit();
+                }
+            },
+            url: "/Requisition/Uploader",
+            dataType: 'json',
+            maxNumberOfFiles: 1,
+            accept: 'application/json',
+            start: function (e, data) {
+                //  $('.loading-spinner').fadeIn();
+            },
+            done: function (e, data) {
+
+
+                if (data.result != "") {
+
+                    $('#JobProfileFilePath').val(data.result);
+
+                }
+            }
+        }).on('fileuploadprocessalways', function (e, data) {
+            var currentFile = data.files[data.index];
+            if (data.files.error && currentFile.error) {
+                // there was an error, do something about it
+                console.log(currentFile.error);
+            }
+        }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+
+    function OnSuccessRequisition(response) {
+        if (response.Response) {
+            DTToggler(); $("#divOperations").empty();
+            oTable.fnDraw(false);
+        }
+        ALGritter('', response.Message, false, false, response.MessageClass);
+    }
+</script>

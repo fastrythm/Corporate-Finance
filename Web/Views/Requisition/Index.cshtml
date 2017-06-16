@@ -1,0 +1,177 @@
+﻿<div class="col-sm-9">
+    <div id="div-table">
+
+        <div class="row">
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row mr15">
+            <div class="col-sm-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="datepicker_from" class="datepicker form-control" placeholder="Filter By From Date" type="datetime">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input id="datepicker_to" class="datepicker form-control" placeholder="Filter By To Date" type="datetime">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 nopadding text-left">
+                            <button class="btn btn-theme btn-blue" id="btnSearch" type="button">Go</button>
+                        </div>
+                        <div class="col-sm-4 nopadding text-right">
+                            <button id="add_record" onclick="javascript:AddEditRecord(0);" title="Add New Record" class="pull-right btn btn-lg btn-theme bg_red"> Add New</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div id="dialog_confirm" title="Delete the Selected Record?">
+                    <p>
+                        <span class="icon icon-warning-sign"></span>
+                        Selected Record will be permanently deleted and cannot be recovered. Are you sure?
+                    </p>
+                </div>
+                <!-- BEGIN FORM-->
+
+                <table id="tblRequisition" class="my_data_table data-table table table-striped table-bordered table-responsive table-hover">
+                    <thead>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row-fluid">
+        <div id="divOperations"></div>
+    </div>
+    <!-- END FORM-->
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        ajaxEnable = false;
+        $(document).ready(function () {
+
+
+            InitializeDialogConfirmation();
+            InitializeRequisitionList('', '');
+
+            $('.datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1900:+10',
+                setDate: new Date()
+            })
+
+            $(".datepicker").datepicker().datepicker("setDate", new Date());
+
+            $("#btnSearch").click(function () {
+
+                oTable.fnDestroy();
+                $('#tblRequisition thead tr, #tblRequisition tbody tr').remove();
+                InitializeRequisitionList($("#datepicker_from").val(), $("#datepicker_to").val());
+
+            });
+
+
+        });
+
+        function InitializeRequisitionList(fromDate, toDate) {
+
+
+            GenerateDTVersion1('#tblRequisition', [
+                     {
+                         "data": "RequisitionID",
+                         "sTitle": 'Doc #',
+                         "render": function (data, type, full, meta) {
+                             return "UR-" + addLeadingZeros(data, 6);
+                         }
+                     },
+                        {
+                            "data": "RequisitionDate",
+                            "sTitle": 'Date',
+                            "render": function (data, type, full, meta) {
+                                return DateFormat(data);
+                            }
+                        },
+                      { "data": "JobTitle", "sTitle": "Job Title" },
+                      { "data": "GradeLevel", "sTitle": "Grade" },
+                      { "data": "NoOfPosition", "sTitle": "No. of Position","sClass": "numericCol" },
+                      { "data": "Status", "sTitle": "Status" },
+
+                        {
+                            "data": "RequisitionID",
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "100px",
+                            "sTitle": 'Action',
+                            "render": function (data, type, full, meta) {
+                                return '<a onClick=\'javascript:AddEditRecord("' + data + '");\' data-toggle="tooltip" title="Edit"><button type="button" class="btn btn-action btn-info"><i class="glyphicon glyphicon-edit"></i></button></a>&nbsp;' + '<a onClick="javascript:DeleteRecord(' + data + ');" data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
+                            }
+                        }
+            ], '/Requisition/RequisitionList?fromDate=' + fromDate + '&toDate=' + toDate, {
+                "order": [[0, "asc"]], "buttons": [{
+                    extend: 'excelHtml5',
+                    title: 'Requisitions',
+                    text: '<span class="fa fa-file-excel-o"></span> Excel Export',
+                    footer: true,
+
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    }
+                }]
+            });
+        }
+
+
+        function AddEditRecord(id) {
+            DTToggler();
+            $('#divOperations').load('@(Url.Action("AddEdit", "Requisition", null, Request.Url.Scheme))?id=' + id, function () {
+                var $form = $(this).find('form');
+                $.validator.unobtrusive.parse($form);
+            });
+        }
+
+
+        function DeleteRecord(id) {
+
+            $('#hdnUniqueSetUpRecord').val(id);
+            $("#dialog_confirm").dialog("open");
+            $('.ui-dialog button').blur();// avoid button autofocus
+
+        }
+
+        function DeleteConfirmation(obj) {
+            if (obj != null) {
+                obj.dialog("close");
+                $('#loader-wrapper').show();
+                $.post("@Url.Action("Delete", "Requisition")", { id: $('#hdnUniqueSetUpRecord').val() }, function (data, status) {
+                    if (data != null) {
+                        if (data.Response) {
+                            oTable.fnDraw(false);
+                        }
+                        ALGritter('', data.Message, false, false, data.MessageClass);
+
+                    }
+                    $('#hdnUniqueSetUpRecord').val('');
+                });
+
+            }
+        }
+
+    </script>
+}
