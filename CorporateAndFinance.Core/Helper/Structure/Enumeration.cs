@@ -20,6 +20,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Admin = "Admin";
         public static string FinanceUser = "FinanceUser";
         public static string FinanceManager = "FinanceManager";
+        public static string Employee = "Employee";
     }
 
     public class ExcelFileProcess
@@ -62,6 +63,51 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Consultant = "Consultant";
         public static string Other = "Other";
         public static string AutoDebit = "Auto-Debit"; 
+    }
+
+    public struct UserExpenseMandatoryColumn
+    {
+        public static string Department = "Department";
+        public static string Department_Type = "Department Type";
+        public static string Employee_Number = "Employee Number";
+        public static string Employee_Name = "Employee Name";
+    }
+    public struct UserExpenseType
+    {
+        public static string Monthly_Salary = "Monthly Salary";
+        public static string Monthly_Salary2 = "Monthly Salary - 2";
+        public static string EOBI_Employer = "EOBI - Employer";
+        public static string PF_Employer = "PF - Employer";
+        public static string Mobile_Allowance = "Mobile Allowance";
+        public static string Bonus = "Bonus";
+        public static string Meal_Reimbursement = "Meal Reimbursement";
+        public static string Transportation = "Transportation";
+        public static string Leave_Encashment = "Leave Encashment";
+        public static string Incentive_PSM = "Incentive / PSM";
+        public static string Health_Insurance = "Health Insurance";
+        public static string Medical_OPD = "Medical OPD";
+        public static string Billable_Salary_PKR = "Billable Salary (Rs.)";
+        public static string Billable_Salary_USD = "Billable Salary ($)";
+ 
+    }
+
+    public struct RequisitionStatus
+    {
+        public static string Level1_Pending = "Level1 Pending";
+        public static string Level1_Approved = "Level1 Approved";
+        public static string Level1_Rejected = "Level1 Rejected";
+
+        public static string Level2_Pending = "Level2 Pending";
+        public static string Level2_Approved = "Level2 Approved";
+        public static string Level2_Rejected = "Level2 Rejected";
+    }
+
+    public struct RequestStatus
+    {
+        public static string Pending = "Pending";
+        public static string Approved = "Approved";
+        public static string Rejected = "Rejected";
+
     }
 
     public enum BankTransactionStatus
@@ -111,7 +157,16 @@ namespace CorporateAndFinance.Core.Helper.Structure
         UserTask_View = 29,
         UserTask_Delete = 30,
         UserTask_Add = 31,
-        UserTask_Edit = 32
+        UserTask_Edit = 32,
+
+        ALP_Costing_View = 33,
+        ALP_Costing_Add = 34,
+        ALP_Costing_Delete = 35,
+
+        Requisition_View = 36,
+        Requisition_Delete = 37,
+        Requisition_Add = 38,
+        Requisition_Edit = 39,
     }
 
     public class ChartOfAccount

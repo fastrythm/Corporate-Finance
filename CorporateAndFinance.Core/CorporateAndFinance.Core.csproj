@@ -68,7 +68,6 @@
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\BankBranch.cs" />
-    <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Code.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\CompanyBank.cs" />
@@ -80,6 +79,10 @@
     <Compile Include="Model\ConsultantPlacement.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Expense.cs" />
+    <Compile Include="Model\Requisition.cs" />
+    <Compile Include="Model\RequisitionApproval.cs" />
+    <Compile Include="ViewModel\RequisitionVM.cs" />
+    <Compile Include="Model\UserAllocation.cs" />
     <Compile Include="Model\UserDepartment.cs" />
     <Compile Include="Model\UserExpense.cs" />
     <Compile Include="Model\UserTask.cs" />
@@ -93,7 +96,6 @@
     <Compile Include="ViewModel\CompanyBankVM.cs" />
     <Compile Include="ViewModel\CompanyComplianceVM.cs" />
     <Compile Include="ViewModel\DataTableModel.cs" />
-    <Compile Include="Model\Gadget.cs" />
     <Compile Include="Model\IdentityModels.cs" />
     <Compile Include="Model\PettyCash.cs" />
     <Compile Include="Model\UserCard.cs" />
@@ -105,6 +107,8 @@
     <Compile Include="ViewModel\PettyCashOpenCloseBalance.cs" />
     <Compile Include="ViewModel\ReportVM.cs" />
     <Compile Include="ViewModel\SelectListItem.cs" />
+    <Compile Include="ViewModel\UserDepartmentVM.cs" />
+    <Compile Include="ViewModel\UserExpenseVM.cs" />
     <Compile Include="ViewModel\UserCardExpenseVM.cs" />
     <Compile Include="ViewModel\UserTaskAndDetailVM.cs" />
     <Compile Include="ViewModel\UserTaskDetailVM.cs" />

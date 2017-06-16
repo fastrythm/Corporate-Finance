@@ -165,6 +165,12 @@
   <data name="MSG_GENERIC_UPDATE_SUCCESS" xml:space="preserve">
     <value>Update {0} successfully.</value>
   </data>
+  <data name="MSG_GENERIC_UPLOAD_DEPARTMENT_NOT_FOUND" xml:space="preserve">
+    <value> Department with the name {0} is not found. </value>
+  </data>
+  <data name="MSG_GENERIC_UPLOAD_EMP_NUMBER_NOT_FOUND" xml:space="preserve">
+    <value>User with the employee number {0} and name {1} is not found.</value>
+  </data>
   <data name="MSG_GENERIC_UPLOAD_ERROR" xml:space="preserve">
     <value>Sorry, System couldn't upload new {0} file. Please try again or contact your site Administrator.</value>
   </data>
@@ -210,6 +216,9 @@
   <data name="MSG_UPLOAD_ACCOUNT_NUMBER_NOTASSIGN" xml:space="preserve">
     <value>account number {0} not assigned to any user at row number {1} . &lt;br /&gt;</value>
   </data>
+  <data name="MSG_UPLOAD_DEPARTMENT_NOT_FOUND" xml:space="preserve">
+    <value>Department {0} not found  at row number {1} . &lt;br /&gt;</value>
+  </data>
   <data name="MSG_UPLOAD_INVALID_DATE_FORMAT" xml:space="preserve">
     <value>Invalid date format exist on column {0} at row number {1}.  &lt;br /&gt;</value>
   </data>
@@ -218,5 +227,8 @@
   </data>
   <data name="MSG_UPLOAD_INVALID_NUMBER_FORMAT" xml:space="preserve">
     <value>Invalid number format exist on column {0} at row number {1} . &lt;br /&gt;</value>
+  </data>
+  <data name="MSG_UPLOAD_USER_NOT_FOUND" xml:space="preserve">
+    <value>User Employee number {0}  and Name {1} not found  at row number {2} . &lt;br /&gt;</value>
   </data>
 </root>

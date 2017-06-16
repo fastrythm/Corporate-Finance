@@ -32,6 +32,10 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return companyRepository.Get(x => x.CompanyNumber == number);
         }
+        public Company GetCompanyByName(string name)
+        {
+            return companyRepository.Get(x => x.Name.ToLower() == name.ToLower());
+        }
 
         public void SaveCompany()
         {

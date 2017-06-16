@@ -101,6 +101,13 @@
                         @if (PermissionControl.CheckPermission(UserAppPermissions.UserTask_View))
                         {
                             <li><a href="@Url.Action("Index", "Task")">Issue Log</a></li>}
+
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.ALP_Costing_View))
+                        {
+                            <li><a href="@Url.Action("Index", "UserExpense")">ALP Costing</a></li>}
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.Requisition_View))
+                        {
+                            <li><a href="@Url.Action("Index", "Requisition")">Requisition</a></li>}
                     </ul>
                 </li>
 

@@ -60,6 +60,15 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(BankTransactionManagement).Assembly)
        .Where(t => t.Name.EndsWith("Management"))
        .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(DepartmentManagement).Assembly)
+      .Where(t => t.Name.EndsWith("Management"))
+      .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserDepartmentManagement).Assembly)
+     .Where(t => t.Name.EndsWith("Management"))
+     .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserExpenseManagement).Assembly)
+  .Where(t => t.Name.EndsWith("Management"))
+  .AsImplementedInterfaces().InstancePerRequest();
 
             builder.RegisterAssemblyTypes(typeof(UserTaskManagement).Assembly)
      .Where(t => t.Name.EndsWith("Management"))
@@ -102,6 +111,16 @@ namespace CorporateAndFinance.Web.App_Start
             builder.RegisterAssemblyTypes(typeof(UserTaskDetailRepository).Assembly)
 .Where(t => t.Name.EndsWith("Repository"))
 .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserDepartmentRepository).Assembly)
+.Where(t => t.Name.EndsWith("Repository"))
+.AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(DepartmentRepository).Assembly)
+.Where(t => t.Name.EndsWith("Repository"))
+.AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(UserExpenseRepository).Assembly)
+.Where(t => t.Name.EndsWith("Repository"))
+.AsImplementedInterfaces().InstancePerRequest();
+
 
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

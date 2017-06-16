@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -26,10 +27,15 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private readonly IUserPermissionManagement userPermissionManagement;
+        private readonly IDepartmentManagement departmentManagement;
+        private readonly IUserDepartmentManagement userdepartmentManagement;
 
-        public UserController(IUserPermissionManagement userPermissionManagement)
+        public UserController(IUserPermissionManagement userPermissionManagement, IDepartmentManagement departmentManagement, IUserDepartmentManagement userdepartmentManagement)
         {
             this.userPermissionManagement = userPermissionManagement;
+            this.departmentManagement = departmentManagement;
+            this.userdepartmentManagement = userdepartmentManagement;
+           
         }
 
 
@@ -93,23 +99,27 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         [HttpPost]
         [Route("UserList")]
-      //  [HasPermission(UserAppPermissions.User_View)]
+        //  [HasPermission(UserAppPermissions.User_View)]
         public ActionResult UserList()
         {
-            try {
-
-            if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
+            try
             {
-                return RedirectToAction("Restricted", "Home");
-            }
-            logger.DebugFormat("Getting User List ");
-            var jsonObj  =  UserManager.Users.Where(x=>x.IsDeleted == false).ToList();
-            logger.DebugFormat("Successfully Retrieve User List Records [{0}]",jsonObj.Count());
 
-            return Json(new
-            {
-                aaData = jsonObj
-            });
+                if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
+                {
+                    return RedirectToAction("Restricted", "Home");
+                }
+                logger.DebugFormat("Getting User List ");
+                var AdminUser = RoleManager.Roles.Where(x => x.Name.Equals(UserRoles.Admin)).SingleOrDefault();
+                var jsonObj = UserManager.Users.Where(x => !x.IsDeleted && !(x.Roles.Select(y => y.RoleId).Contains(AdminUser.Id))).ToList();
+
+
+                logger.DebugFormat("Successfully Retrieve User List Records [{0}]", jsonObj.Count());
+
+                return Json(new
+                {
+                    aaData = jsonObj
+                });
             }
             catch (Exception ex)
             {
@@ -158,11 +168,19 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             ViewBag.Title = "Add/Update Users";
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
+            var departments = departmentManagement.GetAllDepartments();
+            var roles = RoleManager.Roles.Where(x => !x.Name.Equals("Admin")).ToList().Select(x => new Core.ViewModel.SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id
+            });
+
             var user = new UserVM();
             if (id != "0")
             {
-                var   appUser = UserManager.FindById(id);
+                var appUser = UserManager.FindById(id);
                 var userRoles = UserManager.GetRoles(id);
+                IEnumerable<UserDepartment> userDepartments = userdepartmentManagement.GetAllUserDepartmentById(appUser.Id);
 
                 user.Id = appUser.Id;
                 user.FirstName = appUser.FirstName;
@@ -172,29 +190,41 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 user.Mobile = appUser.Mobile;
                 user.Designation = appUser.Designation;
                 user.UserPermissions = GetUserPermission(id);
-                user.RolesList = RoleManager.Roles.ToList().Select(x => new Core.ViewModel.SelectListItem()
+                if (userDepartments != null)
                 {
-                    Selected = userRoles.Contains(x.Name),
-                    Text = x.Name,
-                    Value = x.Name
-                });
+                    foreach (var userDept in userDepartments)
+                    {
+                        userDept.Departments = departments;
+                        userDept.RolesList = roles;
+                    }
+                    user.UserDepartments = userDepartments;
+                }
+
             }
-            else
-            {
-                user.RolesList = user.RolesList = RoleManager.Roles.ToList().Select(x => new Core.ViewModel.SelectListItem()
-                {
-                    Text = x.Name,
-                    Value = x.Name
-                });
-            }
+
 
             return PartialView("_AddEditUser", user);
         }
 
+        [Route("AddDepartment")]
+        public ActionResult AddDepartment()
+        {
+            UserDepartment userDepartment = new UserDepartment();
+            userDepartment.Departments = departmentManagement.GetAllDepartments();
+            userDepartment.RolesList = RoleManager.Roles.Where(x => !x.Name.Equals("Admin")).ToList().Select(x => new Core.ViewModel.SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id
+            });
+
+            return PartialView("_UserDepartment", userDepartment);
+        }
+
+
         private List<UserAppPermissions> GetUserPermission(string id)
         {
             List<UserAppPermissions> appPerm = new List<UserAppPermissions>();
-            var permissions =  userPermissionManagement.GetAllPermissionByUserId(id);
+            var permissions = userPermissionManagement.GetAllPermissionByUserId(id);
             foreach (var userPerm in permissions)
             {
                 UserAppPermissions perm = (UserAppPermissions)userPerm.PermissionID;
@@ -211,15 +241,15 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
-                if(model.Id != null && model.Id != "0")
+                if (model.Id != null && model.Id != "0")
                     ModelState.Remove("Password");
                 if (ModelState.IsValid)
                 {
                     ApplicationUser user = null;
                     if (model.Id != null && model.Id != "0")
                     {
-                        logger.DebugFormat("Update  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}], Department [{3}],  Designation [{4}] UserID [{5}] ",
-               model.FirstName, model.LastName, model.SelectedRoles, model.Department, model.Designation, model.Id);
+                        logger.DebugFormat("Update  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}],  Designation [{3}] UserID [{4}] ",
+               model.FirstName, model.LastName, model.SelectedRoles, model.Designation, model.Id);
 
                         if (!PermissionControl.CheckPermission(UserAppPermissions.User_Edit))
                         {
@@ -228,7 +258,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         }
 
                         user = UserManager.FindById(model.Id);
-                        if(user == null)
+                        if (user == null)
                         {
                             logger.DebugFormat("User not found With UserID [{0}] ", model.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_FAILED, "User"), MessageClass = MessageClass.Error, Response = false });
@@ -238,23 +268,24 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.LastName = model.LastName;
                         user.Email = model.Email;
                         user.UserName = model.Email;
-                        if(!string.IsNullOrWhiteSpace(model.Password))
-                        user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
+                        if (!string.IsNullOrWhiteSpace(model.Password))
+                            user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
                         user.Designation = model.Designation;
+                        //   user.DepartmentID = model.DepartmentID;
                         var isUpdate = UserManager.Update(user);
                         var userRoles = UserManager.GetRoles(model.Id);
-                        
+
                         if (isUpdate.Succeeded)
                         {
-                           
-                            UserManager.RemoveFromRoles(user.Id, userRoles.ToArray<string>());
-                            if (model.SelectedRoles != null)
-                            {
-                                var result = UserManager.AddToRoles(model.Id, model.SelectedRoles.ToArray<string>());
-                            }
 
+                            //UserManager.RemoveFromRoles(user.Id, userRoles.ToArray<string>());
+                            //if (model.SelectedRoles != null)
+                            //{
+                            //    var result = UserManager.AddToRoles(model.Id, model.SelectedRoles.ToArray<string>());
+                            //}
+                            AddUpdateUserDepartments(model, user.Id);
                             UpdateUserPermission(model.UserPermissions, user.Id);
                             logger.Info("Successfully Updated User Record");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
@@ -264,8 +295,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     }
                     else
                     {
-                        logger.DebugFormat("Add New  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}], Department [{3}],  Designation [{4}] ",
-            model.FirstName, model.LastName, model.SelectedRoles, model.Department, model.Designation);
+
+                        logger.DebugFormat("Add New  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}],  Designation [{3}] ",
+            model.FirstName, model.LastName, model.SelectedRoles, model.Designation);
                         if (!PermissionControl.CheckPermission(UserAppPermissions.User_Add))
                         {
                             logger.Info("Don't have rights to add  User ");
@@ -273,7 +305,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         }
 
                         user = new ApplicationUser();
-                      // model.Id = Guid.NewGuid().ToString();
+                        // model.Id = Guid.NewGuid().ToString();
                         user.FirstName = model.FirstName;
                         user.LastName = model.LastName;
                         user.Email = model.Email;
@@ -281,25 +313,26 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
                         user.Designation = model.Designation;
+                        //   user.DepartmentID = model.DepartmentID;
 
-                       var isSaved = UserManager.Create(user, model.Password);
+                        var isSaved = UserManager.Create(user, model.Password);
 
                         if (isSaved.Succeeded)
                         {
-                            if (model.SelectedRoles != null && model.SelectedRoles.Count() > 0)
-                            {
-                                var result = UserManager.AddToRoles(user.Id, model.SelectedRoles.ToArray<string>());
-                            }
-
+                            //if (model.SelectedRoles != null && model.SelectedRoles.Count() > 0)
+                            //{
+                            //    var result = UserManager.AddToRoles(user.Id, model.SelectedRoles.ToArray<string>());
+                            //}
+                            AddUpdateUserDepartments(model, user.Id);
                             UpdateUserPermission(model.UserPermissions, user.Id);
 
-                            logger.DebugFormat("Successfully Create New User Record with UserID [{0}]",user.Id);
+                            logger.DebugFormat("Successfully Create New User Record with UserID [{0}]", user.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
                         logger.DebugFormat("User Not Create Due to Error [{0}]", isSaved.Errors);
                         return Json(new { Message = isSaved.Errors, MessageClass = MessageClass.Error, Response = false });
                     }
-                 
+
                 }
                 else
                 {
@@ -315,26 +348,97 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         }
 
 
-        private void UpdateUserPermission(List<UserAppPermissions> userAppPermissions,string userId)
+        private void UpdateUserPermission(List<UserAppPermissions> userAppPermissions, string userId)
         {
             try
             {
 
-            userPermissionManagement.DeleteAllByUserId(userId);
-            if (userAppPermissions != null)
-            {
-                foreach (UserAppPermissions appPermission in userAppPermissions)
+                userPermissionManagement.DeleteAllByUserId(userId);
+                if (userAppPermissions != null)
                 {
-                    UserPermission userPerm = new UserPermission() { UserID = userId, PermissionID = ((int)appPermission) };
-                    userPermissionManagement.Add(userPerm);
+                    foreach (UserAppPermissions appPermission in userAppPermissions)
+                    {
+                        UserPermission userPerm = new UserPermission() { UserID = userId, PermissionID = ((int)appPermission) };
+                        userPermissionManagement.Add(userPerm);
+                    }
+                    userPermissionManagement.SaveUserPermissions();
                 }
-                userPermissionManagement.SaveUserPermissions();
-            }
 
             }
             catch (Exception ex)
             {
                 logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+            }
+        }
+
+        public bool AddUpdateUserDepartments(UserVM model, string userId)
+        {
+            try
+            {
+
+                IEnumerable<UserDepartment> userDepartments = userdepartmentManagement.GetAllUserDepartmentById(userId);
+                // Update or inactive those department that are not selected in selected department list.
+                foreach (UserDepartment dept in userDepartments)
+                {
+                    if (!model.SelectedDepartment.Contains(dept.DepartmentID))
+                    {
+                        dept.ModifiedBy = new Guid(User.Identity.GetUserId());
+                        dept.LastModified = DateTime.Now;
+                        dept.IsActive = false;
+                        dept.IsPrimary = false;
+                        dept.EndDate = DateTime.Now;
+                        userdepartmentManagement.Update(dept);
+                    }
+                }
+
+                // Update those department that are exist in selected in selected department list.
+                int counter = 0;
+
+                foreach (long deptId in model.SelectedDepartment)
+                {
+                    var dept = userDepartments.Where(x => x.DepartmentID == deptId).SingleOrDefault();
+                    if (dept != null)
+                    {
+
+                        dept.ModifiedBy = new Guid(User.Identity.GetUserId());
+                        dept.LastModified = DateTime.Now;
+                        dept.IsPrimary = counter == 0;
+                        string userRole = model.SelectedRoles[counter];
+                        dept.RoleID = userRole;
+                        userdepartmentManagement.Update(dept);
+                    }
+                    counter++;
+                }
+
+                // Add those department that are exist in selected in selected department list.
+                counter = 0;
+                foreach (long deptId in model.SelectedDepartment)
+                {
+                    var dept = userDepartments.Where(x => x.DepartmentID == deptId).SingleOrDefault();
+                    if (dept == null)
+                    {
+                        dept = new UserDepartment();
+                        dept.CreatedBy = new Guid(User.Identity.GetUserId());
+                        dept.UserID = userId;
+                        dept.IsPrimary = counter == 0;
+                        dept.DepartmentID = deptId;
+                        dept.StartDate = DateTime.Now;
+                        dept.EndDate = null;
+
+                        string userRole = model.SelectedRoles[counter];
+                        dept.RoleID = userRole;
+                        userdepartmentManagement.Add(dept);
+                    }
+                    counter++;
+                }
+
+                userdepartmentManagement.SaveUserDepartment();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return false;
             }
         }
     }

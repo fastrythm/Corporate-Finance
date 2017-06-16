@@ -13,6 +13,7 @@ namespace CorporateAndFinance.Data.Infrastructure
         bool Add(T entity);
         // Marks an entity as modified
         bool Update(T entity);
+        bool DeAttach(T entity);
         // Marks an entity to be removed
         bool Delete(T entity);
         bool Delete(Expression<Func<T, bool>> where);

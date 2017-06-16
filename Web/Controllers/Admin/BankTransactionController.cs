@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Web;
 
 namespace CorporateAndFinance.Web.Controllers.Admin
@@ -120,6 +121,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         logger.DebugFormat("Add  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}], ReferenceId [{9}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
                             model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus, referenceId);
 
+                       
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Add))
                         {
                             logger.Info("Don't have rights to add  Bank Transaction");
@@ -169,7 +171,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     {
                         logger.DebugFormat("Update  Bank Transaction with TransactionDate [{0}],  CompanyBankID [{1}],  CategoryType [{2}], CategoryReferenceID [{3}],  Amount [{4}] , CompanyBankID [{5}] , PaymentType[{6}] , TransactionType [{7}] , TransactionStatus [{8}], CompanyBankTransactionID[{9}] , ReferenceId [{10}]", model.TransactionDate, model.CompanyBankID, model.CategoryType,
                           model.CategoryReferenceID, model.Amount, model.CompanyBankID, model.PaymentType, model.TransactionType, model.TransactionStatus, model.CompanyBankTransactionID, model.ReferenceID);
-
+                       
                         if (!PermissionControl.CheckPermission(UserAppPermissions.BankTransaction_Edit))
                         {
                             logger.Info("Don't have rights to update  Bank Transaction");

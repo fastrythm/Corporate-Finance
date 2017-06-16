@@ -14,12 +14,10 @@ namespace CorporateAndFinance.Data
 {
     public class CorporateFinanceEntities : DbContext
     {
-        public CorporateFinanceEntities() : base("CorporateFinanceConnection") {
-             Configuration.LazyLoadingEnabled = false;
+        public CorporateFinanceEntities() : base("CorporateFinanceConnection")
+        {
+            Configuration.LazyLoadingEnabled = false;
         }
-
-        public DbSet<Gadget> Gadgets { get; set; }
-        public DbSet<Category> Categories { get; set; }
 
 
         public virtual DbSet<Address> Addresses { get; set; }
@@ -35,7 +33,7 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<ConsultantDocument> ConsultantDocuments { get; set; }
         public virtual DbSet<ConsultantPlacement> ConsultantPlacements { get; set; }
         public virtual DbSet<PettyCash> PettyCashes { get; set; }
-   
+
         public virtual DbSet<UserCard> UserCards { get; set; }
         public virtual DbSet<UserCardExpense> UserCardExpenses { get; set; }
         public virtual DbSet<UserCompany> UserCompanies { get; set; }
@@ -45,11 +43,14 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<UserTaskDetail> UserTaskDetails { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Expense> Expenses { get; set; }
-        public virtual DbSet<UserDepartment> UserDepartments { get; set; }
         public virtual DbSet<UserExpense> UserExpenses { get; set; }
         [NotMapped]
         public virtual DbSet<ApplicationUser> Users { get; set; }
+        public virtual DbSet<UserDepartment> UserDepartments { get; set; }
 
+        public virtual DbSet<Requisition> Requisitions { get; set; }
+        public virtual DbSet<UserAllocation> UserAllocations { get; set; }
+        public virtual DbSet<RequisitionApproval> RequisitionApprovals { get; set; }
 
         public virtual void Commit()
         {
@@ -60,8 +61,8 @@ namespace CorporateAndFinance.Data
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-         //   modelBuilder.Configurations.Add(new GadgetConfiguration());
-         //   modelBuilder.Configurations.Add(new CategoryConfiguration());
+            //   modelBuilder.Configurations.Add(new GadgetConfiguration());
+            //   modelBuilder.Configurations.Add(new CategoryConfiguration());
 
 
             modelBuilder.Entity<Address>()
@@ -100,7 +101,7 @@ namespace CorporateAndFinance.Data
               .WithRequired(e => e.UserTask)
               .WillCascadeOnDelete(false);
 
-            
+
 
             //modelBuilder.Entity<Company>()
             //    .HasMany(e => e.ConsultantPlacements)
@@ -182,61 +183,85 @@ namespace CorporateAndFinance.Data
 
 
             modelBuilder.Entity<UserExpense>()
-                .Property(e => e.Amount)
+                .Property(e => e.Monthly_Salary)
                 .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<Role>()
-            //    .HasMany(e => e.UserInRoles)
-            //    .WithRequired(e => e.Role)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserExpense>()
+               .Property(e => e.Monthly_Salary2)
+               .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+              .Property(e => e.EOBI_Employer)
+              .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+           .Property(e => e.PF_Employer)
+           .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+         .Property(e => e.Mobile_Allowance)
+         .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+       .Property(e => e.Bonus)
+       .HasPrecision(18, 6);
+            modelBuilder.Entity<UserExpense>()
+            .Property(e => e.Meal_Reimbursement)
+            .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .Property(e => e.EmployeeNumber)
-            //    .IsUnicode(false);
+            modelBuilder.Entity<UserExpense>()
+            .Property(e => e.Transportation)
+            .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .Property(e => e.Email)
-            //    .IsUnicode(false);
+            modelBuilder.Entity<UserExpense>()
+          .Property(e => e.Leave_Encashment)
+          .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .Property(e => e.Mobile)
-            //    .IsUnicode(false);
+            modelBuilder.Entity<UserExpense>()
+         .Property(e => e.Incentive_PSM)
+         .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .HasMany(e => e.UserCards)
-            //    .WithRequired(e => e.User)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserExpense>()
+          .Property(e => e.Health_Insurance)
+          .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .HasMany(e => e.UserCompanies)
-            //    .WithRequired(e => e.User)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserExpense>()
+     .Property(e => e.Medical_OPD)
+     .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .HasMany(e => e.UserInRoles)
-            //    .WithRequired(e => e.User)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserExpense>()
+    .Property(e => e.Billable_Salary_PKR)
+    .HasPrecision(18, 6);
 
-            //modelBuilder.Entity<User>()
-            //    .HasMany(e => e.VendorConsultants)
-            //    .WithRequired(e => e.User)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserExpense>()
+ .Property(e => e.Billable_Salary_USD)
+ .HasPrecision(18, 6);
+
+
 
             modelBuilder.Entity<UserCard>()
-                .HasMany(e => e.UserCardExpenses)
-                .WithRequired(e => e.UserCard)
-                .WillCascadeOnDelete(false);
+                    .HasMany(e => e.UserCardExpenses)
+                    .WithRequired(e => e.UserCard)
+                    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserCardExpense>()
                 .Property(e => e.Amount)
                 .HasPrecision(18, 6);
 
-            modelBuilder.Entity<VendorConsultant>()
+            modelBuilder.Entity<Requisition>()
+             .Property(e => e.ProjectedRevenue)
+             .HasPrecision(18, 6);
+
+            modelBuilder.Entity<Requisition>()
+           .Property(e => e.AllocatedBudget)
+           .HasPrecision(18, 6);
+
+            modelBuilder.Entity<UserAllocation>()
+           .Property(e => e.Percentage)
+           .HasPrecision(18, 6);
+
+                modelBuilder.Entity<VendorConsultant>()
                 .HasMany(e => e.ConsultantPlacements)
                 .WithRequired(e => e.VendorConsultant)
                 .WillCascadeOnDelete(false);
 
-         
+
 
             modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers").Property(p => p.Id).HasColumnName("Id");
             modelBuilder.Entity<IdentityUserRole>().ToTable("AspNetUserRoles");

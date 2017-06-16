@@ -61,8 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\CategoryConfiguration.cs" />
-    <Compile Include="Configuration\GadgetConfiguration.cs" />
     <Compile Include="CorporateFinanceEntities.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
@@ -151,14 +149,48 @@
     <Compile Include="Migrations\201705111340293_CompanyBankTransaction-CreatedBy-LastModifiedBy.Designer.cs">
       <DependentUpon>201705111340293_CompanyBankTransaction-CreatedBy-LastModifiedBy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706021040544_ALP_Partial_Entities.cs" />
-    <Compile Include="Migrations\201706021040544_ALP_Partial_Entities.Designer.cs">
-      <DependentUpon>201706021040544_ALP_Partial_Entities.cs</DependentUpon>
+    <Compile Include="Migrations\201706050601101_ALP_Costing_Department_UserExpense.cs" />
+    <Compile Include="Migrations\201706050601101_ALP_Costing_Department_UserExpense.Designer.cs">
+      <DependentUpon>201706050601101_ALP_Costing_Department_UserExpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706050741222_Department-Type.cs" />
+    <Compile Include="Migrations\201706050741222_Department-Type.Designer.cs">
+      <DependentUpon>201706050741222_Department-Type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706050756070_Expense-SortOrder-Field.cs" />
+    <Compile Include="Migrations\201706050756070_Expense-SortOrder-Field.Designer.cs">
+      <DependentUpon>201706050756070_Expense-SortOrder-Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706050956549_Update-UserExpense-Fields.cs" />
+    <Compile Include="Migrations\201706050956549_Update-UserExpense-Fields.Designer.cs">
+      <DependentUpon>201706050956549_Update-UserExpense-Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706080923474_UserDepartment_Table.cs" />
+    <Compile Include="Migrations\201706080923474_UserDepartment_Table.Designer.cs">
+      <DependentUpon>201706080923474_UserDepartment_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706140846018_Requisition_UserAllocation_Tables.cs" />
+    <Compile Include="Migrations\201706140846018_Requisition_UserAllocation_Tables.Designer.cs">
+      <DependentUpon>201706140846018_Requisition_UserAllocation_Tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160715510_Requisition-Mandatory-Fields.cs" />
+    <Compile Include="Migrations\201706160715510_Requisition-Mandatory-Fields.Designer.cs">
+      <DependentUpon>201706160715510_Requisition-Mandatory-Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160809533_Requistion-PersonReplacement-Field.cs" />
+    <Compile Include="Migrations\201706160809533_Requistion-PersonReplacement-Field.Designer.cs">
+      <DependentUpon>201706160809533_Requistion-PersonReplacement-Field.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositoreis\BankTransactionRepository.cs" />
+    <Compile Include="Repositoreis\RequisitionApprovalRepository.cs" />
+    <Compile Include="Repositoreis\UserAllocationRepository.cs" />
+    <Compile Include="Repositoreis\RequisitionRepository.cs" />
+    <Compile Include="Repositoreis\UserDepartmentRepository.cs" />
+    <Compile Include="Repositoreis\DepartmentRepository.cs" />
     <Compile Include="Repositoreis\ConsultantRepository.cs" />
+    <Compile Include="Repositoreis\UserExpenseRepository.cs" />
     <Compile Include="Repositoreis\UserTaskDetailRepository.cs" />
     <Compile Include="Repositoreis\UserTaskRepository.cs" />
     <Compile Include="Repositoreis\UserPermissionRepository.cs" />
@@ -236,14 +268,35 @@
     <EmbeddedResource Include="Migrations\201705111340293_CompanyBankTransaction-CreatedBy-LastModifiedBy.resx">
       <DependentUpon>201705111340293_CompanyBankTransaction-CreatedBy-LastModifiedBy.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706021040544_ALP_Partial_Entities.resx">
-      <DependentUpon>201706021040544_ALP_Partial_Entities.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706050601101_ALP_Costing_Department_UserExpense.resx">
+      <DependentUpon>201706050601101_ALP_Costing_Department_UserExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706050741222_Department-Type.resx">
+      <DependentUpon>201706050741222_Department-Type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706050756070_Expense-SortOrder-Field.resx">
+      <DependentUpon>201706050756070_Expense-SortOrder-Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706050956549_Update-UserExpense-Fields.resx">
+      <DependentUpon>201706050956549_Update-UserExpense-Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706080923474_UserDepartment_Table.resx">
+      <DependentUpon>201706080923474_UserDepartment_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706140846018_Requisition_UserAllocation_Tables.resx">
+      <DependentUpon>201706140846018_Requisition_UserAllocation_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160715510_Requisition-Mandatory-Fields.resx">
+      <DependentUpon>201706160715510_Requisition-Mandatory-Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160809533_Requistion-PersonReplacement-Field.resx">
+      <DependentUpon>201706160809533_Requistion-PersonReplacement-Field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Migrations\add-bankbranch.sql" />
     <Content Include="Migrations\AddUserFields.sql" />
-    <Content Include="Migrations\ALP_Partial_Entities.sql" />
+    <Content Include="Migrations\ALP_Costing_Department_UserExpense.sql" />
     <Content Include="Migrations\BankTransaction-Mandator-Fields.sql" />
     <Content Include="Migrations\ChartOfAccountTitle.sql" />
     <Content Include="Migrations\ComapnyBankTransaction-ToCompanyBankID-Field.sql" />
@@ -256,15 +309,20 @@
     <Content Include="Migrations\CompanyNumber-ConsultantNumber-UserCardExpense.sql" />
     <Content Include="Migrations\companytype-field.sql" />
     <Content Include="Migrations\consultant-change-requiredfields.sql" />
+    <Content Include="Migrations\Department-Type.sql" />
+    <Content Include="Migrations\Expense-SortOrder-Field.sql" />
     <Content Include="Migrations\Functions\fnGetBankClosingBalance.sql" />
     <Content Include="Migrations\Functions\fnGetCompanyClosingBalance.sql" />
     <Content Include="Migrations\Functions\fnGetCompanyOpeningBalance.sql" />
     <Content Include="Migrations\Functions\fnSplit.sql" />
     <Content Include="Migrations\InitialDBSetup.sql" />
+    <Content Include="Migrations\Requisition_UserAllocation_Tables.sql" />
     <Content Include="Migrations\StoreProcedures\GetBankReconciliation.sql" />
     <Content Include="Migrations\StoreProcedures\GetBankTransaction.sql" />
     <Content Include="Migrations\StoreProcedures\GetBankTransactionByPaymentTypes.sql" />
     <Content Include="Migrations\StoreProcedures\GetCompanyReconciliation.sql" />
+    <Content Include="Migrations\Update-UserExpense-Fields.sql" />
+    <Content Include="Migrations\UserDepartment_Table.sql" />
     <Content Include="Migrations\UserPermissionTable.sql" />
     <Content Include="Migrations\UserTask-Type-Field.sql" />
     <Content Include="Migrations\UserTask.sql" />

@@ -45,16 +45,24 @@ namespace CorporateAndFinance.Core.ViewModel
 
         public string Designation { get; set; }
 
-        public string Department { get; set; }
-
         public bool IsDeleted { get; set; }
 
         [Display(Name = "Permissions")]
-        public  List<UserAppPermissions> UserPermissions { get; set; } 
+        public  List<UserAppPermissions> UserPermissions { get; set; }
+
+        [Display(Name = "User Deparments")]
+       
+        public IEnumerable<UserDepartment> UserDepartments { get; set; } 
 
         [Display(Name = "Roles")]
         public IEnumerable<SelectListItem> RolesList { get; set; }
-
+        [Required]
         public string[] SelectedRoles { get; set; }
+        [Required]
+        public long[] SelectedDepartment { get; set; }
+
+        public string[] IsPrimaryDepartment { get; set; }
+
+        public IEnumerable<Department> Departments { get; set; } = new List<Department>();
     }
 }

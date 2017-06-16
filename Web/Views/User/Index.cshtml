@@ -59,7 +59,18 @@
                               { "data": "EmployeeNumber", "sTitle": "Employee Number" },
                               { "data": "Mobile", "sTitle": "Mobile" },
                               { "data": "Designation", "sTitle": "Designation" },
-                              { "data": "Department", "sTitle": "Department" },
+                              {
+                                   "data": "UserDepartment",
+                                   "sTitle": 'Department',
+                                   "render": function (data, type, full, meta) {
+                                       if (data != null)
+                                           return data.Name;
+                                       else
+                                           return "";
+                             
+                                   }
+                               },
+
                                {
                                    "data": "Id",
                                    "bSearchable": false,
@@ -93,7 +104,7 @@
                     });
                 }
 
-
+              
                 function DeleteRecord(id) {
 
                     $('#hdnUniqueSetUpRecord').val(id);

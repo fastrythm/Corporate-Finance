@@ -14,6 +14,7 @@ namespace CorporateAndFinance.Service.Interface
         IEnumerable<Company> GetAllVendorCompanies();
         IEnumerable<Company> GetAllClientCompanies();
         Company GetCompanyByNumber(long number);
+        Company GetCompanyByName(string Name);
         IEnumerable<CompanyBankVM> GetCompanyBankAccounts();
         bool Add(Company model);
         void SaveCompany();

@@ -33,13 +33,15 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private readonly IUserTaskDetailManagement userTaskDetailManagement;
         private readonly IUserManagement userManagement;
         private readonly ICommunicationManagement comManagement;
+        private readonly IUserDepartmentManagement userdepartmentManagement;
 
-        public TaskController(IUserTaskManagement userTaskManagement, IUserTaskDetailManagement userTaskDetailManagement, IUserManagement userManagement, ICommunicationManagement comManagement)
+        public TaskController(IUserTaskManagement userTaskManagement, IUserTaskDetailManagement userTaskDetailManagement, IUserManagement userManagement, ICommunicationManagement comManagement, IUserDepartmentManagement userdepartmentManagement)
         {
             this.userTaskManagement = userTaskManagement;
             this.userTaskDetailManagement = userTaskDetailManagement;
             this.userManagement = userManagement;
             this.comManagement = comManagement;
+            this.userdepartmentManagement = userdepartmentManagement;
         }
 
 
@@ -110,6 +112,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     type = User.Identity.GetUserId();
 
                 logger.DebugFormat("Getting User Task List with Ticket Type [{0}]", type);
+
 
                 UserTaskVM userTask = new UserTaskVM();
                 userTask.DTObject = param;
