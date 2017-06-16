@@ -26,6 +26,11 @@ namespace CorporateAndFinance.Service.Implementation
             return requisitionRepository.Add(model);
         }
 
+        public bool DeAttach(Requisition model)
+        {
+            return requisitionRepository.DeAttach(model);
+        }
+
         public bool Delete(Requisition model)
         {
             return requisitionRepository.Delete(model);

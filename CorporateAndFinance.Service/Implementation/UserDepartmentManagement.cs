@@ -35,9 +35,9 @@ namespace CorporateAndFinance.Service.Implementation
             return userdepartmentRepository.GetMany(x =>  x.UserID == userId && x.IsActive );
         }
 
-        public IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId)
+        public IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId,bool isAdmin)
         {
-            return userdepartmentRepository.GetAllUserDepartmentByUserId(userId);
+            return userdepartmentRepository.GetAllUserDepartmentByUserId(userId, isAdmin);
         }
 
         public bool Add(UserDepartment model)

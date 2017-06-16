@@ -14,6 +14,6 @@ namespace CorporateAndFinance.Service.Interface
         bool Update(UserDepartment model);
         void SaveUserDepartment();
         IEnumerable<UserDepartment> GetAllUserDepartmentById(string userId);
-        IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId);
+        IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId,bool isAdmin);
     }
 }

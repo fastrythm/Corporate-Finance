@@ -769,6 +769,7 @@
     <Content Include="Views\User\_UserDepartment.cshtml" />
     <Content Include="Views\Requisition\Index.cshtml" />
     <Content Include="Views\Requisition\_AddEditRequisition.cshtml" />
+    <Content Include="Views\Requisition\_UserAllocatedDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

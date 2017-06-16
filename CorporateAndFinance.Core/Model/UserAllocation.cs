@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace CorporateAndFinance.Core.Model
         public string UserID { get; set; }
         public long DepartmentID { get; set; }
         public long? RequisitionID { get; set; }
+
+        [RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "Invalid Percentage; Maximum Two Decimal Places.")]
+        [Range(typeof(Decimal), "0", "100", ErrorMessage = "{0} must be a decimal/number between {1} and {2}.")]
         public decimal Percentage { get; set; }
         [DefaultValue("True")]
         public bool IsActive { get; set; }
@@ -30,5 +34,8 @@ namespace CorporateAndFinance.Core.Model
         public virtual Department Department { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual Requisition Requisition { get; set; }
+
+        [NotMapped]
+        public IEnumerable<Department> Departments { get; set; } = new List<Department>();
     }
 }

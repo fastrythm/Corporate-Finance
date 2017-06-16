@@ -105,12 +105,12 @@
                             "data": "RequisitionDate",
                             "sTitle": 'Date',
                             "render": function (data, type, full, meta) {
-                                return DateFormat(full.TransactionDate);
+                                return DateFormat(data);
                             }
                         },
                       { "data": "JobTitle", "sTitle": "Job Title" },
                       { "data": "GradeLevel", "sTitle": "Grade" },
-                      { "data": "NoOfPosition", "sTitle": "No. of Position" },
+                      { "data": "NoOfPosition", "sTitle": "No. of Position","sClass": "numericCol" },
                       { "data": "Status", "sTitle": "Status" },
 
                         {

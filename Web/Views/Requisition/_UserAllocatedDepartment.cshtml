@@ -1,0 +1,66 @@
+﻿@model CorporateAndFinance.Core.Model.UserAllocation
+<style>
+    .delRow {
+    text-align:center;
+    cursor:pointer;
+   
+    font-weight:bold;
+}
+</style>
+ <div class="row">
+    <div>
+        @Html.LabelFor(model => model.DepartmentID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.DropDownListFor(model => model.DepartmentID, Model.Departments.Count() == 0 ? Enumerable.Empty<SelectListItem>() : Model.Departments.Select(
+                  x => new SelectListItem()
+                  {
+                      Value = x.DepartmentID.ToString(),
+                      Text = x.Name,
+                      Selected = x.DepartmentID == Model.DepartmentID
+                  }), new { @class = "form-control", @placeholder = "Select Departments", Name = "SelectedDepartment" })
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+            </div>
+            @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            <div class="input-group">
+                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", Name = "SelectedDepartmentPercentage" } })
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-dollar"></i></span>
+            </div>
+            @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="delRow">&times;</div>
+     <br />  
+</div>
+
+ 
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#divUserDepartment").on('click', '.delRow', function () {
+            $(this).parent().remove();
+        })
+
+        $("input[name='SelectedDepartmentPercentage']").keyup(function() {
+            var $this = $(this);
+            $this.val($this.val().replace(/[^\d.]/g, ''));        
+        })
+    });
+
+
+ 
+
+
+</script>
+
+ 
+

@@ -12,6 +12,8 @@ namespace CorporateAndFinance.Service.Interface
         IEnumerable<UserAllocation> GetAllUserAllocationByParam(DateTime fromDate,DateTime toDate);
         void SaveUserAllocation();
         UserAllocation GetUserAllocation(long id);
+
+        IEnumerable<UserAllocation> GetUserAllocationsByRequisition(long reqId);
         bool Delete(UserAllocation model);
         bool Add(UserAllocation model);
         bool Update(UserAllocation model);

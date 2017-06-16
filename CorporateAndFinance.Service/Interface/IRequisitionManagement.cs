@@ -16,5 +16,6 @@ namespace CorporateAndFinance.Service.Interface
         bool Delete(Requisition model);
         bool Add(Requisition model);
         bool Update(Requisition model);
+        bool DeAttach(Requisition model);
     }
 }

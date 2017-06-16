@@ -62,6 +62,20 @@ namespace CorporateAndFinance.Data.Infrastructure
             }
 
         }
+        public virtual bool DeAttach(T entity)
+        {
+            try
+            {
+            
+                dataContext.Entry(entity).State = EntityState.Detached;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
 
 
         public virtual bool Delete(T entity)

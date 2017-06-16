@@ -91,6 +91,24 @@ namespace CorporateAndFinance.Core.Helper.Structure
  
     }
 
+    public struct RequisitionStatus
+    {
+        public static string Level1_Pending = "Level1 Pending";
+        public static string Level1_Approved = "Level1 Approved";
+        public static string Level1_Rejected = "Level1 Rejected";
+
+        public static string Level2_Pending = "Level2 Pending";
+        public static string Level2_Approved = "Level2 Approved";
+        public static string Level2_Rejected = "Level2 Rejected";
+    }
+
+    public struct RequestStatus
+    {
+        public static string Pending = "Pending";
+        public static string Approved = "Approved";
+        public static string Rejected = "Rejected";
+
+    }
 
     public enum BankTransactionStatus
     {

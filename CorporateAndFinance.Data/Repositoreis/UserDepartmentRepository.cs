@@ -33,25 +33,40 @@ namespace CorporateAndFinance.Data.Repositoreis
 
         }
 
-        public IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId)
+        public IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId,bool isAdmin)
         {
-            List<UserDepartmentVM> query = (from userDept in DbContext.UserDepartments.AsNoTracking()
-                                             join dept in DbContext.Departments.AsNoTracking()
-                                             on userDept.DepartmentID equals dept.DepartmentID
-                                             where userDept.IsActive 
-                                              
-                                               select new UserDepartmentVM
-                                               {
-                                                   UserDepartmentID = userDept.UserDepartmentID,
-                                                   UserID = userDept.UserID,
-                                                   DepartmentName = dept.Name,
-                                                   DepartmentID = dept.DepartmentID,
-                                                   IsPrimary = userDept.IsPrimary,
-                                                   IsActive = userDept.IsActive,
-                                                   StartDate = userDept.StartDate,
-                                                   EndDate = userDept.EndDate
-                                               }).ToList();
+            List<UserDepartmentVM> query = null;
+            if (!isAdmin)
+            {
+                query = (from userDept in DbContext.UserDepartments.AsNoTracking()
+                                                join dept in DbContext.Departments.AsNoTracking()
+                                                on userDept.DepartmentID equals dept.DepartmentID
+                                                where userDept.IsActive
 
+                                                select new UserDepartmentVM
+                                                {
+                                                    UserDepartmentID = userDept.UserDepartmentID,
+                                                    UserID = userDept.UserID,
+                                                    DepartmentName = dept.Name,
+                                                    DepartmentID = dept.DepartmentID,
+                                                    IsPrimary = userDept.IsPrimary,
+                                                    IsActive = userDept.IsActive,
+                                                    StartDate = userDept.StartDate,
+                                                    EndDate = userDept.EndDate
+                                                }).ToList();
+
+
+            }
+            else
+            {
+                 query = (from userDept in DbContext.Departments.AsNoTracking()
+                                                where userDept.IsActive
+                                                select new UserDepartmentVM
+                                                {
+                                                    DepartmentName = userDept.Name,
+                                                    DepartmentID = userDept.DepartmentID,
+                                                }).ToList();
+            }
 
             return query;
         }
@@ -74,7 +89,7 @@ namespace CorporateAndFinance.Data.Repositoreis
     }
     public interface IUserDepartmentRepository : IRepository<UserDepartment>
     {
-        IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId);
+        IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId, bool isAdmin);
     }
 
 }

@@ -177,7 +177,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 Requisition req = requisitionManagement.GetRequisition(id);
 
                 req.IsDeleted = true;
-                if (requisitionManagement.Delete(req))
+                if (requisitionManagement.Update(req))
                 {
                     requisitionManagement.SaveRequisition();
                     logger.Info("Requisition record Successfully Deleted");
@@ -197,15 +197,41 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
         }
 
+        [Route("AddDepartmentAllocation")]
+        public ActionResult AddDepartmentAllocation()
+        {
+            UserAllocation userDepartment = new UserAllocation();
+            userDepartment.Departments = departmentManagement.GetAllDepartments();
+            return PartialView("_UserAllocatedDepartment", userDepartment);
+        }
 
         [Route("AddEdit")]
         public ActionResult AddEdit(int id)
         {
             ViewBag.Title = "Add/Update New Requisition";
+            bool isAdmin = false;
+            if (User.IsInRole("Admin"))
+            {
+                isAdmin = true;
+            }
+            var departments = departmentManagement.GetAllDepartments();
+
             Requisition requisition = requisitionManagement.GetRequisition(id);
             if (requisition == null)
-                requisition = new Requisition();
-            requisition.Departments =  userdepartmentManagement.GetAllUserDepartmentByUserId(User.Identity.GetUserId());
+               requisition = new Requisition();
+            requisition.UserDepartments =  userdepartmentManagement.GetAllUserDepartmentByUserId(User.Identity.GetUserId(), isAdmin);
+            var userAllocatedDepartments = userAllocationManagement.GetUserAllocationsByRequisition(id);
+
+            if (userAllocatedDepartments != null)
+            {
+                foreach (var userDept in userAllocatedDepartments)
+                {
+                    userDept.Departments = departments;
+                    
+                }
+                requisition.UserAllocatedDepartments = userAllocatedDepartments;
+            }
+
             return PartialView("_AddEditRequisition", requisition);
         }
 
@@ -218,13 +244,24 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
             try
             {
-             
-               
 
                 if (ModelState.IsValid)
                 {
+                    string deparmentError = ValidateUserDeparments(model);
+                    if(!string.IsNullOrEmpty(deparmentError))
+                    {
+                        return Json(new { Message = deparmentError, MessageClass = MessageClass.Error, Response = false });
+                    }
+
+                    bool isHundredPercent = ValidateAllocationPercentage(model);
+                    if(!isHundredPercent)
+                    {
+                        return Json(new { Message = "Total user department allocation must equal to 100%", MessageClass = MessageClass.Error, Response = false });
+                    }
+
                     if (model.RequisitionID == 0)
                     {
+                        model.Status = RequisitionStatus.Level1_Pending;
                         string jsonObject = new JavaScriptSerializer().Serialize(model);
                         logger.DebugFormat("Add new Requisition with Parameters [{0}]", jsonObject);
 
@@ -238,6 +275,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         if (requisitionManagement.Add(model))
                         {
                             requisitionManagement.SaveRequisition();
+                            AddUpdateUserAllocation(model);
                             logger.Info("Successfully Saved New Requisition ");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Requisition"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -258,9 +296,18 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
 
+                        var req = requisitionManagement.GetRequisition(model.RequisitionID);
+                        if (req.Status != RequisitionStatus.Level1_Rejected || req.Status != RequisitionStatus.Level2_Rejected)
+                        {
+                            return Json(new { Message = "Your requisition is in pending. you are have no rights to change.", MessageClass = MessageClass.Error, Response = false });
+                        }
+
+                        requisitionManagement.DeAttach(req);
+
                         if (requisitionManagement.Update(model))
                         {
                             requisitionManagement.SaveRequisition();
+                            AddUpdateUserAllocation(model);
                             logger.Info("Successfully Updated Requisition ");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Requisition"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -285,7 +332,128 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
         }
 
- 
+
+
+        private string ValidateUserDeparments(Requisition model)
+        {
+            try
+            {
+                if (model.SelectedDepartment != null)
+                {
+                    for (int i = 0; i < model.SelectedDepartmentPercentage.Length; i++)
+                    {
+                        if (Convert.ToDecimal(model.SelectedDepartmentPercentage[i]) == 0)
+                            return "Allocation percentage cannot be 0 value.";
+                     }
+
+                    var isDuplicateDeptExist = model.SelectedDepartment.GroupBy(n => n).Any(g => g.Count() > 1);
+                        if (isDuplicateDeptExist)
+                        return "Duplicate department exist in list.";
+                }
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                return "Error occured try later.";
+            }
+        }
+
+        private bool ValidateAllocationPercentage(Requisition model)
+        {
+            bool isHundredPer = true;
+            decimal totalPercentage = 0;
+            if (model.SelectedDepartmentPercentage != null)
+            {
+                try
+                {
+                    for (int i=0;i<model.SelectedDepartmentPercentage.Length;i++)
+                    {
+                        totalPercentage += Convert.ToDecimal(model.SelectedDepartmentPercentage[i]);
+                    }
+
+                    if (totalPercentage != 100)
+                        return false;
+                    
+                } catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            return isHundredPer;
+        }
+
+        private void AddUpdateUserAllocation(Requisition model)
+        {
+
+            var userAllocations = userAllocationManagement.GetUserAllocationsByRequisition(model.RequisitionID);
+            if(userAllocations != null && userAllocations.Count() > 0)
+            {
+                for (int i = 0; i < model.SelectedDepartment.Length; i++)
+                {
+                   var allocate =  userAllocations.Where(x => x.DepartmentID == model.SelectedDepartment[i]).FirstOrDefault();
+                    if (allocate != null)
+                    {
+                        if (allocate.DepartmentID == model.SelectedDepartment[i] && allocate.Percentage != model.SelectedDepartmentPercentage[i])
+                        {
+                            AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], allocate);
+                        }
+                    }
+                    else
+                    {
+                        AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], null);
+                    }
+
+                  
+                }
+
+                // Delete department that not exist in select list
+                foreach(var allocate in userAllocations)
+                {
+                    if(!model.SelectedDepartment.Contains(allocate.DepartmentID))
+                    {
+                        userAllocationManagement.Delete(allocate);
+                    }
+
+                }
+                userAllocationManagement.SaveUserAllocation();
+            }
+            else
+            {
+                for(int i=0;i<model.SelectedDepartment.Length;i++)
+                {
+                    AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i],null);
+                }
+
+                userAllocationManagement.SaveUserAllocation();
+            }
+
+        }
+
+        public void AllocateUserInDepartment(long requisitionID,long departmentId,decimal percentage, UserAllocation allocate)
+        {
+            if (allocate == null)
+            {
+                UserAllocation userAllocate = new UserAllocation();
+                userAllocate.RequisitionID = requisitionID;
+                userAllocate.StartDate = DateTime.Now;
+                userAllocate.DepartmentID = departmentId;
+                userAllocate.Percentage = percentage;
+                userAllocate.Status = RequestStatus.Pending;
+                userAllocate.CreatedBy = new Guid(User.Identity.GetUserId());
+                userAllocate.IsActive = true;
+                userAllocationManagement.Add(userAllocate);
+            }
+            else
+            {
+                allocate.StartDate = DateTime.Now;
+                allocate.Percentage = percentage;
+                allocate.ModifiedBy = new Guid(User.Identity.GetUserId());
+                userAllocationManagement.Update(allocate);
+            }
+           
+            
+        }
+
 
         //private void SendUserTaskEmail(long taskId)
         //{
@@ -342,5 +510,71 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         //        logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
         //    }
         //}
+
+        public ActionResult Uploader()
+        {
+
+            if (!PermissionControl.CheckPermission(UserAppPermissions.Compliance_Edit) || !PermissionControl.CheckPermission(UserAppPermissions.Compliance_Add))
+            {
+                return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+            }
+
+            string fname = string.Empty;
+            string tempFname = string.Empty;
+            string path = string.Empty;
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        HttpPostedFileBase file = files[i];
+
+
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                            tempFname = fname;
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                            tempFname = fname;
+                        }
+
+                        // Get the complete folder path and store the file inside it. 
+
+                        string fileName = Path.GetFileName(fname);
+                        string fileExtension = Path.GetExtension(fname);
+                          path = string.Format("{0}{1}_{2}{3}", Server.MapPath("~/UploadFiles/"), fileName, DateTime.Now.Ticks.ToString(), fileExtension);
+
+                     //   fname = Path.Combine(Server.MapPath("~/UploadFiles/"), fname);
+                        file.SaveAs(path);
+                    }
+                    // Returns message that successfully uploaded  
+                    return Json(path);
+
+                }
+                catch (Exception ex)
+                {
+                    logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+
+        }
     }
+
+
 }

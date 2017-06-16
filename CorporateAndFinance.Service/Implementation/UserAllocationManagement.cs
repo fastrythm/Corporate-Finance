@@ -49,5 +49,10 @@ namespace CorporateAndFinance.Service.Implementation
         {
             return userAllocationRepository.Update(model);
         }
+
+        public IEnumerable<UserAllocation> GetUserAllocationsByRequisition(long reqId)
+        {
+            return userAllocationRepository.GetMany(x=>x.IsActive && x.RequisitionID == reqId);
+        }
     }
 }
