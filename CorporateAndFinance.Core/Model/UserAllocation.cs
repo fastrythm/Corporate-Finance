@@ -15,16 +15,18 @@ namespace CorporateAndFinance.Core.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long UserAllocationID { get; set; }
         public string UserID { get; set; }
+        [DisplayName("Departments")]
         public long DepartmentID { get; set; }
         public long? RequisitionID { get; set; }
 
-        [RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "Invalid Percentage; Maximum Two Decimal Places.")]
+        //[RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "Invalid Percentage; Maximum Two Decimal Places.")]
         [Range(typeof(Decimal), "0", "100", ErrorMessage = "{0} must be a decimal/number between {1} and {2}.")]
         public decimal Percentage { get; set; }
         [DefaultValue("True")]
         public bool IsActive { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public long RequestedDepartmentID { get; set; }
         public string Status { get; set; }
         public string Comments { get; set; }
         public Guid CreatedBy { get; set; }

@@ -181,10 +181,19 @@
     <Compile Include="Migrations\201706160809533_Requistion-PersonReplacement-Field.Designer.cs">
       <DependentUpon>201706160809533_Requistion-PersonReplacement-Field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706191030048_UserAllocation-RequestedDepartmentID-Field.cs" />
+    <Compile Include="Migrations\201706191030048_UserAllocation-RequestedDepartmentID-Field.Designer.cs">
+      <DependentUpon>201706191030048_UserAllocation-RequestedDepartmentID-Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706201153524_SLAApproval-new-table.cs" />
+    <Compile Include="Migrations\201706201153524_SLAApproval-new-table.Designer.cs">
+      <DependentUpon>201706201153524_SLAApproval-new-table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositoreis\BankTransactionRepository.cs" />
     <Compile Include="Repositoreis\RequisitionApprovalRepository.cs" />
+    <Compile Include="Repositoreis\SLAApprovalRepository.cs" />
     <Compile Include="Repositoreis\UserAllocationRepository.cs" />
     <Compile Include="Repositoreis\RequisitionRepository.cs" />
     <Compile Include="Repositoreis\UserDepartmentRepository.cs" />
@@ -291,6 +300,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706160809533_Requistion-PersonReplacement-Field.resx">
       <DependentUpon>201706160809533_Requistion-PersonReplacement-Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706191030048_UserAllocation-RequestedDepartmentID-Field.resx">
+      <DependentUpon>201706191030048_UserAllocation-RequestedDepartmentID-Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706201153524_SLAApproval-new-table.resx">
+      <DependentUpon>201706201153524_SLAApproval-new-table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

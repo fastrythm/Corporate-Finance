@@ -9,7 +9,7 @@ namespace CorporateAndFinance.Service.Interface
 {
     public interface IRequisitionApprovalManagement
     {
-        IEnumerable<RequisitionApproval> GetAllRequisitionApprovalByParam(DateTime fromDate,DateTime toDate);
+        IEnumerable<RequisitionApproval> GetAllRequisitionApprovalByRequisition(long id);
         void SaveRequisitionApproval();
         RequisitionApproval GetRequisitionApproval(long id);
         bool Delete(RequisitionApproval model);

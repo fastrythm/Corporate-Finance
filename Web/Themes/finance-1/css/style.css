@@ -242,7 +242,7 @@ section ul.nav li a:hover
     color: #fff;
     min-width: 128px;
     font-size: 10pt !important;
-    padding: 10px 0px !important;
+    padding: 10px 10px !important;
     transition: all ease-in-out .15s;
 }
 
@@ -833,4 +833,25 @@ input[type="checkbox"]{
 	}
 }
 
-
+/* CUSTOM CSS */
+.req_form input[type="checkbox"]{
+    margin:10px 0 0 !important;
+}
+.req_form .input-group-addon{
+    right:15px !important;
+    top:0 !important;
+}
+.req_form label{
+    text-align:left !important;
+    margin:8px 0 !important;
+}
+.req_form h4 {
+    background: #ccc !important;
+    padding: 12px !important;
+}
+#divUserDepartment{
+    margin-top:20px;
+}
+#divUserDepartment .input-group-addon{
+    right:0 !important;
+}

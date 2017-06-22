@@ -102,6 +102,7 @@ namespace CorporateAndFinance.Core.Model
         [DefaultValue("False")]
         public bool IsDeleted { get; set; }
         public string Status { get; set; }
+    
         public Guid CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime LastModified { get; set; }

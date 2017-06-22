@@ -51,7 +51,8 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<Requisition> Requisitions { get; set; }
         public virtual DbSet<UserAllocation> UserAllocations { get; set; }
         public virtual DbSet<RequisitionApproval> RequisitionApprovals { get; set; }
-
+        public virtual DbSet<SLAApproval> SLAApprovals { get; set; }
+        
         public virtual void Commit()
         {
             base.SaveChanges();

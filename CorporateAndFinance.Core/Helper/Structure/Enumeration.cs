@@ -23,6 +23,12 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Employee = "Employee";
     }
 
+    public struct SLAType
+    {
+        public static string Requisition = "Requisition";
+       
+    }
+
     public class ExcelFileProcess
     {
         public string Message { get; set; }
@@ -107,6 +113,8 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Pending = "Pending";
         public static string Approved = "Approved";
         public static string Rejected = "Rejected";
+        public static string Deleted = "Deleted";
+        public static string My_Request = "My_Request";
 
     }
 
@@ -167,6 +175,11 @@ namespace CorporateAndFinance.Core.Helper.Structure
         Requisition_Delete = 37,
         Requisition_Add = 38,
         Requisition_Edit = 39,
+
+        UserAllocation_View = 40,
+        Allocation_Add = 41,
+        Allocation_Edit = 42,
+        UserAllocation_Approve_Reject = 43,
     }
 
     public class ChartOfAccount

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Data.Infrastructure;
 using CorporateAndFinance.Data.Repositoreis;
+using CorporateAndFinance.Core.ViewModel;
+using CorporateAndFinance.Core.Helper.Structure;
 
 namespace CorporateAndFinance.Service.Implementation
 {
@@ -30,9 +32,9 @@ namespace CorporateAndFinance.Service.Implementation
             return userAllocationRepository.Delete(model);
         }
 
-        public IEnumerable<UserAllocation> GetAllUserAllocationByParam(DateTime fromDate, DateTime toDate)
+        public IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM requisition, DateTime frdate, DateTime tdate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type)
         {
-            return userAllocationRepository.GetAllUserAllocationByParam(fromDate, toDate);
+            return userAllocationRepository.GetAllUserAllocationByParam(requisition,frdate, tdate, userDepartments, isAdmin, type);
         }
 
         public UserAllocation GetUserAllocation(long id)
@@ -52,7 +54,12 @@ namespace CorporateAndFinance.Service.Implementation
 
         public IEnumerable<UserAllocation> GetUserAllocationsByRequisition(long reqId)
         {
-            return userAllocationRepository.GetMany(x=>x.IsActive && x.RequisitionID == reqId);
+            return userAllocationRepository.GetMany(x=>x.RequisitionID == reqId && !x.Status.Equals(RequestStatus.Deleted));
+        }
+
+        public IEnumerable<UserAllocation> GetUserAllocationsByUserIdDepartmentId(string userID, long departmentID)
+        {
+            return userAllocationRepository.GetMany(x => x.IsActive && x.UserID == userID && x.DepartmentID == departmentID && !x.Status.Equals(RequestStatus.Deleted));
         }
     }
 }

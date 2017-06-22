@@ -36,9 +36,9 @@ namespace CorporateAndFinance.Service.Implementation
             return requisitionRepository.Delete(model);
         }
 
-        public IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param, DateTime fromDate, DateTime toDate,IEnumerable<UserDepartment> departments,bool isAdmin)
+        public IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param, DateTime fromDate, DateTime toDate,IEnumerable<UserDepartment> departments,bool isAdmin,string type)
         {
-            return requisitionRepository.GetAllRequisitionByParam(param,fromDate, toDate, departments, isAdmin);
+            return requisitionRepository.GetAllRequisitionByParam(param,fromDate, toDate, departments, isAdmin, type);
         }
 
         public Requisition GetRequisition(long id)

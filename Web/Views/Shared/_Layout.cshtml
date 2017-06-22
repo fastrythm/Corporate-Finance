@@ -108,6 +108,10 @@
                         @if (PermissionControl.CheckPermission(UserAppPermissions.Requisition_View))
                         {
                             <li><a href="@Url.Action("Index", "Requisition")">Requisition</a></li>}
+
+                        @if (PermissionControl.CheckPermission(UserAppPermissions.UserAllocation_View))
+                        {
+                            <li><a href="@Url.Action("Index", "UserAllocation")">User Allocation</a></li>}
                     </ul>
                 </li>
 

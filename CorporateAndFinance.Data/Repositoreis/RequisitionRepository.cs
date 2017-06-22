@@ -18,7 +18,7 @@ namespace CorporateAndFinance.Data.Repositoreis
         {
         }
 
-        public IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param,DateTime fromDate, DateTime toDate, IEnumerable<UserDepartment> departments, bool isAdmin)
+        public IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param,DateTime fromDate, DateTime toDate, IEnumerable<UserDepartment> departments, bool isAdmin, string type)
         {
             try
             {
@@ -26,23 +26,47 @@ namespace CorporateAndFinance.Data.Repositoreis
                 foreach (var dept in departments)
                     deptId.Add(dept.DepartmentID);
 
-                IQueryable<RequisitionVM> query = (from req in DbContext.Requisitions.AsNoTracking()
-                                                 where !req.IsDeleted
-                                                 orderby req.RequisitionDate descending
-                                                 where (DbFunctions.TruncateTime(req.RequisitionDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(req.RequisitionDate) <= DbFunctions.TruncateTime(toDate))
-                                                 && ( deptId.Contains(req.DepartmentID) || isAdmin)
-                                                   select new RequisitionVM
-                                                 {
-                                                     RequisitionID = req.RequisitionID,
-                                                     JobTitle = req.JobTitle,
-                                                     RequisitionDate = req.RequisitionDate,
-                                                     Status = req.Status,
-                                                     NoOfPosition = req.NoOfPosition,
-                                                     GradeLevel = req.GradeLevel,
-                                                     DepartmentID = req.DepartmentID
-                                                 });
+                IQueryable<RequisitionVM> query = null;
+                if (type == RequestStatus.My_Request)
+                {
+                      query = (from req in DbContext.Requisitions.AsNoTracking()
+                                                       where !req.IsDeleted
+                                                       orderby req.RequisitionDate descending
+                                                       where (DbFunctions.TruncateTime(req.RequisitionDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(req.RequisitionDate) <= DbFunctions.TruncateTime(toDate))
+                                                       && (deptId.Contains(req.DepartmentID) || isAdmin)
+                                                       select new RequisitionVM
+                                                       {
+                                                           RequisitionID = req.RequisitionID,
+                                                           JobTitle = req.JobTitle,
+                                                           RequisitionDate = req.RequisitionDate,
+                                                           Status = req.Status,
+                                                           NoOfPosition = req.NoOfPosition,
+                                                           GradeLevel = req.GradeLevel,
+                                                           DepartmentID = req.DepartmentID
+                                                       });
 
- 
+                }
+                else
+                {
+
+                    int condition = CheckHaveRight(deptId);
+
+                    query = (from req in DbContext.Requisitions.AsNoTracking()
+                             where !req.IsDeleted
+                             orderby req.RequisitionDate descending
+                             where (DbFunctions.TruncateTime(req.RequisitionDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(req.RequisitionDate) <= DbFunctions.TruncateTime(toDate))
+                             && req.Status.Equals(type) && 1 == condition
+                             select new RequisitionVM
+                             {
+                                 RequisitionID = req.RequisitionID,
+                                 JobTitle = req.JobTitle,
+                                 RequisitionDate = req.RequisitionDate,
+                                 Status = req.Status,
+                                 NoOfPosition = req.NoOfPosition,
+                                 GradeLevel = req.GradeLevel,
+                                 DepartmentID = req.DepartmentID
+                             });
+                }
                  query = GetRequisitionFiltersOrderQuery(query, param);
 
                
@@ -71,6 +95,18 @@ namespace CorporateAndFinance.Data.Repositoreis
                 logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return null;
             }
+        }
+
+        private int CheckHaveRight(List<long> deptId)
+        {
+            var query = (from sla in DbContext.SLAApprovals.AsNoTracking()
+                         where (deptId.Contains(sla.DepartmentID)) && sla.SLAType.Equals(SLAType.Requisition)
+                         select sla).ToList() ;
+
+            if (query != null && query.Count > 0)
+                return 1;
+
+            return 0;
         }
 
         private IQueryable<RequisitionVM> GetRequisitionFiltersOrderQuery(IQueryable<RequisitionVM> query, RequisitionVM param, bool forAll = false)
@@ -161,6 +197,6 @@ namespace CorporateAndFinance.Data.Repositoreis
     }
     public interface IRequisitionRepository : IRepository<Requisition>
     {
-        IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param,DateTime fromDate,DateTime toDate,IEnumerable<UserDepartment> departments, bool isAdmin);
+        IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param,DateTime fromDate,DateTime toDate,IEnumerable<UserDepartment> departments, bool isAdmin, string type);
     }
 }

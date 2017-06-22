@@ -10,7 +10,7 @@ namespace CorporateAndFinance.Service.Interface
 {
     public interface IRequisitionManagement
     {
-        IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param, DateTime fromDate,DateTime toDate, IEnumerable<UserDepartment> departments, bool isAdmin);
+        IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param, DateTime fromDate,DateTime toDate, IEnumerable<UserDepartment> departments, bool isAdmin,string type);
         void SaveRequisition();
         Requisition GetRequisition(long id);
         bool Delete(Requisition model);

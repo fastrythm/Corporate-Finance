@@ -16,7 +16,7 @@ namespace CorporateAndFinance.Core.ViewModel
         public string Status { get; set; }
         public int NoOfPosition { get; set; }
         public DateTime RequisitionDate { get; set; }
-        [NotMapped]
+      
         public DataTablesViewModel DTObject { get; set; }
 
         public RequisitionVM()
