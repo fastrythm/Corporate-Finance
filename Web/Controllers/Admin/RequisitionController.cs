@@ -99,6 +99,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return RedirectToAction("Restricted", "Home");
             }
 
+            ViewBag.HaveRequisitionApproveRights = false;
+
             return View();
         }
 
@@ -111,6 +113,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 if (!PermissionControl.CheckPermission(UserAppPermissions.Requisition_View))
                 { return RedirectToAction("Restricted", "Home"); }
+
+                if (string.IsNullOrEmpty(type) || type.Equals("undefined"))
+                    type = RequestStatus.My_Request;
 
                 DateTime frdate = DateTime.Now;
                 if (!string.IsNullOrWhiteSpace(fromDate))
@@ -318,7 +323,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
                         model.CreatedBy = new Guid(User.Identity.GetUserId());
-                     
+                        model.RequisitionDate = DateTime.Now;
                         if (requisitionManagement.Add(model))
                         {
                             requisitionManagement.SaveRequisition();
@@ -352,11 +357,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         }
 
 
+                        model.RequisitionDate = req.RequisitionDate;
 
-                        if (req.Status == RequisitionStatus.Level1_Rejected)
-                            model.Status = RequisitionStatus.Level1_Pending;
-                        else if (req.Status == RequisitionStatus.Level2_Rejected)
+                        if (req.Status == RequisitionStatus.Level2_Rejected)
                              model.Status = RequisitionStatus.Level2_Pending;
+                        else
+                            model.Status = RequisitionStatus.Level1_Pending;
+
 
                         requisitionManagement.DeAttach(req);
 
@@ -511,7 +518,6 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 allocate.ModifiedBy = new Guid(User.Identity.GetUserId());
                 userAllocationManagement.Update(allocate);
             }
-           
             
         }
 
@@ -522,7 +528,29 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             var approvalReq = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(model.RequisitionID);
             if (approvalReq != null && approvalReq.Count() > 0)
             {
+                foreach (var sla in slaApprovals)
+                {
+                    RequisitionApproval reqApp = requisitionApprovalManagement.GetRequisitionApprovalByDeptIdAndRequisition(sla.DepartmentID, model.RequisitionID);
+                    if (reqApp != null)
+                    {
+                        
+                        reqApp.IsActive = false;
+                        reqApp.Status = RequestStatus.Pending;
+                        requisitionApprovalManagement.Update(reqApp);
+                    }
+                    else
+                    {
+                        reqApp = new RequisitionApproval();
+                        reqApp.RequisitionID = model.RequisitionID;
+                        reqApp.IsActive = false;
+                        reqApp.Status = RequestStatus.Pending;
+                        reqApp.CreatedBy = new Guid(User.Identity.GetUserId());
+                        reqApp.DepartmentID = sla.DepartmentID;
+                        requisitionApprovalManagement.Add(reqApp);
 
+                    }
+                }
+                requisitionApprovalManagement.SaveRequisitionApproval();
             }
             else
             {

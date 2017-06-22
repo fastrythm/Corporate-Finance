@@ -31,37 +31,74 @@ namespace CorporateAndFinance.Data.Repositories
             }
         }
 
-        public IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param, string userId)
+        public IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param, string userId, IEnumerable<UserDepartment> departments)
         {
             try
             {
+                List<long> deptId = new List<long>();
+                foreach (var depts in departments)
+                    deptId.Add(depts.DepartmentID);
 
-                IQueryable<UserTaskVM> query = (from Record in DbContext.UserTasks.AsNoTracking()
-                                                join UTD in DbContext.UserTaskDetails.AsNoTracking()
-                                                on Record.UserTaskID equals UTD.UserTaskID
-                                                join FU in DbContext.Users.AsNoTracking()
-                                                on UTD.FromUserID.ToString() equals FU.Id
-                                                join TU in DbContext.Users.AsNoTracking()
-                                                on UTD.ToUserID.ToString() equals TU.Id
+                IQueryable<UserTaskVM> query = null;
+                if (userId == "1")
+                {
+                    query = (from Record in DbContext.UserTasks.AsNoTracking()
+                             join UTD in DbContext.UserTaskDetails.AsNoTracking()
+                             on Record.UserTaskID equals UTD.UserTaskID
+                             join FU in DbContext.Users.AsNoTracking()
+                             on UTD.FromUserID.ToString() equals FU.Id
+                             join TU in DbContext.Users.AsNoTracking()
+                             on UTD.ToUserID.ToString() equals TU.Id
+                             
+                             join userdept in DbContext.UserDepartments.AsNoTracking()
+                             on FU.Id equals userdept.UserID
 
-                                                where !Record.IsDeleted && UTD.IsActive
-                                                orderby Record.CreatedOn descending
-                                                where (userId == "1") || (UTD.ToUserID.ToString() == userId && UTD.Status != "Closed")
-                                                select new UserTaskVM
-                                                {
-                                                    UserTaskID = Record.UserTaskID,
-                                                    Title = Record.Title,
-                                                    Description = Record.Description,
-                                                    Type = Record.Type,
-                                                    Priority = Record.Priority,
-                                                    DueDate = Record.DueDate,
-                                                    FromUser = FU.FirstName + " " + FU.LastName,
-                                                    ToUser = TU.FirstName + " " + TU.LastName,
-                                                    Remarks = UTD.Remarks,
-                                                    Status = UTD.Status,
-                                                    CreatedDate = Record.CreatedOn
-                                                });
+                             where !Record.IsDeleted && UTD.IsActive
+                             orderby Record.CreatedOn descending
+                             where deptId.Contains(userdept.DepartmentID)
+                             select new UserTaskVM
+                             {
+                                 UserTaskID = Record.UserTaskID,
+                                 Title = Record.Title,
+                                 Description = Record.Description,
+                                 Type = Record.Type,
+                                 Priority = Record.Priority,
+                                 DueDate = Record.DueDate,
+                                 FromUser = FU.FirstName + " " + FU.LastName,
+                                 ToUser = TU.FirstName + " " + TU.LastName,
+                                 Remarks = UTD.Remarks,
+                                 Status = UTD.Status,
+                                 CreatedDate = Record.CreatedOn
+                             }).Distinct();
+                }
+                else
+                {
+                    query = (from Record in DbContext.UserTasks.AsNoTracking()
+                             join UTD in DbContext.UserTaskDetails.AsNoTracking()
+                             on Record.UserTaskID equals UTD.UserTaskID
+                             join FU in DbContext.Users.AsNoTracking()
+                             on UTD.FromUserID.ToString() equals FU.Id
+                             join TU in DbContext.Users.AsNoTracking()
+                             on UTD.ToUserID.ToString() equals TU.Id
 
+                             where !Record.IsDeleted && UTD.IsActive
+                             orderby Record.CreatedOn descending
+                             where  (UTD.ToUserID.ToString() == userId && UTD.Status != "Closed")
+                             select new UserTaskVM
+                             {
+                                 UserTaskID = Record.UserTaskID,
+                                 Title = Record.Title,
+                                 Description = Record.Description,
+                                 Type = Record.Type,
+                                 Priority = Record.Priority,
+                                 DueDate = Record.DueDate,
+                                 FromUser = FU.FirstName + " " + FU.LastName,
+                                 ToUser = TU.FirstName + " " + TU.LastName,
+                                 Remarks = UTD.Remarks,
+                                 Status = UTD.Status,
+                                 CreatedDate = Record.CreatedOn
+                             });
+                }
 
                 query = GetUserTaskFiltersOrderQuery(query, param);
 
@@ -236,7 +273,7 @@ namespace CorporateAndFinance.Data.Repositories
 
     public interface IUserTaskRepository : IRepository<UserTask>
     {
-        IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param, string userId);
+        IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param, string userId, IEnumerable<UserDepartment> departments);
         UserTaskEmailVM GetUserTaskEmailDetails(long taskId);
         List<UserTaskDetailVM> GetUserTaskDetails(long taskId);
     }

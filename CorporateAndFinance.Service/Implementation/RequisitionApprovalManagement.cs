@@ -40,6 +40,11 @@ namespace CorporateAndFinance.Service.Implementation
            return requisitionApprovalRepository.GetById(id);
         }
 
+        public RequisitionApproval GetRequisitionApprovalByDeptIdAndRequisition(long departmentID, long requisitionID)
+        {
+            return requisitionApprovalRepository.Get(x => x.RequisitionID == requisitionID && x.DepartmentID == departmentID);
+        }
+
         public void SaveRequisitionApproval()
         {
             unitOfWork.Commit();

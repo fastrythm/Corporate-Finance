@@ -10,7 +10,7 @@ namespace CorporateAndFinance.Service.Interface
 {
     public interface IUserTaskManagement
     {
-        IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param,string userId);
+        IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param,string userId, IEnumerable<UserDepartment> departments);
         void SaveUserTask();
         bool Delete(UserTask model);
         bool Add(UserTask model);

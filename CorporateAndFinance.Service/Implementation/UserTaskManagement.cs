@@ -33,9 +33,9 @@ namespace CorporateAndFinance.Service.Implementation
             return userTaskRepository.Update(model);
         }
 
-        public IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param,string userId)
+        public IEnumerable<UserTaskVM> GetTaskByCriteria(UserTaskVM param,string userId, IEnumerable<UserDepartment> departments)
         {
-            return userTaskRepository.GetTaskByCriteria(param,userId);
+            return userTaskRepository.GetTaskByCriteria(param,userId, departments);
         }
 
         public void SaveUserTask()

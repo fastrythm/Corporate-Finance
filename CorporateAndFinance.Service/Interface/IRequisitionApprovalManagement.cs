@@ -15,5 +15,6 @@ namespace CorporateAndFinance.Service.Interface
         bool Delete(RequisitionApproval model);
         bool Add(RequisitionApproval model);
         bool Update(RequisitionApproval model);
+        RequisitionApproval GetRequisitionApprovalByDeptIdAndRequisition(long departmentID, long requisitionID);
     }
 }

@@ -34,11 +34,13 @@
             </div>
             <div class="divider"></div>
         </div>
+        @if (ViewBag.HaveRequisitionApproveRights)
+        {
         <div class="row mr15">
             <div class="col-sm-4 text-left">
                 <div class="input-group">
                     <select id="requestType" class="form-control" name="requestType">
-                        <option value="My_Request">My Requisition</option>
+                        <option value="@RequestStatus.My_Request">My Requisition</option>
                         <option value="@RequisitionStatus.Level2_Pending">Pending</option>
                         <option value="@RequisitionStatus.Level2_Approved">Approved</option>
                         <option value="@RequisitionStatus.Level2_Rejected">Rejected</option>
@@ -47,6 +49,7 @@
                 </div>
             </div>
         </div>
+        }
         <div class="row">
             <div class="col-sm-12">
 
@@ -101,6 +104,14 @@
 
             });
 
+
+            $("#requestType").change(function () {
+
+                oTable.fnDestroy();
+                $('#tblRequisition thead tr, #tblRequisition tbody tr').remove();
+                InitializeRequisitionList($("#datepicker_from").val(), $("#datepicker_to").val());
+
+            });
 
         });
 

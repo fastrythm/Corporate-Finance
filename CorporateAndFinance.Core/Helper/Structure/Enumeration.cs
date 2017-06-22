@@ -18,8 +18,8 @@ namespace CorporateAndFinance.Core.Helper.Structure
     public struct UserRoles
     {
         public static string Admin = "Admin";
-        public static string FinanceUser = "FinanceUser";
-        public static string FinanceManager = "FinanceManager";
+        public static string User = "User";
+        public static string Manager = "Manager";
         public static string Employee = "Employee";
     }
 

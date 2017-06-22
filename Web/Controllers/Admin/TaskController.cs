@@ -116,7 +116,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
                 UserTaskVM userTask = new UserTaskVM();
                 userTask.DTObject = param;
-                var list = userTaskManagement.GetTaskByCriteria(userTask, type);
+                var userDepartments = userdepartmentManagement.GetAllUserDepartmentById(User.Identity.GetUserId());
+                var list = userTaskManagement.GetTaskByCriteria(userTask, type, userDepartments);
                 logger.DebugFormat("Successfully Retrieve User Task List Records [{1}] with Ticket Type [{0}]", type, list.Count());
 
 
@@ -188,9 +189,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
            // userTask.Users = userManagement.GetAllUsers();
 
-            var FinanceManager = RoleManager.Roles.Where(x => x.Name.Equals(UserRoles.FinanceManager)).SingleOrDefault();
-            var FinanceUser = RoleManager.Roles.Where(x =>  x.Name.Equals(UserRoles.FinanceUser)).SingleOrDefault();
-            userTask.Users = UserManager.Users.Where(x => !x.IsDeleted && (x.Roles.Select(y => y.RoleId).Contains(FinanceManager.Id) || x.Roles.Select(y => y.RoleId).Contains(FinanceUser.Id))).ToList();
+            var userDepartments = userdepartmentManagement.GetAllUserDepartmentById(User.Identity.GetUserId());
+            userTask.Users = userManagement.GetAllUsersByDepartments(userDepartments);
 
             return PartialView("_AddEditUserTask", userTask);
         }
@@ -382,24 +382,31 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
                     List<string> rcc = new List<string>();
                     rcc.Add(activeTaskDetail.FromUserEmail);
-                    logger.DebugFormat("Getting user with roles [{0}]", UserRoles.FinanceManager);
 
-                    var role = RoleManager.Roles.Where(x => x.Name.Equals(UserRoles.FinanceManager)).FirstOrDefault();
-                    var users = UserManager.Users.Where(x => !x.IsDeleted && x.Roles.Select(y => y.RoleId).Contains(role.Id)).ToList();
-                    logger.DebugFormat("Total [{0}] users found with roles [{1}]", UserRoles.FinanceManager, users.Count());
+                    logger.DebugFormat("Getting user with roles [{0}]", UserRoles.Manager);
+                    var role = RoleManager.Roles.Where(x => x.Name.Equals(UserRoles.Manager)).FirstOrDefault();
+                   
+                    var userDepartments = userdepartmentManagement.GetAllUserDepartmentById(User.Identity.GetUserId());
+                    if (userDepartments != null && userDepartments.Count() > 0)
+                    {
+                        var primaryDepartment = userDepartments.Where(x => x.IsPrimary).SingleOrDefault();
+                        var users = userManagement.GetAllUsersByRoleAndDepartment(role.Id, primaryDepartment.DepartmentID);
+                          logger.DebugFormat("Total [{0}] users found with roles [{1}]", UserRoles.Manager, users.Count());
 
-                    if (users.Count > 0)
-                        foreach (var user in users)
-                        {
-                            if (!user.Email.Equals(activeTaskDetail.FromUserEmail) && !user.Email.Equals(activeTaskDetail.ToUserEmail))
-                                rcc.Add(user.Email);
-                        }
 
-                    comManagement.RecipientCC = rcc;
-                    comManagement.HeaderImage = Server.MapPath("~/Themes/finance-1/img/logo.png");
+                           if (users.Count() > 0)
+                            foreach (var user in users)
+                            {
+                                if (!user.Email.Equals(activeTaskDetail.FromUserEmail) && !user.Email.Equals(activeTaskDetail.ToUserEmail))
+                                    rcc.Add(user.Email);
+                            }
 
-                    Async.Do(() => comManagement.SendEmail());
-                    logger.DebugFormat("Email Successfully Send");
+                        comManagement.RecipientCC = rcc;
+                        comManagement.HeaderImage = Server.MapPath("~/Themes/finance-1/img/logo.png");
+
+                        Async.Do(() => comManagement.SendEmail());
+                        logger.DebugFormat("Email Successfully Send");
+                    }
                 }
             }
             catch(Exception ex)
