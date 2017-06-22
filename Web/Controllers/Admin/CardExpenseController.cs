@@ -219,50 +219,52 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
         }
 
-        private ExcelFileProcess ProcessExpenseSheet(string path,string fileName)
+        private ExcelFileProcess ProcessExpenseSheet(string path, string fileName)
         {
             logger.DebugFormat("Processing Expense Sheet Name [{0}]", fileName);
 
-            DataSet ds =  ExcelFileReader.Read(path);
-            if(ds.Tables.Count == 0)
+            DataSet ds = ExcelFileReader.Read(path);
+            DataTable dataTable = ds.Tables[0];
+            dataTable = dataTable.Rows.Cast<DataRow>().Where(row => !row.ItemArray.All(field => field is System.DBNull || string.Compare((field as string).Trim(), string.Empty) == 0)).CopyToDataTable();
+            if (dataTable.Rows.Count == 0)
             {
                 logger.DebugFormat("No rows found in file [{0}]", fileName);
 
                 return new ExcelFileProcess { Message = "No rows to insert.", Response = false, MessageType = MessageClass.Error };
             }
 
-            string missingcolumn = ExcelFileReader.CheckAllColumnExist(ds.Tables[0], ColumnList);
-            if(!string.IsNullOrWhiteSpace(missingcolumn))
+            string missingcolumn = ExcelFileReader.CheckAllColumnExist(dataTable, ColumnList);
+            if (!string.IsNullOrWhiteSpace(missingcolumn))
             {
                 logger.Debug(string.Format(Resources.Messages.MSG_GENERIC_COLUMN_MISSING, missingcolumn));
 
                 return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_COLUMN_MISSING, missingcolumn), Response = false, MessageType = MessageClass.Error };
             }
 
-            string info = ExcelFileReader.ValidateData(ds.Tables[0], MandatoryColumnList);
+            string info = ExcelFileReader.ValidateData(dataTable, MandatoryColumnList);
 
-            if(!string.IsNullOrWhiteSpace(info))
+            if (!string.IsNullOrWhiteSpace(info))
             {
                 logger.Debug(info);
                 return new ExcelFileProcess { Message = info, Response = false, MessageType = MessageClass.Error };
             }
 
-            string errors =  ExcelFileReader.ValidateDataFormat(ds.Tables[0]);
+            string errors = ExcelFileReader.ValidateDataFormat(dataTable);
             if (!string.IsNullOrWhiteSpace(errors))
             {
                 logger.Debug(errors);
                 return new ExcelFileProcess { Message = errors, Response = false, MessageType = MessageClass.Error };
             }
 
-            var userCards =  userCardManagement.GetAllUserCards();
-            string accNumberError = ExcelFileReader.ValidateAccountNumber(ds.Tables[0], userCards);
+            var userCards = userCardManagement.GetAllUserCards();
+            string accNumberError = ExcelFileReader.ValidateAccountNumber(dataTable, userCards);
             if (!string.IsNullOrWhiteSpace(accNumberError))
             {
                 logger.Debug(accNumberError);
                 return new ExcelFileProcess { Message = accNumberError, Response = false, MessageType = MessageClass.Error };
             }
 
-            ExcelFileProcess process =  InsertData(ds.Tables[0], fileName, userCards);
+            ExcelFileProcess process = InsertData(dataTable, fileName, userCards);
 
             return process;
         }
