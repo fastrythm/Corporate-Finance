@@ -225,7 +225,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
             DataSet ds =  ExcelFileReader.Read(path);
             DataTable dataTable = ds.Tables[0];
-            dataTable = dataTable.Rows.Cast<DataRow>().Where(row => !row.ItemArray.All(field => field is System.DBNull || string.Compare((field as string).Trim(), string.Empty) == 0)).CopyToDataTable();
+            dataTable = dataTable.Rows.Cast<DataRow>().Where(row => !row.ItemArray.All(field => field is System.DBNull || string.Compare((Convert.ToString(field)).Trim(), string.Empty) == 0)).CopyToDataTable();
             if (dataTable.Rows.Count == 0)
             {
                 logger.DebugFormat("No rows found in file [{0}]", fileName);
