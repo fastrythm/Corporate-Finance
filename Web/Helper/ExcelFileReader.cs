@@ -116,8 +116,8 @@ namespace CorporateAndFinance.Web.Helper
             
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                var isFound = userCards.Select(x => x.CardNumber.ToLower() == dataTable.Rows[i][UserCardExpenseEnum.Account_Number].ToString().ToLower()).FirstOrDefault();
-                if (!isFound)
+                var card = userCards.Where(x => x.CardNumber.ToLower() == dataTable.Rows[i][UserCardExpenseEnum.Account_Number].ToString().ToLower()).FirstOrDefault();
+                if (card == null)
                 {
                     sb.AppendFormat(Messages.MSG_UPLOAD_ACCOUNT_NUMBER_NOTASSIGN, dataTable.Rows[i][UserCardExpenseEnum.Account_Number].ToString(), i + 2);
                 }
