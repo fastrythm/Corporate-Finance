@@ -10,6 +10,7 @@ namespace CorporateAndFinance.Core.ViewModel
     public class RequisitionVM
     {
         public long RequisitionID { get; set; }
+        public long RequisitionApprovalID { get; set; }
         public long DepartmentID { get; set; }
         public string JobTitle { get; set; }
         public string GradeLevel { get; set; }

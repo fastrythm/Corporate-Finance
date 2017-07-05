@@ -100,6 +100,12 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
 
             ViewBag.HaveRequisitionApproveRights = false;
+            var userDepartment = userdepartmentManagement.GetAllUserDepartmentByUserId(User.Identity.GetUserId(), User.IsInRole(UserRoles.Admin));
+            if(userDepartment != null && userDepartment.Count() > 0)
+            {
+                ViewBag.HaveRequisitionApproveRights = slaApprovalManagement.HaveSLALevelRightByType(userDepartment, SLAType.Requisition);
+            }
+           
 
             return View();
         }
@@ -157,6 +163,90 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return null;
+            }
+        }
+
+
+        [Route("Operation")]
+        [HttpPost]
+        public JsonResult Operation(string id_type, string comments)
+        {
+            try
+            {
+                var values = id_type.Split('_');
+                
+                logger.DebugFormat(" Requisition updated with  With ID [{0}] and action [{1}] ", values[0], values[1]);
+
+                if (!PermissionControl.CheckPermission(UserAppPermissions.Requisition_Approve_Reject))
+                {
+                    logger.Info("Don't have right to Approve/Reject Requisition record");
+                    return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                }
+
+                RequisitionApproval req = requisitionApprovalManagement.GetRequisitionApproval(Convert.ToInt64(values[2]));
+                if (req == null)
+                {
+                    return Json(new { Message = "Requisition Approval not found", MessageClass = MessageClass.Error, Response = false });
+                }
+
+                string selectedType = Convert.ToInt32(values[1]) == 1 ? RequestStatus.Approved : RequestStatus.Rejected;
+              
+                req.IsActive = true;
+                req.ModifiedBy = new Guid(User.Identity.GetUserId());
+                req.LastModified = DateTime.Now;
+                req.Status = selectedType;
+                req.Comments = comments;
+
+
+                if (requisitionApprovalManagement.Update(req))
+                {
+                    requisitionApprovalManagement.SaveRequisitionApproval();
+                    logger.InfoFormat("Requistion record Successfully {0}", selectedType);
+                    UpdateRequisitionStatus(req, selectedType);
+
+                    return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
+                }
+                else
+                {
+                    logger.InfoFormat("Requistion record not {0}", selectedType);
+                    return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
+            }
+        }
+
+        private void UpdateRequisitionStatus(RequisitionApproval req, string type)
+        {
+            var requisition = requisitionManagement.GetRequisition(Convert.ToInt64(req.RequisitionID));
+
+            if (type == RequestStatus.Approved)
+            {                
+                var reqApp = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(Convert.ToInt64(req.RequisitionID));
+                var approvedList = reqApp.Where(x => x.IsActive && x.Status.Equals(RequestStatus.Approved) ).ToList();
+
+                if (approvedList != null && approvedList.Count == reqApp.Count() )
+                {
+                    requisition.Status = RequisitionStatus.Level2_Approved;
+                    requisitionManagement.Update(requisition);
+                    requisitionManagement.SaveRequisition();
+                }
+
+            }
+            else if(type == RequestStatus.Rejected)  
+            {
+                var reqApp = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(Convert.ToInt64(req.RequisitionID));
+                var rejectedList = reqApp.Where(x => x.IsActive && x.Status.Equals(RequestStatus.Rejected)).ToList();
+                if (rejectedList != null && rejectedList.Count == reqApp.Count())
+                {
+                    requisition.Status = RequisitionStatus.Level2_Rejected;
+                    requisitionManagement.Update(requisition);
+                    requisitionManagement.SaveRequisition();
+                }
             }
         }
 

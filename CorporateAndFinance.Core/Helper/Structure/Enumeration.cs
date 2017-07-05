@@ -180,6 +180,8 @@ namespace CorporateAndFinance.Core.Helper.Structure
         Allocation_Add = 41,
         Allocation_Edit = 42,
         UserAllocation_Approve_Reject = 43,
+
+        Requisition_Approve_Reject = 44,
     }
 
     public class ChartOfAccount

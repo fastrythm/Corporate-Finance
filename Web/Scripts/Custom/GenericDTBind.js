@@ -59,7 +59,7 @@ function InitializeDialogConfirmation() {
 }
 
 function InitializeCommentsBox() {
-    $("#dialog_confirm").dialog({
+    $("#dialog_comments").dialog({
         dialogClass: 'ui-dialog-green',
         autoOpen: false,
         resizable: false,

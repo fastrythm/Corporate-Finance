@@ -42,20 +42,24 @@ namespace CorporateAndFinance.Data.Repositoreis
                                                            Status = req.Status,
                                                            NoOfPosition = req.NoOfPosition,
                                                            GradeLevel = req.GradeLevel,
-                                                           DepartmentID = req.DepartmentID
+                                                           DepartmentID = req.DepartmentID,
+                                                           RequisitionApprovalID = 0
                                                        });
 
                 }
                 else
                 {
 
-                    int condition = CheckHaveRight(deptId);
+                   // int condition = CheckHaveRight(deptId);
 
                     query = (from req in DbContext.Requisitions.AsNoTracking()
-                             where !req.IsDeleted
+                             join reqApp in DbContext.RequisitionApprovals.AsNoTracking()
+                             on req.RequisitionID equals reqApp.RequisitionID
+                             where !req.IsDeleted && !reqApp.IsActive
                              orderby req.RequisitionDate descending
                              where (DbFunctions.TruncateTime(req.RequisitionDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(req.RequisitionDate) <= DbFunctions.TruncateTime(toDate))
-                             && req.Status.Equals(type) && 1 == condition
+                             &&  ((type == RequisitionStatus.Level2_Pending && (req.Status.Equals(RequisitionStatus.Level1_Approved) || req.Status.Equals(RequisitionStatus.Level2_Pending)) )  || (req.Status.Equals(type)) )  
+                             && deptId.Contains(reqApp.DepartmentID)
                              select new RequisitionVM
                              {
                                  RequisitionID = req.RequisitionID,
@@ -64,7 +68,8 @@ namespace CorporateAndFinance.Data.Repositoreis
                                  Status = req.Status,
                                  NoOfPosition = req.NoOfPosition,
                                  GradeLevel = req.GradeLevel,
-                                 DepartmentID = req.DepartmentID
+                                 DepartmentID = req.DepartmentID,
+                                 RequisitionApprovalID = reqApp.RequisitionApprovalID
                              });
                 }
                  query = GetRequisitionFiltersOrderQuery(query, param);
@@ -82,6 +87,7 @@ namespace CorporateAndFinance.Data.Repositoreis
                     Status = index.Status,
                     NoOfPosition = index.NoOfPosition,
                     GradeLevel = index.GradeLevel,
+                    RequisitionApprovalID = index.RequisitionApprovalID,
                     DTObject = new DataTablesViewModel() { TotalRecordsCount = totalRecord }
                 }).ToList();
 

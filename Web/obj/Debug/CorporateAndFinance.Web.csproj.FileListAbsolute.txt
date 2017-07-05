@@ -28,6 +28,7 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\EntityFramework.SqlServer.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ICSharpCode.SharpZipLib.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\log4net.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.Agent.Intercept.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.DependencyCollector.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -53,6 +54,7 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.Web.Infrastructure.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Newtonsoft.Json.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Owin.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\RazorEngine.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ReportViewerForMvc.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Net.Http.Formatting.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Web.Helpers.dll
@@ -75,12 +77,14 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\b
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Autofac.Integration.Owin.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\AutoMapper.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Excel.pdb
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\log4net.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.DependencyCollector.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.Web.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.AI.WindowsServer.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.ApplicationInsights.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\RazorEngine.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Web.Helpers.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Web.Mvc.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\System.Web.Optimization.xml
@@ -122,7 +126,3 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\o
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\RdlCompile.compiled
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.pdb
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\RazorEngine.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\RazorEngine.xml
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\log4net.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\log4net.xml
