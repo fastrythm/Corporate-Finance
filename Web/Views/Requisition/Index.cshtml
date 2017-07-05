@@ -1,4 +1,7 @@
-﻿<div class="col-sm-9">
+﻿@using CorporateAndFinance.Core.Helper.Structure
+@using CorporateAndFinance.Web.Helper
+
+<div class="col-sm-9">
     <div id="div-table">
 
         <div class="row">
@@ -33,6 +36,22 @@
             </div>
             <div class="divider"></div>
         </div>
+        @if (ViewBag.HaveRequisitionApproveRights && PermissionControl.CheckPermission(UserAppPermissions.Requisition_Approve_Reject))
+        {
+        <div class="row mr15">
+            <div class="col-sm-4 text-left">
+                <div class="input-group">
+                    <select id="requestType" class="form-control" name="requestType">
+                        <option value="@RequestStatus.My_Request">My Requisition</option>
+                        <option value="@RequisitionStatus.Level2_Pending">Pending</option>
+                        <option value="@RequisitionStatus.Level2_Approved">Approved</option>
+                        <option value="@RequisitionStatus.Level2_Rejected">Rejected</option>
+                    </select>
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+                </div>
+            </div>
+        </div>
+        }
         <div class="row">
             <div class="col-sm-12">
 
@@ -40,6 +59,13 @@
                     <p>
                         <span class="icon icon-warning-sign"></span>
                         Selected Record will be permanently deleted and cannot be recovered. Are you sure?
+                    </p>
+                </div>
+                <div id="dialog_comments" title="Want to Approve/Reject">
+                    <p>
+
+                        <textarea type="text" id="txtComments" class="form-control" placeholder="Comments" aria-describedby="basic-addon4"></textarea>
+
                     </p>
                 </div>
                 <!-- BEGIN FORM-->
@@ -66,7 +92,7 @@
         ajaxEnable = false;
         $(document).ready(function () {
 
-
+            InitializeCommentsBox();
             InitializeDialogConfirmation();
             InitializeRequisitionList('', '');
 
@@ -88,10 +114,18 @@
             });
 
 
+            $("#requestType").change(function () {
+
+                oTable.fnDestroy();
+                $('#tblRequisition thead tr, #tblRequisition tbody tr').remove();
+                InitializeRequisitionList($("#datepicker_from").val(), $("#datepicker_to").val());
+
+            });
+
         });
 
         function InitializeRequisitionList(fromDate, toDate) {
-
+            var reqtype = $("#requestType").val();
 
             GenerateDTVersion1('#tblRequisition', [
                      {
@@ -119,11 +153,21 @@
                             "bSortable": false,
                             "sWidth": "100px",
                             "sTitle": 'Action',
-                            "render": function (data, type, full, meta) {
-                                return '<a onClick=\'javascript:AddEditRecord("' + data + '");\' data-toggle="tooltip" title="Edit"><button type="button" class="btn btn-action btn-info"><i class="glyphicon glyphicon-edit"></i></button></a>&nbsp;' + '<a onClick="javascript:DeleteRecord(' + data + ');" data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
+                            "render": function (data, type, full, meta)
+                            {
+                                var myrequest = '<a onClick=\'javascript:AddEditRecord("' + data + '");\' data-toggle="tooltip" title="Edit"><button type="button" class="btn btn-action btn-info"><i class="glyphicon glyphicon-edit"></i></button></a>&nbsp;' + '<a onClick="javascript:DeleteRecord(' + data + ');" data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
+                                var view = '<a onClick=\'javascript:ViewRecord("' + data + '");\' data-toggle="tooltip" title="View"><button type="button" class="btn btn-action btn-success"><i class="glyphicon glyphicon-eye-open"></i></button></a>&nbsp;';
+                                if (reqtype == '@RequestStatus.My_Request' || reqtype == undefined)
+                                {
+                                    return myrequest;
+                                }
+                                else if (reqtype == '@RequisitionStatus.Level2_Pending')
+                                { return view + '<a onClick=\'javascript:Operation("' + data + '","' + full.RequisitionApprovalID + '",1);\' data-toggle="tooltip" title="Approve"><button type="button" class="btn btn-action btn-warning"><i class="glyphicon glyphicon-ok"></i></button></a>&nbsp;' + '<a onClick=\'javascript:Operation("' + data + '","' + full.RequisitionApprovalID + '",2);\' data-toggle="tooltip" title="Reject"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-remove"></i></button></a>'; }
+                                else
+                                { return view; }
                             }
                         }
-            ], '/Requisition/RequisitionList?fromDate=' + fromDate + '&toDate=' + toDate, {
+            ], '/Requisition/RequisitionList?fromDate=' + fromDate + '&toDate=' + toDate + '&type=' + reqtype, {
                 "order": [[0, "asc"]], "buttons": [{
                     extend: 'excelHtml5',
                     title: 'Requisitions',
@@ -146,6 +190,12 @@
             });
         }
 
+        function Operation(id,reqAppId, type)
+        {
+            $('#hdnUniqueSetUpRecord').val(id + "_" + type + "_" + reqAppId);
+            $("#dialog_comments").dialog("open");
+            $('.ui-dialog button').blur();// avoid button autofocus
+        }
 
         function DeleteRecord(id) {
 
@@ -173,5 +223,33 @@
             }
         }
 
+        function OperationConfirmation(obj) {
+            if (obj != null) {
+                obj.dialog("close");
+                $('#loader-wrapper').show();
+
+                $.post("@Url.Action("Operation", "Requisition")", {id_type: $('#hdnUniqueSetUpRecord').val(),comments: $('#txtComments').val() }, function (data, status) {
+                    if (data != null) {
+                        if (data.Response) {
+                            oTable.fnDraw(false);
+                        }
+                        ALGritter('', data.Message, false, false, data.MessageClass);
+
+                    }
+                    $('#hdnUniqueSetUpRecord').val('');
+                    $('#txtComments').val('');
+                });
+
+        }
+        }
+        function ViewRecord(reqId) {
+            DTToggler();
+       
+                $('#divOperations').load('@(Url.Action("View", "Requisition" , null, Request.Url.Scheme))?id=' + reqId, function () {
+                    var $form = $(this).find('form');
+                    $.validator.unobtrusive.parse($form);
+                });
+          
+        }
     </script>
 }

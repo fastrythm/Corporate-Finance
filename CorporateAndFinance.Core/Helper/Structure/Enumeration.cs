@@ -18,9 +18,15 @@ namespace CorporateAndFinance.Core.Helper.Structure
     public struct UserRoles
     {
         public static string Admin = "Admin";
-        public static string FinanceUser = "FinanceUser";
-        public static string FinanceManager = "FinanceManager";
+        public static string User = "User";
+        public static string Manager = "Manager";
         public static string Employee = "Employee";
+    }
+
+    public struct SLAType
+    {
+        public static string Requisition = "Requisition";
+       
     }
 
     public class ExcelFileProcess
@@ -107,6 +113,8 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Pending = "Pending";
         public static string Approved = "Approved";
         public static string Rejected = "Rejected";
+        public static string Deleted = "Deleted";
+        public static string My_Request = "My_Request";
 
     }
 
@@ -167,6 +175,13 @@ namespace CorporateAndFinance.Core.Helper.Structure
         Requisition_Delete = 37,
         Requisition_Add = 38,
         Requisition_Edit = 39,
+
+        UserAllocation_View = 40,
+        Allocation_Add = 41,
+        Allocation_Edit = 42,
+        UserAllocation_Approve_Reject = 43,
+
+        Requisition_Approve_Reject = 44,
     }
 
     public class ChartOfAccount

@@ -17,7 +17,6 @@ namespace CorporateAndFinance.Web.Helper
     {
         static Regex regexDateFormat = new Regex(@"^([0]\d|[1][0-2])\/([0-2]\d|[3][0-1])\/([2][01]|[1][6-9])\d{2}(\s([0-1]\d|[2][0-3])(\:[0-5]\d){1,2})?$");
         static Regex regexNumberFormat = new Regex(@"^[0-9]*$");
-
         static Regex regexCurrencyFormat = new Regex(@"^-?[0-9]\d*(\.\d+)?$");
 
         public static DataSet Read(string filePath, bool IsFirstRowAsColumnNames = true)
@@ -117,8 +116,8 @@ namespace CorporateAndFinance.Web.Helper
             
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                var isFound = userCards.Select(x => x.CardNumber.ToLower() == dataTable.Rows[i][UserCardExpenseEnum.Account_Number].ToString().ToLower()).FirstOrDefault();
-                if (!isFound)
+                var card = userCards.Where(x => x.CardNumber.ToLower() == dataTable.Rows[i][UserCardExpenseEnum.Account_Number].ToString().ToLower()).FirstOrDefault();
+                if (card == null)
                 {
                     sb.AppendFormat(Messages.MSG_UPLOAD_ACCOUNT_NUMBER_NOTASSIGN, dataTable.Rows[i][UserCardExpenseEnum.Account_Number].ToString(), i + 2);
                 }

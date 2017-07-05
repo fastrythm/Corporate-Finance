@@ -5,18 +5,13 @@ using CorporateAndFinance.Service.Interface;
 using CorporateAndFinance.Web.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using RazorEngine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using Web;
-using RazorEngine;
-using RazorEngine.Templating;
-using CorporateAndFinance.Service.Helper;
 using log4net;
 using System.Web.Script.Serialization;
 
@@ -37,8 +32,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private readonly ICommunicationManagement comManagement;
         private readonly IUserDepartmentManagement userdepartmentManagement;
         private readonly IDepartmentManagement departmentManagement;
+        private readonly ISLAApprovalManagement slaApprovalManagement;
 
-        public RequisitionController(IRequisitionManagement requisitionManagement, IUserAllocationManagement userAllocationManagement, IRequisitionApprovalManagement requisitionApprovalManagement, IUserManagement userManagement, ICommunicationManagement comManagement, IUserDepartmentManagement userdepartmentManagement, IDepartmentManagement departmentManagement)
+        public RequisitionController(IRequisitionManagement requisitionManagement, IUserAllocationManagement userAllocationManagement, IRequisitionApprovalManagement requisitionApprovalManagement, IUserManagement userManagement, ICommunicationManagement comManagement, IUserDepartmentManagement userdepartmentManagement, IDepartmentManagement departmentManagement, ISLAApprovalManagement slaApprovalManagement)
         {
             this.requisitionManagement = requisitionManagement;
             this.userAllocationManagement = userAllocationManagement;
@@ -47,6 +43,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             this.comManagement = comManagement;
             this.userdepartmentManagement = userdepartmentManagement;
             this.departmentManagement = departmentManagement;
+            this.slaApprovalManagement = slaApprovalManagement;
         }
 
 
@@ -102,18 +99,29 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return RedirectToAction("Restricted", "Home");
             }
 
+            ViewBag.HaveRequisitionApproveRights = false;
+            var userDepartment = userdepartmentManagement.GetAllUserDepartmentByUserId(User.Identity.GetUserId(), User.IsInRole(UserRoles.Admin));
+            if(userDepartment != null && userDepartment.Count() > 0)
+            {
+                ViewBag.HaveRequisitionApproveRights = slaApprovalManagement.HaveSLALevelRightByType(userDepartment, SLAType.Requisition);
+            }
+           
+
             return View();
         }
 
  
         [HttpPost]
         [Route("RequisitionList")]
-        public ActionResult RequisitionList(DataTablesViewModel param, string fromDate, string toDate)
+        public ActionResult RequisitionList(DataTablesViewModel param, string fromDate, string toDate, string type)
         {
             try
             {
                 if (!PermissionControl.CheckPermission(UserAppPermissions.Requisition_View))
                 { return RedirectToAction("Restricted", "Home"); }
+
+                if (string.IsNullOrEmpty(type) || type.Equals("undefined"))
+                    type = RequestStatus.My_Request;
 
                 DateTime frdate = DateTime.Now;
                 if (!string.IsNullOrWhiteSpace(fromDate))
@@ -139,7 +147,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
                 RequisitionVM requisition = new RequisitionVM();
                 requisition.DTObject = param;
-                var list = requisitionManagement.GetAllRequisitionByParam(requisition, frdate, tdate, userDepartments,IsAdmin);
+                var list = requisitionManagement.GetAllRequisitionByParam(requisition, frdate, tdate, userDepartments,IsAdmin, type);
                 logger.DebugFormat("Successfully Retrieve  Requisition List Records [{2}] with From Date [{0}] and To Date [1]", frdate.ToShortDateString(), tdate.ToShortDateString(), list.Count());
 
                 return Json(new
@@ -155,6 +163,90 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
                 return null;
+            }
+        }
+
+
+        [Route("Operation")]
+        [HttpPost]
+        public JsonResult Operation(string id_type, string comments)
+        {
+            try
+            {
+                var values = id_type.Split('_');
+                
+                logger.DebugFormat(" Requisition updated with  With ID [{0}] and action [{1}] ", values[0], values[1]);
+
+                if (!PermissionControl.CheckPermission(UserAppPermissions.Requisition_Approve_Reject))
+                {
+                    logger.Info("Don't have right to Approve/Reject Requisition record");
+                    return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
+                }
+
+                RequisitionApproval req = requisitionApprovalManagement.GetRequisitionApproval(Convert.ToInt64(values[2]));
+                if (req == null)
+                {
+                    return Json(new { Message = "Requisition Approval not found", MessageClass = MessageClass.Error, Response = false });
+                }
+
+                string selectedType = Convert.ToInt32(values[1]) == 1 ? RequestStatus.Approved : RequestStatus.Rejected;
+              
+                req.IsActive = true;
+                req.ModifiedBy = new Guid(User.Identity.GetUserId());
+                req.LastModified = DateTime.Now;
+                req.Status = selectedType;
+                req.Comments = comments;
+
+
+                if (requisitionApprovalManagement.Update(req))
+                {
+                    requisitionApprovalManagement.SaveRequisitionApproval();
+                    logger.InfoFormat("Requistion record Successfully {0}", selectedType);
+                    UpdateRequisitionStatus(req, selectedType);
+
+                    return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
+                }
+                else
+                {
+                    logger.InfoFormat("Requistion record not {0}", selectedType);
+                    return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
+            }
+        }
+
+        private void UpdateRequisitionStatus(RequisitionApproval req, string type)
+        {
+            var requisition = requisitionManagement.GetRequisition(Convert.ToInt64(req.RequisitionID));
+
+            if (type == RequestStatus.Approved)
+            {                
+                var reqApp = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(Convert.ToInt64(req.RequisitionID));
+                var approvedList = reqApp.Where(x => x.IsActive && x.Status.Equals(RequestStatus.Approved) ).ToList();
+
+                if (approvedList != null && approvedList.Count == reqApp.Count() )
+                {
+                    requisition.Status = RequisitionStatus.Level2_Approved;
+                    requisitionManagement.Update(requisition);
+                    requisitionManagement.SaveRequisition();
+                }
+
+            }
+            else if(type == RequestStatus.Rejected)  
+            {
+                var reqApp = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(Convert.ToInt64(req.RequisitionID));
+                var rejectedList = reqApp.Where(x => x.IsActive && x.Status.Equals(RequestStatus.Rejected)).ToList();
+                if (rejectedList != null && rejectedList.Count == reqApp.Count())
+                {
+                    requisition.Status = RequisitionStatus.Level2_Rejected;
+                    requisitionManagement.Update(requisition);
+                    requisitionManagement.SaveRequisition();
+                }
             }
         }
 
@@ -181,6 +273,21 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 {
                     requisitionManagement.SaveRequisition();
                     logger.Info("Requisition record Successfully Deleted");
+                    var allocation =  userAllocationManagement.GetUserAllocationsByRequisition(id);
+                    if(allocation != null)
+                    {
+                        logger.DebugFormat("Deleting User Allocation With Requisition ID [{0}] ", id);
+                        foreach(var userAllocation in allocation)
+                        {
+                            userAllocation.Status = RequestStatus.Deleted;
+                            userAllocation.ModifiedBy = new Guid(User.Identity.GetUserId());
+                            userAllocation.IsActive = false;
+                            userAllocationManagement.Update(userAllocation);
+                        }
+                        userAllocationManagement.SaveUserAllocation();
+                        logger.Info("User Allocation records Successfully Deleted");
+                    }
+
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
                 }
                 else
@@ -204,11 +311,43 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             userDepartment.Departments = departmentManagement.GetAllDepartments();
             return PartialView("_UserAllocatedDepartment", userDepartment);
         }
+        [Route("View")]
+        public ActionResult View(int id)
+        {
+            ViewBag.Title = "Add/Update New Requisition";
+            ViewBag.IsAddEdit = false;
+            bool isAdmin = false;
+            if (User.IsInRole("Admin"))
+            {
+                isAdmin = true;
+            }
+            var departments = departmentManagement.GetAllDepartments();
+
+            Requisition requisition = requisitionManagement.GetRequisition(id);
+            if (requisition == null)
+                requisition = new Requisition();
+            requisition.UserDepartments = userdepartmentManagement.GetAllUserDepartmentByUserId(User.Identity.GetUserId(), isAdmin);
+            var userAllocatedDepartments = userAllocationManagement.GetUserAllocationsByRequisition(id);
+
+            if (userAllocatedDepartments != null)
+            {
+                foreach (var userDept in userAllocatedDepartments)
+                {
+                    userDept.Departments = departments;
+
+                }
+                requisition.UserAllocatedDepartments = userAllocatedDepartments;
+            }
+
+            return PartialView("_AddEditRequisition", requisition);
+        }
+
 
         [Route("AddEdit")]
         public ActionResult AddEdit(int id)
         {
             ViewBag.Title = "Add/Update New Requisition";
+            ViewBag.IsAddEdit = true;
             bool isAdmin = false;
             if (User.IsInRole("Admin"))
             {
@@ -234,6 +373,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
             return PartialView("_AddEditRequisition", requisition);
         }
+
+
+
 
 
 
@@ -271,11 +413,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });
                         }
                         model.CreatedBy = new Guid(User.Identity.GetUserId());
-                      
+                        model.RequisitionDate = DateTime.Now;
                         if (requisitionManagement.Add(model))
                         {
                             requisitionManagement.SaveRequisition();
                             AddUpdateUserAllocation(model);
+                            AddUpdateSLAApproval(model);
+
                             logger.Info("Successfully Saved New Requisition ");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Requisition"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -297,17 +441,29 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         }
 
                         var req = requisitionManagement.GetRequisition(model.RequisitionID);
-                        if (req.Status != RequisitionStatus.Level1_Rejected || req.Status != RequisitionStatus.Level2_Rejected)
+                        if (req.Status != RequisitionStatus.Level1_Rejected && req.Status != RequisitionStatus.Level2_Rejected)
                         {
                             return Json(new { Message = "Your requisition is in pending. you are have no rights to change.", MessageClass = MessageClass.Error, Response = false });
                         }
 
+
+                        model.RequisitionDate = req.RequisitionDate;
+
+                        if (req.Status == RequisitionStatus.Level2_Rejected)
+                             model.Status = RequisitionStatus.Level2_Pending;
+                        else
+                            model.Status = RequisitionStatus.Level1_Pending;
+
+
                         requisitionManagement.DeAttach(req);
+
+                      
 
                         if (requisitionManagement.Update(model))
                         {
                             requisitionManagement.SaveRequisition();
                             AddUpdateUserAllocation(model);
+                            AddUpdateSLAApproval(model);
                             logger.Info("Successfully Updated Requisition ");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Requisition"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -331,7 +487,6 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return Json(new { Message = Resources.Messages.MSG_GENERIC_FAILED, MessageClass = MessageClass.Error, Response = false });
             }
         }
-
 
 
         private string ValidateUserDeparments(Requisition model)
@@ -395,14 +550,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     {
                         if (allocate.DepartmentID == model.SelectedDepartment[i] && allocate.Percentage != model.SelectedDepartmentPercentage[i])
                         {
-                            AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], allocate);
+                            AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], allocate,0);
                         }
                     }
                     else
                     {
-                        AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], null);
+                        AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], null,model.DepartmentID);
                     }
-
                   
                 }
 
@@ -421,7 +575,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 for(int i=0;i<model.SelectedDepartment.Length;i++)
                 {
-                    AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i],null);
+                    AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i],null, model.DepartmentID);
                 }
 
                 userAllocationManagement.SaveUserAllocation();
@@ -429,7 +583,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         }
 
-        public void AllocateUserInDepartment(long requisitionID,long departmentId,decimal percentage, UserAllocation allocate)
+        public void AllocateUserInDepartment(long requisitionID,long departmentId,decimal percentage, UserAllocation allocate,long requestedDepartmentId)
         {
             if (allocate == null)
             {
@@ -438,22 +592,72 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 userAllocate.StartDate = DateTime.Now;
                 userAllocate.DepartmentID = departmentId;
                 userAllocate.Percentage = percentage;
+                userAllocate.RequestedDepartmentID = requestedDepartmentId;
                 userAllocate.Status = RequestStatus.Pending;
                 userAllocate.CreatedBy = new Guid(User.Identity.GetUserId());
-                userAllocate.IsActive = true;
+                userAllocate.IsActive = false;
                 userAllocationManagement.Add(userAllocate);
             }
             else
             {
                 allocate.StartDate = DateTime.Now;
                 allocate.Percentage = percentage;
+                allocate.IsActive = false;
+                allocate.Status = RequestStatus.Pending;
+                allocate.Comments = string.Empty;
                 allocate.ModifiedBy = new Guid(User.Identity.GetUserId());
                 userAllocationManagement.Update(allocate);
             }
-           
             
         }
 
+        private void AddUpdateSLAApproval(Requisition model)
+        {
+            var slaApprovals = slaApprovalManagement.GetAllSLAApprovalByType(SLAType.Requisition);
+
+            var approvalReq = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(model.RequisitionID);
+            if (approvalReq != null && approvalReq.Count() > 0)
+            {
+                foreach (var sla in slaApprovals)
+                {
+                    RequisitionApproval reqApp = requisitionApprovalManagement.GetRequisitionApprovalByDeptIdAndRequisition(sla.DepartmentID, model.RequisitionID);
+                    if (reqApp != null)
+                    {
+                        
+                        reqApp.IsActive = false;
+                        reqApp.Status = RequestStatus.Pending;
+                        requisitionApprovalManagement.Update(reqApp);
+                    }
+                    else
+                    {
+                        reqApp = new RequisitionApproval();
+                        reqApp.RequisitionID = model.RequisitionID;
+                        reqApp.IsActive = false;
+                        reqApp.Status = RequestStatus.Pending;
+                        reqApp.CreatedBy = new Guid(User.Identity.GetUserId());
+                        reqApp.DepartmentID = sla.DepartmentID;
+                        requisitionApprovalManagement.Add(reqApp);
+
+                    }
+                }
+                requisitionApprovalManagement.SaveRequisitionApproval();
+            }
+            else
+            {
+                foreach(var sla in slaApprovals)
+                {
+                    RequisitionApproval reqApp = new RequisitionApproval();
+                    reqApp.RequisitionID = model.RequisitionID;
+                    reqApp.IsActive = false;
+                    reqApp.Status = RequestStatus.Pending;
+                    reqApp.CreatedBy = new Guid(User.Identity.GetUserId());
+                    reqApp.DepartmentID = sla.DepartmentID;
+                    requisitionApprovalManagement.Add(reqApp);
+                }
+                requisitionApprovalManagement.SaveRequisitionApproval();
+            }
+
+        }
 
         //private void SendUserTaskEmail(long taskId)
         //{

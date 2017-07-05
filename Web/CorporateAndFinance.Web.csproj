@@ -260,6 +260,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\AccountController.cs" />
+    <Compile Include="Controllers\Admin\UserAllocationController.cs" />
     <Compile Include="Controllers\Admin\BankPositionController.cs" />
     <Compile Include="Controllers\Admin\BankTransactionController.cs" />
     <Compile Include="Controllers\Admin\ComplianceController.cs" />
@@ -605,6 +606,7 @@
     <None Include="Properties\PublishProfiles\CF-Release-013.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-014.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-015.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-016.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -770,10 +772,12 @@
     <Content Include="Views\Requisition\Index.cshtml" />
     <Content Include="Views\Requisition\_AddEditRequisition.cshtml" />
     <Content Include="Views\Requisition\_UserAllocatedDepartment.cshtml" />
+    <Content Include="Views\UserAllocation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadFiles\" />
+    <Folder Include="Views\Allocation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -27,5 +27,14 @@ namespace CorporateAndFinance.Service.Implementation
             return userRepository.GetMany(x=>x.IsDeleted == false);
         }
 
+        public IEnumerable<ApplicationUser> GetAllUsersByDepartments(IEnumerable<UserDepartment> departments)
+        {
+            return userRepository.GetAllUsersByDepartments(departments);
+        }
+
+        public IEnumerable<ApplicationUser> GetAllUsersByRoleAndDepartment(string roleId, long departmentId)
+        {
+            return userRepository.GetAllUsersByRoleAndDepartment(roleId, departmentId);
+        }
     }
 }

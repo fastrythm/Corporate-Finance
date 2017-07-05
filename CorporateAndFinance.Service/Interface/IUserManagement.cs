@@ -10,5 +10,9 @@ namespace CorporateAndFinance.Service.Interface
     public interface IUserManagement
     {
         IEnumerable<ApplicationUser> GetAllUsers();
+
+        IEnumerable<ApplicationUser> GetAllUsersByDepartments(IEnumerable<UserDepartment> departments);
+
+        IEnumerable<ApplicationUser> GetAllUsersByRoleAndDepartment(string roleName , long departmentName);
     }
 }

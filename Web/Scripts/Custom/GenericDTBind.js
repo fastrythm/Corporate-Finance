@@ -57,6 +57,37 @@ function InitializeDialogConfirmation() {
 
    
 }
+
+function InitializeCommentsBox() {
+    $("#dialog_comments").dialog({
+        dialogClass: 'ui-dialog-green',
+        autoOpen: false,
+        resizable: false,
+        height: 210,
+        modal: true,
+        buttons: [
+          {
+              'class': 'btn green',
+              "text": "Confirm",
+              click: function () {
+                      OperationConfirmation($(this));
+                
+              }
+          },
+          {
+              'class': 'btn',
+              "text": "Cancel",
+
+              click: function () {
+                  $(this).dialog("close");
+              }
+          }
+        ]
+    });
+
+
+}
+
 // DatTable Configurations & Settings
 var oTable;
 var oTableDetail;

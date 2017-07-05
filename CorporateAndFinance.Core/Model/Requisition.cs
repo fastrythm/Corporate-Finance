@@ -20,7 +20,7 @@ namespace CorporateAndFinance.Core.Model
         
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Date")]
-        public DateTime RequisitionDate { get; set; } = DateTime.Now;
+        public DateTime RequisitionDate { get; set; }
         [DisplayName("Ref: No.")]
         public string RequestNumber { get; set; }
         [DisplayName("Department")]
@@ -102,6 +102,7 @@ namespace CorporateAndFinance.Core.Model
         [DefaultValue("False")]
         public bool IsDeleted { get; set; }
         public string Status { get; set; }
+    
         public Guid CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime LastModified { get; set; }

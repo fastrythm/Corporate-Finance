@@ -30,14 +30,19 @@ namespace CorporateAndFinance.Service.Implementation
             return requisitionApprovalRepository.Delete(model);
         }
 
-        public IEnumerable<RequisitionApproval> GetAllRequisitionApprovalByParam(DateTime fromDate, DateTime toDate)
+        public IEnumerable<RequisitionApproval> GetAllRequisitionApprovalByRequisition(long id)
         {
-            return requisitionApprovalRepository.GetAllRequisitionApprovalByParam(fromDate, toDate);
+            return requisitionApprovalRepository.GetMany(x => x.RequisitionID == id);
         }
 
         public RequisitionApproval GetRequisitionApproval(long id)
         {
            return requisitionApprovalRepository.GetById(id);
+        }
+
+        public RequisitionApproval GetRequisitionApprovalByDeptIdAndRequisition(long departmentID, long requisitionID)
+        {
+            return requisitionApprovalRepository.Get(x => x.RequisitionID == requisitionID && x.DepartmentID == departmentID );
         }
 
         public void SaveRequisitionApproval()

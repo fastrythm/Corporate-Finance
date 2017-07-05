@@ -41,8 +41,8 @@ namespace CorporateAndFinance.Data.Repositoreis
                 query = (from userDept in DbContext.UserDepartments.AsNoTracking()
                                                 join dept in DbContext.Departments.AsNoTracking()
                                                 on userDept.DepartmentID equals dept.DepartmentID
-                                                where userDept.IsActive
-
+                                                where userDept.IsActive  && userDept.UserID == userId
+                                                
                                                 select new UserDepartmentVM
                                                 {
                                                     UserDepartmentID = userDept.UserDepartmentID,

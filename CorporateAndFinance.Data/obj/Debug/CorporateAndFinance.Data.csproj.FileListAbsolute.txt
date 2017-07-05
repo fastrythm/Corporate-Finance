@@ -9,11 +9,13 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\CorporateAndFinance.Core.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\EntityFramework.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\EntityFramework.SqlServer.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\log4net.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\CorporateAndFinance.Core.pdb
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\EntityFramework.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\log4net.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csprojResolveAssemblyReference.cache
@@ -33,11 +35,6 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserTask.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserTaskTypeField.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserTaskDetailIsActive.resources
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csproj.GenerateResource.Cache
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.pdb
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\log4net.dll
-D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\bin\Debug\log4net.xml
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.BankTransactionMandatorFields.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserTaskDetailChangeByField.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.CompanyBankTransactionReferenceID.resources
@@ -50,3 +47,8 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.Requisition_UserAllocation_Tables.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.RequisitionMandatoryFields.resources
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.RequistionPersonReplacementField.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserAllocationRequestedDepartmentIDField.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.SLAApprovalnewtable.resources
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csproj.GenerateResource.Cache
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.dll
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.pdb

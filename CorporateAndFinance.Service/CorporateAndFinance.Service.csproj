@@ -49,6 +49,7 @@
     <Compile Include="Implementation\CommunicationManagement.cs" />
     <Compile Include="Implementation\ConsultantManagement.cs" />
     <Compile Include="Implementation\RequisitionApprovalManagement.cs" />
+    <Compile Include="Implementation\SLAApprovalManagement.cs" />
     <Compile Include="Implementation\UserAllocationManagement.cs" />
     <Compile Include="Implementation\RequisitionManagement.cs" />
     <Compile Include="Implementation\UserDepartmentManagement.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Implementation\UserPermissionManagement.cs" />
     <Compile Include="Implementation\UserTaskDetailManagement.cs" />
     <Compile Include="Implementation\UserTaskManagement.cs" />
+    <Compile Include="Interface\ISLAApprovalManagement.cs" />
     <Compile Include="Interface\IBankTransactionManagement.cs" />
     <Compile Include="Interface\ICommunicationManagement.cs" />
     <Compile Include="Interface\IConsultantManagement.cs" />
