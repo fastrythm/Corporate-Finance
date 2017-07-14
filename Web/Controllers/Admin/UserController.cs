@@ -29,13 +29,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private readonly IUserPermissionManagement userPermissionManagement;
         private readonly IDepartmentManagement departmentManagement;
         private readonly IUserDepartmentManagement userdepartmentManagement;
-
-        public UserController(IUserPermissionManagement userPermissionManagement, IDepartmentManagement departmentManagement, IUserDepartmentManagement userdepartmentManagement)
+        private readonly IRequisitionManagement requisitionManagement;
+        private readonly IUserAllocationManagement userAllocationManagement;
+        public UserController(IUserPermissionManagement userPermissionManagement, IDepartmentManagement departmentManagement, IUserDepartmentManagement userdepartmentManagement, IRequisitionManagement requisitionManagement, IUserAllocationManagement userAllocationManagement)
         {
             this.userPermissionManagement = userPermissionManagement;
             this.departmentManagement = departmentManagement;
             this.userdepartmentManagement = userdepartmentManagement;
-           
+            this.requisitionManagement = requisitionManagement;
+            this.userAllocationManagement = userAllocationManagement;
+
         }
 
 
@@ -169,6 +172,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
             var departments = departmentManagement.GetAllDepartments();
+            var requisition = requisitionManagement.GetAllApprovedRequisition();
             var roles = RoleManager.Roles.Where(x => !x.Name.Equals("Admin")).ToList().Select(x => new Core.ViewModel.SelectListItem()
             {
                 Text = x.Name,
@@ -176,6 +180,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             });
 
             var user = new UserVM();
+            user.RequisitionList = requisition;
             if (id != "0")
             {
                 var appUser = UserManager.FindById(id);
@@ -190,6 +195,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 user.Mobile = appUser.Mobile;
                 user.Designation = appUser.Designation;
                 user.UserPermissions = GetUserPermission(id);
+                user.RequisitionID = appUser.RequisitionID;
                 if (userDepartments != null)
                 {
                     foreach (var userDept in userDepartments)
@@ -273,20 +279,22 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
                         user.Designation = model.Designation;
+
+                        if (model.RequisitionID.HasValue)
+                        user.RequisitionID = model.RequisitionID;
+
                         //   user.DepartmentID = model.DepartmentID;
                         var isUpdate = UserManager.Update(user);
                         var userRoles = UserManager.GetRoles(model.Id);
 
                         if (isUpdate.Succeeded)
                         {
-
-                            //UserManager.RemoveFromRoles(user.Id, userRoles.ToArray<string>());
-                            //if (model.SelectedRoles != null)
-                            //{
-                            //    var result = UserManager.AddToRoles(model.Id, model.SelectedRoles.ToArray<string>());
-                            //}
                             AddUpdateUserDepartments(model, user.Id);
                             UpdateUserPermission(model.UserPermissions, user.Id);
+
+                            if (model.RequisitionID.HasValue)
+                            UpdateUserAllocation(user.Id, user.RequisitionID);
+
                             logger.Info("Successfully Updated User Record");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -313,19 +321,15 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user.Mobile = model.Mobile;
                         user.EmployeeNumber = model.EmployeeNumber;
                         user.Designation = model.Designation;
-                        //   user.DepartmentID = model.DepartmentID;
+                        user.RequisitionID = model.RequisitionID;
 
                         var isSaved = UserManager.Create(user, model.Password);
 
                         if (isSaved.Succeeded)
                         {
-                            //if (model.SelectedRoles != null && model.SelectedRoles.Count() > 0)
-                            //{
-                            //    var result = UserManager.AddToRoles(user.Id, model.SelectedRoles.ToArray<string>());
-                            //}
                             AddUpdateUserDepartments(model, user.Id);
                             UpdateUserPermission(model.UserPermissions, user.Id);
-
+                            UpdateUserAllocation(user.Id, user.RequisitionID);
                             logger.DebugFormat("Successfully Create New User Record with UserID [{0}]", user.Id);
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "User"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -347,6 +351,32 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
         }
 
+        private void UpdateUserAllocation(string userId, long? requisitionID)
+        {
+            if (requisitionID.HasValue)
+            {
+                long reqId = Convert.ToInt64(requisitionID);
+                var userAllocations = userAllocationManagement.GetUserAllocationsByRequisition(reqId);
+                foreach(var allocation in userAllocations)
+                {
+                    UserAllocation userAllocate = new UserAllocation();
+                    userAllocate.RequestedDepartmentID = allocation.RequestedDepartmentID;
+                    userAllocate.DepartmentID = allocation.DepartmentID;
+                    userAllocate.UserID = userId;
+                    userAllocate.RequisitionID = allocation.RequisitionID;
+                    userAllocate.StartDate = allocation.StartDate;
+                    userAllocate.EndDate = allocation.EndDate;
+                    userAllocate.IsActive = allocation.IsActive;
+                    userAllocate.Percentage = allocation.Percentage;
+                    userAllocate.CreatedBy = new Guid(User.Identity.GetUserId());
+                    userAllocate.Status = allocation.Status;
+
+                    userAllocationManagement.Add(userAllocate);
+                }
+
+                userAllocationManagement.SaveUserAllocation();
+            }
+        }
 
         private void UpdateUserPermission(List<UserAppPermissions> userAppPermissions, string userId)
         {

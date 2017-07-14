@@ -32,9 +32,9 @@ namespace CorporateAndFinance.Service.Implementation
             return userAllocationRepository.Delete(model);
         }
 
-        public IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM requisition, DateTime frdate, DateTime tdate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type)
+        public IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM requisition, DateTime frdate, DateTime tdate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type, string allocationType)
         {
-            return userAllocationRepository.GetAllUserAllocationByParam(requisition,frdate, tdate, userDepartments, isAdmin, type);
+            return userAllocationRepository.GetAllUserAllocationByParam(requisition,frdate, tdate, userDepartments, isAdmin, type, allocationType);
         }
 
         public UserAllocation GetUserAllocation(long id)
@@ -60,6 +60,26 @@ namespace CorporateAndFinance.Service.Implementation
         public IEnumerable<UserAllocation> GetUserAllocationsByUserIdDepartmentId(string userID, long departmentID)
         {
             return userAllocationRepository.GetMany(x => x.IsActive && x.UserID == userID && x.DepartmentID == departmentID && !x.Status.Equals(RequestStatus.Deleted));
+        }
+
+        public IEnumerable<UserAllocation> GetUserAllocationsByUserId(string userId)
+        {
+            return userAllocationRepository.GetMany(x => x.IsActive && x.UserID == userId && x.Status.Equals(RequestStatus.Approved));
+        }
+
+        public IEnumerable<UserAllocation> GetUserPendingAllocationsByUserId(string userId)
+        {
+            return userAllocationRepository.GetMany(x => !x.IsActive && x.UserID == userId && x.Status.Equals(RequestStatus.Pending));
+        }
+
+        public IEnumerable<UserAllocation> GetUserAllocationByGroupNumber(long groupNumber)
+        {
+            return userAllocationRepository.GetMany(x => x.GroupNumber == groupNumber);
+        }
+
+        public IEnumerable<UserAllocation> GetActiveUserAllocationExceptGroupNumber(string userID, long groupNumber)
+        {
+            return userAllocationRepository.GetMany(x => x.IsActive && x.UserID ==  userID && x.GroupNumber != groupNumber && x.Status.Equals(RequestStatus.Approved));
         }
     }
 }

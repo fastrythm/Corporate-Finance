@@ -115,6 +115,13 @@ namespace CorporateAndFinance.Core.Helper.Structure
         public static string Rejected = "Rejected";
         public static string Deleted = "Deleted";
         public static string My_Request = "My_Request";
+        public static string Closed  = "Closed";
+    }
+    public struct AllocationType
+    {
+        public static string Requisition = "Requisition";
+        public static string Allocation = "Allocation";
+        
 
     }
 
@@ -177,8 +184,8 @@ namespace CorporateAndFinance.Core.Helper.Structure
         Requisition_Edit = 39,
 
         UserAllocation_View = 40,
-        Allocation_Add = 41,
-        Allocation_Edit = 42,
+        UserAllocation_Add = 41,
+        UserAllocation_Edit = 42,
         UserAllocation_Approve_Reject = 43,
 
         Requisition_Approve_Reject = 44,

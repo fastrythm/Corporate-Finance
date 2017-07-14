@@ -35,6 +35,11 @@ namespace CorporateAndFinance.Service.Implementation
             return userdepartmentRepository.GetMany(x =>  x.UserID == userId && x.IsActive );
         }
 
+        public UserDepartment GetUserPrimaryDepartmentById(string userId)
+        {
+            return userdepartmentRepository.Get(x => x.UserID == userId && x.IsActive && x.IsPrimary);
+        }
+
         public IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId,bool isAdmin)
         {
             return userdepartmentRepository.GetAllUserDepartmentByUserId(userId, isAdmin);

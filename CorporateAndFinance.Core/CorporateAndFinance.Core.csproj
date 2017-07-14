@@ -112,6 +112,7 @@
     <Compile Include="ViewModel\UserDepartmentVM.cs" />
     <Compile Include="ViewModel\UserExpenseVM.cs" />
     <Compile Include="ViewModel\UserCardExpenseVM.cs" />
+    <Compile Include="ViewModel\UserReAllocationVM.cs" />
     <Compile Include="ViewModel\UserTaskAndDetailVM.cs" />
     <Compile Include="ViewModel\UserTaskDetailVM.cs" />
     <Compile Include="ViewModel\UserTaskEmailVM.cs" />

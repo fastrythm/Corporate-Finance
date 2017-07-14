@@ -52,3 +52,4 @@ D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Corpo
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.csproj.GenerateResource.Cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.dll
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.pdb
+D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\CorporateAndFinance.Data\obj\Debug\CorporateAndFinance.Data.Migrations.UserDepartmentIDGroupNumber.resources

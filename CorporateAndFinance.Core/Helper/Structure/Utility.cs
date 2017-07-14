@@ -22,5 +22,10 @@ namespace CorporateAndFinance.Core.Helper.Structure
 
             return string.Empty;
         }
+
+        public static string FormatedId (string label,string Id)
+        {
+            return label + Convert.ToInt64(Id).ToString("000000");
+        }
     }
 }

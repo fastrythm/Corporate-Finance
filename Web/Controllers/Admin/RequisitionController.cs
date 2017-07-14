@@ -541,7 +541,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
 
             var userAllocations = userAllocationManagement.GetUserAllocationsByRequisition(model.RequisitionID);
-            if(userAllocations != null && userAllocations.Count() > 0)
+        
+
+            if (userAllocations != null && userAllocations.Count() > 0)
             {
                 for (int i = 0; i < model.SelectedDepartment.Length; i++)
                 {
@@ -595,6 +597,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 userAllocate.RequestedDepartmentID = requestedDepartmentId;
                 userAllocate.Status = RequestStatus.Pending;
                 userAllocate.CreatedBy = new Guid(User.Identity.GetUserId());
+                userAllocate.UserDepartmentID = requestedDepartmentId;
+                userAllocate.GroupNumber = requisitionID;
                 userAllocate.IsActive = false;
                 userAllocationManagement.Add(userAllocate);
             }

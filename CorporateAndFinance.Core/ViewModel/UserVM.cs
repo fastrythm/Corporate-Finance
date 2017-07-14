@@ -64,5 +64,9 @@ namespace CorporateAndFinance.Core.ViewModel
         public string[] IsPrimaryDepartment { get; set; }
 
         public IEnumerable<Department> Departments { get; set; } = new List<Department>();
+
+        [Display(Name = "Requisition")]
+        public long? RequisitionID { get; set; }
+        public IEnumerable<Requisition> RequisitionList { get; set; }
     }
 }
