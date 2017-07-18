@@ -15,7 +15,7 @@ namespace CorporateAndFinance.Service.Interface
         void SaveUserDepartment();
         IEnumerable<UserDepartment> GetAllUserDepartmentById(string userId);
         IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId,bool isAdmin);
-
-        
+        UserDepartment GetUserPrimaryDepartmentById(string userId);
+ 
     }
 }

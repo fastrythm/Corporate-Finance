@@ -143,7 +143,7 @@ namespace CorporateAndFinance.Web.Helper
             return sb.ToString();
         }
 
-        public static string ValidateDepartmentAndUsers(DataTable dataTable,IEnumerable<Department> deparments, List<ApplicationUser> users)
+        public static string ValidateDepartmentAndUsersAndAllocation(DataTable dataTable,IEnumerable<Department> deparments, List<ApplicationUser> users, IEnumerable<UserAllocation> userAllocation)
         {
 
             StringBuilder sb = new StringBuilder();
@@ -153,14 +153,35 @@ namespace CorporateAndFinance.Web.Helper
                 string employeeNumber = Convert.ToString(dataTable.Rows[i][UserExpenseMandatoryColumn.Employee_Number]);
                 string employeeName = Convert.ToString(dataTable.Rows[i][UserExpenseMandatoryColumn.Employee_Name]);
                 var dept = deparments.Where(x => x.Name == department).SingleOrDefault();
-                 if (dept == null)
-                 {
-                        sb.AppendFormat(Messages.MSG_UPLOAD_DEPARTMENT_NOT_FOUND, department, i + 2);
-                 }
+                if (dept == null)
+                {
+                    sb.AppendFormat(Messages.MSG_UPLOAD_DEPARTMENT_NOT_FOUND, department, i + 2);
+                }
                 var user = users.Where(x => x.EmployeeNumber == employeeNumber).SingleOrDefault();
                 if (user == null)
                 {
                     sb.AppendFormat(Messages.MSG_UPLOAD_USER_NOT_FOUND, employeeNumber, employeeName,  i + 2);
+                }
+
+             
+                if (user != null)
+                {
+                    if (userAllocation != null && userAllocation.Count() > 0)
+                    {
+                        var allocation = userAllocation.Where(x => x.UserID == user.Id && x.IsActive && x.Status.Equals(RequestStatus.Approved)).ToList();
+                        if (allocation == null)
+                        {
+                            sb.AppendFormat(Messages.MSG_UPLOAD_USER_ALLOCATION_NOT_FOUND, employeeNumber, employeeName, i + 2);
+                        }
+                        else if (allocation.Count == 0)
+                        {
+                            sb.AppendFormat(Messages.MSG_UPLOAD_USER_ALLOCATION_NOT_FOUND, employeeNumber, employeeName, i + 2);
+                        }
+                    }
+                    else
+                    {
+                        sb.AppendFormat(Messages.MSG_UPLOAD_USER_ALLOCATION_NOT_FOUND, employeeNumber, employeeName, i + 2);
+                    }
                 }
             }
 

@@ -1,0 +1,78 @@
+﻿@model CorporateAndFinance.Core.ViewModel.UserAllocationEmailVM
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Requisition</title>
+    
+    <style>
+        @Model.StyleSheet
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+<body>
+ 
+            <table border="0" cellspacing="0" cellpadding="0" >
+                <tbody>
+                    <tr class="main-header">
+                        <td>
+                            <p class="MsoNormal">
+                                <span style="font-size:11.0pt;font-family:Calibri,sans-serif">
+                                    <img border="0" src="cid:header-logo">
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 !important">
+                            <div style="text-align:left;width:100%">Dear Manager,</div><br />
+                            <div>
+                                User re-allocation been created and you have to Approve/Reject allocation based on user billing percentage on your department.
+                                <br />
+
+                            </div>
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div>
+                                <h3>Allocation Details</h3>
+                                <table>
+                                    <tr>
+                                        <td style="width:20%"><b>Allocation Number</b></td>
+                                        <td style="width:20%"><b>Department</b></td>
+                                        <td style="width:20%"><b>Percentage</b></td>
+                                        <td style="width:20%"><b>User Name</b></td>
+                                        <td style="width:20%"><b>Requested Department</b></td>
+                                    </tr>
+                                    @foreach (var detail in Model.UserAllocations)
+                                    {
+                                        <tr>
+                                            <td> @detail.FormatedUserAllocationID</td>
+                                            <td>@detail.DepartmentName</td>
+                                            <td>@detail.Percentage</td>
+                                            <td>@detail.UserName</td>
+                                            <td>@detail.RequestedDepartmentName</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="main-footer">
+
+                        <td>
+                            <p align="center">
+                                <span>
+                                    &copy; @DateTime.Now.Year - Consulting And Finance - <a href="http://www.arthurlawrence.net" target="_blank">Arthur Lawrence</a> All rights reserved.
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+       
+</body>
+</html>

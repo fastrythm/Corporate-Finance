@@ -55,10 +55,10 @@ namespace CorporateAndFinance.Data.Repositoreis
                     query = (from req in DbContext.Requisitions.AsNoTracking()
                              join reqApp in DbContext.RequisitionApprovals.AsNoTracking()
                              on req.RequisitionID equals reqApp.RequisitionID
-                             where !req.IsDeleted && !reqApp.IsActive
+                             where !req.IsDeleted 
                              orderby req.RequisitionDate descending
                              where (DbFunctions.TruncateTime(req.RequisitionDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(req.RequisitionDate) <= DbFunctions.TruncateTime(toDate))
-                             &&  ((type == RequisitionStatus.Level2_Pending && (req.Status.Equals(RequisitionStatus.Level1_Approved) || req.Status.Equals(RequisitionStatus.Level2_Pending)) )  || (req.Status.Equals(type)) )  
+                             &&  ((!reqApp.IsActive &&  type == RequisitionStatus.Level2_Pending && (req.Status.Equals(RequisitionStatus.Level1_Approved) || req.Status.Equals(RequisitionStatus.Level2_Pending)) )  || (req.Status.Equals(type)) )  
                              && deptId.Contains(reqApp.DepartmentID)
                              select new RequisitionVM
                              {
@@ -200,9 +200,71 @@ namespace CorporateAndFinance.Data.Repositoreis
             }
 
         }
+
+        public RequisitionVM GetRequisitionCompleteInfoById(long requisitionId)
+        {
+           var query = (from req in DbContext.Requisitions.AsNoTracking()
+                        join dept in DbContext.Departments.AsNoTracking() on req.DepartmentID equals dept.DepartmentID
+
+                        where req.RequisitionID  == requisitionId
+                       select new RequisitionVM
+                       {
+                         RequisitionID = req.RequisitionID,
+                         JobTitle = req.JobTitle,
+                         RequisitionDate = req.RequisitionDate,
+                         Status = req.Status,
+                         NoOfPosition = req.NoOfPosition,
+                         GradeLevel = req.GradeLevel,
+                         DepartmentID = req.DepartmentID,
+                         DepartmentName = dept.Name ,
+                         CreatedBy = req.CreatedBy
+                     }).FirstOrDefault();
+
+            if(query != null)
+            {
+                query.FormatedRequisitionId = Utility.FormatedId("UR-", query.RequisitionID.ToString());
+                query.UserAllocations = GetUserAllocationByRequisitionId(requisitionId);
+            }
+
+
+            return query;
+        }
+
+        private IEnumerable<UserAllocationVM> GetUserAllocationByRequisitionId(long requisitionId)
+        {
+            
+               var query = (from ua in DbContext.UserAllocations.AsNoTracking()
+                            join dept in DbContext.Departments.AsNoTracking() on ua.DepartmentID equals dept.DepartmentID
+
+
+                            where ua.RequisitionID == requisitionId
+                            select new UserAllocationVM
+                            {
+                                RequisitionID = ua.RequisitionID,
+                                UserAllocationID = ua.UserAllocationID,
+                                Percentage = ua.Percentage,
+                                DepartmentID = ua.DepartmentID,
+                                RequestedDepartmentID = ua.RequestedDepartmentID,
+                                DepartmentName = dept.Name,
+                                Status = ua.Status,
+                                GroupNumber = ua.GroupNumber.ToString(),
+                                UserID = ua.UserID,
+                                Comments = ua.Comments,
+                                CreatedOn = ua.CreatedOn,
+                                RequestType = string.IsNullOrEmpty(ua.UserID) ? "Requisition" : "Allocation"
+                            }).ToList();
+
+
+            foreach(var que in query)
+            {
+                que.FormatedUserAllocationID = Utility.FormatedId("UAL-", que.UserAllocationID.ToString());
+            }
+            return query;
+        }
     }
     public interface IRequisitionRepository : IRepository<Requisition>
     {
         IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param,DateTime fromDate,DateTime toDate,IEnumerable<UserDepartment> departments, bool isAdmin, string type);
+        RequisitionVM GetRequisitionCompleteInfoById(long requisitionId);
     }
 }

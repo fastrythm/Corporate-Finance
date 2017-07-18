@@ -96,13 +96,8 @@
 
             GenerateDTVersion1('#tblUserExpenses', [
 
-                     {
-                         "data": "UserExpenseID",
-                         "sTitle": 'Doc #',
-                         "render": function (data, type, full, meta) {
-                             return "UE-" + addLeadingZeros(data, 6);
-                         }
-                     },
+                     
+                      { "data": "SerialNumber", "sTitle": "Serial #" },
                       { "data": "UserNumber", "sTitle": "Employee Number" },
                       { "data": "UserName", "sTitle": "Employee Name" },
                       {

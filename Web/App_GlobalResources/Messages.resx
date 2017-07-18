@@ -228,7 +228,10 @@
   <data name="MSG_UPLOAD_INVALID_NUMBER_FORMAT" xml:space="preserve">
     <value>Invalid number format exist on column {0} at row number {1} . &lt;br /&gt;</value>
   </data>
+  <data name="MSG_UPLOAD_USER_ALLOCATION_NOT_FOUND" xml:space="preserve">
+    <value>User with Employee number {0}  and Name {1}  billing allocation not found not at row number {2} . &lt;br /&gt;</value>
+  </data>
   <data name="MSG_UPLOAD_USER_NOT_FOUND" xml:space="preserve">
-    <value>User Employee number {0}  and Name {1} not found  at row number {2} . &lt;br /&gt;</value>
+    <value>User with Employee number {0}  and Name {1} not found  at row number {2} . &lt;br /&gt;</value>
   </data>
 </root>

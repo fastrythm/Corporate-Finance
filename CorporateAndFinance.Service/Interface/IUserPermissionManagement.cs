@@ -13,5 +13,6 @@ namespace CorporateAndFinance.Service.Interface
         void SaveUserPermissions();
         bool DeleteAllByUserId(string userId);
         bool Add(UserPermission model);
+
     }
 }

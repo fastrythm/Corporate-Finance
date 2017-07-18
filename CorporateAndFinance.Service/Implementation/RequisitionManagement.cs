@@ -8,6 +8,7 @@ using CorporateAndFinance.Core.Model;
 using CorporateAndFinance.Data.Infrastructure;
 using CorporateAndFinance.Data.Repositoreis;
 using CorporateAndFinance.Core.ViewModel;
+using CorporateAndFinance.Core.Helper.Structure;
 
 namespace CorporateAndFinance.Service.Implementation
 {
@@ -36,14 +37,26 @@ namespace CorporateAndFinance.Service.Implementation
             return requisitionRepository.Delete(model);
         }
 
+        public IEnumerable<Requisition> GetAllApprovedRequisition()
+        {
+            return requisitionRepository.GetMany(x => x.Status.Equals(RequisitionStatus.Level2_Approved));
+        }
+
         public IEnumerable<RequisitionVM> GetAllRequisitionByParam(RequisitionVM param, DateTime fromDate, DateTime toDate,IEnumerable<UserDepartment> departments,bool isAdmin,string type)
         {
             return requisitionRepository.GetAllRequisitionByParam(param,fromDate, toDate, departments, isAdmin, type);
         }
 
+       
+
         public Requisition GetRequisition(long id)
         {
            return requisitionRepository.GetById(id);
+        }
+
+        public RequisitionVM GetRequisitionCompleteInfoById(long requisitionId)
+        {
+            return requisitionRepository.GetRequisitionCompleteInfoById(requisitionId);
         }
 
         public void SaveRequisition()

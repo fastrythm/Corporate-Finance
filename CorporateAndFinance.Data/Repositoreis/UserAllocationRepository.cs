@@ -19,7 +19,7 @@ namespace CorporateAndFinance.Data.Repositoreis
         public UserAllocationRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
-        public IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM param, DateTime fromDate, DateTime toDate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type)
+        public IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM param, DateTime fromDate, DateTime toDate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type, string allocationType)
         {
             try
             {
@@ -44,21 +44,26 @@ namespace CorporateAndFinance.Data.Repositoreis
                              where !ua.Status.Equals(RequestStatus.Deleted) && (deptId.Contains(ua.RequestedDepartmentID))
                              orderby ua.CreatedOn descending
                              where (DbFunctions.TruncateTime(ua.CreatedOn) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(ua.CreatedOn) <= DbFunctions.TruncateTime(toDate))
+                             && ((allocationType.Equals(AllocationType.Requisition) && string.IsNullOrEmpty(ua.UserID)) ||
+                                   (allocationType.Equals(AllocationType.Allocation) && !string.IsNullOrEmpty(ua.UserID)) ||
+                                   (allocationType == "-1"))
 
                              select new UserAllocationVM
                              {
                                  RequisitionID = tempReq.RequisitionID,
                                  UserAllocationID = ua.UserAllocationID,
-                                 UserName = tempUser.FirstName +" "+tempUser.LastName,
+                                 UserName = tempUser.FirstName + " " + tempUser.LastName,
                                  Percentage = ua.Percentage,
                                  DepartmentName = (from reqDept in DbContext.Departments where reqDept.DepartmentID == ua.DepartmentID select reqDept.Name).FirstOrDefault(),
                                  DepartmentID = dept.DepartmentID,
                                  RequestedDepartmentID = ua.RequestedDepartmentID,
                                  RequestedDepartmentName = dept.Name,
+                                 GroupNumber = ua.GroupNumber.ToString(),
                                  Status = ua.Status,
+                                 UserID = ua.UserID,
                                  Comments = ua.Comments,
                                  CreatedOn = ua.CreatedOn,
-                                 RequestType = ua.RequisitionID.HasValue ? "Requisition" : "Allocation"
+                                 RequestType = string.IsNullOrEmpty(ua.UserID) ? "Requisition" : "Allocation"
                              });
 
                 }
@@ -78,8 +83,14 @@ namespace CorporateAndFinance.Data.Repositoreis
                           
                              orderby ua.CreatedOn descending
                              where (DbFunctions.TruncateTime(ua.CreatedOn) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(ua.CreatedOn) <= DbFunctions.TruncateTime(toDate))
-                             && (ua.IsActive && type.Equals(RequestStatus.Approved) || (!ua.IsActive && type.Equals(RequestStatus.Pending)) || (!ua.IsActive && type.Equals(RequestStatus.Rejected))) && ua.Status.Equals(type)  
+                             && (ua.IsActive && (type.Equals(RequestStatus.Approved) || ua.Status.Equals(RequestStatus.PartialApproved))
+                             || (!ua.IsActive && type.Equals(RequestStatus.Pending)) || (!ua.IsActive && type.Equals(RequestStatus.Rejected))) && ua.Status.Equals(type)  
                              && !ua.Status.Equals(RequestStatus.Deleted)  && (deptId.Contains(ua.DepartmentID))
+
+                               && ((allocationType.Equals(AllocationType.Requisition) && string.IsNullOrEmpty(ua.UserID)) ||
+                                   (allocationType.Equals(AllocationType.Allocation) && !string.IsNullOrEmpty(ua.UserID)) ||
+                                   (allocationType == "-1"))
+
                              select new UserAllocationVM
                              {
                                  RequisitionID = tempReq.RequisitionID,
@@ -91,9 +102,11 @@ namespace CorporateAndFinance.Data.Repositoreis
                                  RequestedDepartmentID = ua.RequestedDepartmentID,
                                  DepartmentName = dept.Name,
                                  Status = ua.Status,
+                                 GroupNumber = ua.GroupNumber.ToString(),
+                                 UserID = ua.UserID,
                                  Comments = ua.Comments,
                                  CreatedOn = ua.CreatedOn,
-                                 RequestType = ua.RequisitionID.HasValue ? "Requisition":"Allocation"
+                                 RequestType = string.IsNullOrEmpty(ua.UserID) ? "Requisition" : "Allocation"
                              });
 
                 }
@@ -116,7 +129,9 @@ namespace CorporateAndFinance.Data.Repositoreis
                     RequestedDepartmentID = index.RequestedDepartmentID,
                     RequestedDepartmentName = index.RequestedDepartmentName,
                     Status = index.Status,
+                    GroupNumber = index.GroupNumber,
                     Comments = index.Comments,
+                    UserID = index.UserID,
                     CreatedOn = index.CreatedOn,
                     RequestType = index.RequestType,
                     DTObject = new DataTablesViewModel() { TotalRecordsCount = totalRecord }
@@ -220,10 +235,50 @@ namespace CorporateAndFinance.Data.Repositoreis
 
         }
 
-       
+        public List<UserAllocationVM> GetUserAllocationByGroupNumber(long groupNumber)
+        {
+           var query = (from ua in DbContext.UserAllocations.AsNoTracking()
+                     join dept in DbContext.Departments.AsNoTracking() on ua.DepartmentID equals dept.DepartmentID
+
+                     join tempReq in DbContext.Requisitions.AsNoTracking()
+                     on ua.RequisitionID equals tempReq.RequisitionID into Requisition
+                     from tempReq in Requisition.DefaultIfEmpty()
+
+                     join tempUser in DbContext.Users.AsNoTracking()
+                     on ua.UserID equals tempUser.Id into User
+                     from tempUser in User.DefaultIfEmpty()
+                     orderby ua.CreatedOn descending
+                     where  ua.GroupNumber == groupNumber
+                     select new UserAllocationVM
+                     {
+                         RequisitionID = tempReq.RequisitionID,
+                         UserAllocationID = ua.UserAllocationID,
+                         UserName = tempUser.FirstName + " " + tempUser.LastName,
+                         Percentage = ua.Percentage,
+                         RequestedDepartmentName = (from reqDept in DbContext.Departments where reqDept.DepartmentID == ua.RequestedDepartmentID select reqDept.Name).FirstOrDefault(),
+                         DepartmentID = ua.DepartmentID,
+                         RequestedDepartmentID = ua.RequestedDepartmentID,
+                         DepartmentName = dept.Name,
+                         Status = ua.Status,
+                         GroupNumber = ua.GroupNumber.ToString(),
+                         UserID = ua.UserID,
+                         Comments = ua.Comments,
+                         CreatedOn = ua.CreatedOn,
+                         CreatedBy = ua.CreatedBy,
+                         RequestType = string.IsNullOrEmpty(ua.UserID) ? "Requisition" : "Allocation"
+                     }).ToList();
+
+
+            foreach (var que in query)
+            {
+                que.FormatedUserAllocationID = Utility.FormatedId("UAL-", que.UserAllocationID.ToString());
+            }
+            return query;
+        }
     }
     public interface IUserAllocationRepository : IRepository<UserAllocation>
     {
-        IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM param, DateTime frdate, DateTime tdate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type);
+        IEnumerable<UserAllocationVM> GetAllUserAllocationByParam(UserAllocationVM param, DateTime frdate, DateTime tdate, IEnumerable<UserDepartment> userDepartments, bool isAdmin, string type, string allocationType);
+        List<UserAllocationVM> GetUserAllocationByGroupNumber(long groupNumber);
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Model\Requisition.cs" />
     <Compile Include="Model\RequisitionApproval.cs" />
     <Compile Include="Model\SLAApproval.cs" />
+    <Compile Include="Model\UserAllocationBilling.cs" />
     <Compile Include="ViewModel\RequisitionVM.cs" />
     <Compile Include="Model\UserAllocation.cs" />
     <Compile Include="Model\UserDepartment.cs" />
@@ -108,10 +109,12 @@
     <Compile Include="ViewModel\PettyCashOpenCloseBalance.cs" />
     <Compile Include="ViewModel\ReportVM.cs" />
     <Compile Include="ViewModel\SelectListItem.cs" />
+    <Compile Include="ViewModel\UserAllocationEmailVM.cs" />
     <Compile Include="ViewModel\UserAllocationVM.cs" />
     <Compile Include="ViewModel\UserDepartmentVM.cs" />
     <Compile Include="ViewModel\UserExpenseVM.cs" />
     <Compile Include="ViewModel\UserCardExpenseVM.cs" />
+    <Compile Include="ViewModel\UserReAllocationVM.cs" />
     <Compile Include="ViewModel\UserTaskAndDetailVM.cs" />
     <Compile Include="ViewModel\UserTaskDetailVM.cs" />
     <Compile Include="ViewModel\UserTaskEmailVM.cs" />

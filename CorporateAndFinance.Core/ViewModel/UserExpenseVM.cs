@@ -9,7 +9,9 @@ namespace CorporateAndFinance.Core.ViewModel
 {
     public class UserExpenseVM
     {
-        public long UserExpenseID { get; set; }
+        public Guid UserExpenseID { get; set; }
+
+        public string SerialNumber { get; set; }
 
         public long UserID { get; set; }
 

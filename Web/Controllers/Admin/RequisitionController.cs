@@ -14,6 +14,10 @@ using System.Web.Mvc;
 using Web;
 using log4net;
 using System.Web.Script.Serialization;
+using System.Web.Hosting;
+using RazorEngine.Templating;
+using RazorEngine;
+using CorporateAndFinance.Service.Helper;
 
 namespace CorporateAndFinance.Web.Controllers.Admin
 {
@@ -197,19 +201,20 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 req.Status = selectedType;
                 req.Comments = comments;
 
-
+              
                 if (requisitionApprovalManagement.Update(req))
                 {
                     requisitionApprovalManagement.SaveRequisitionApproval();
                     logger.InfoFormat("Requistion record Successfully {0}", selectedType);
                     UpdateRequisitionStatus(req, selectedType);
-
-                    return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
+                    string msg = string.Format("Requistion record Successfully {0}", selectedType);
+                    return Json(new { Message = msg , MessageClass = MessageClass.Success, Response = true });
                 }
                 else
                 {
+                    string msg = string.Format("Requistion record not {0}", selectedType);
                     logger.InfoFormat("Requistion record not {0}", selectedType);
-                    return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_FAILED, MessageClass = MessageClass.Error, Response = false });
+                    return Json(new { Message = msg , MessageClass = MessageClass.Error, Response = false });
                 }
 
             }
@@ -234,6 +239,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     requisition.Status = RequisitionStatus.Level2_Approved;
                     requisitionManagement.Update(requisition);
                     requisitionManagement.SaveRequisition();
+
+                    RequisitionStatusEmailToUser(req.RequisitionID, RequisitionStatus.Level2_Approved,req.Comments);
                 }
 
             }
@@ -246,11 +253,51 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     requisition.Status = RequisitionStatus.Level2_Rejected;
                     requisitionManagement.Update(requisition);
                     requisitionManagement.SaveRequisition();
+
+                    RequisitionStatusEmailToUser(req.RequisitionID, RequisitionStatus.Level2_Rejected, req.Comments);
                 }
             }
         }
 
+        private void RequisitionStatusEmailToUser(long requisitionId, string status, string comments)
+        {
+            try
+            {
+                logger.DebugFormat("Sending Requisition Email to request creator by RequisitionID [{0}]", requisitionId);
+                RequisitionVM req = requisitionManagement.GetRequisitionCompleteInfoById(requisitionId);
 
+                if (req == null)
+                {
+                    logger.DebugFormat("No Requisition Found With ID [{0}]", requisitionId);
+                    return;
+                }
+                string styleSheet = System.IO.File.ReadAllText(Server.MapPath("~/Themes/finance-1/css/emailstyle.css"));
+                req.StyleSheet = styleSheet;
+                req.Status = status;
+                req.Comments = comments;
+
+                var viewsPath = Path.GetFullPath(HostingEnvironment.MapPath(@"~/Views/EmailTemplates/RequisitionEmailToRequestCreator.cshtml"));
+                string template = System.IO.File.ReadAllText(viewsPath);
+
+                string uniqueNumber = Guid.NewGuid().ToString();
+                string body = Engine.Razor.RunCompile(template, string.Format("RequisitionEmail_{0}", uniqueNumber), typeof(RequisitionVM), req);
+                
+                var user = UserManager.FindById(req.CreatedBy.ToString());
+                if (user != null)
+                {
+                    comManagement.Subject = string.Format("Requisition Request #. {0}  Status - {1} ", Utility.FormatedId("UR-", req.RequisitionID.ToString()), req.Status);
+                    comManagement.Body = body;
+                    comManagement.Recipient = user.Email;
+                    comManagement.HeaderImage = Server.MapPath("~/Themes/finance-1/img/logo.png");
+                    Async.Do(() => comManagement.SendEmail());
+                    logger.DebugFormat("Email Successfully Send");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+            }
+        }
 
         [Route("Delete")]
         [HttpPost]
@@ -420,6 +467,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             AddUpdateUserAllocation(model);
                             AddUpdateSLAApproval(model);
 
+                            SendRequisitionEmailsToLevel1(model.RequisitionID);
                             logger.Info("Successfully Saved New Requisition ");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Requisition"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -464,6 +512,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             requisitionManagement.SaveRequisition();
                             AddUpdateUserAllocation(model);
                             AddUpdateSLAApproval(model);
+
+                            SendRequisitionEmailsToLevel1(model.RequisitionID);
                             logger.Info("Successfully Updated Requisition ");
                             return Json(new { Message = string.Format(Resources.Messages.MSG_GENERIC_ADD_SUCCESS, "Requisition"), MessageClass = MessageClass.Success, Response = true });
                         }
@@ -488,12 +538,62 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
         }
 
+        private void SendRequisitionEmailsToLevel1(long requisitionId)
+        {
+            try
+            {
+                logger.DebugFormat("Sending Requisition Email to departments by RequisitionID [{0}]", requisitionId);
+                RequisitionVM req = requisitionManagement.GetRequisitionCompleteInfoById(requisitionId);
+
+                if (req == null)
+                {
+                    logger.DebugFormat("No Requisition Found With ID [{0}]", requisitionId);
+                    return;
+                }
+                string styleSheet = System.IO.File.ReadAllText(Server.MapPath("~/Themes/finance-1/css/emailstyle.css"));
+                req.StyleSheet = styleSheet;
+
+                var viewsPath = Path.GetFullPath(HostingEnvironment.MapPath(@"~/Views/EmailTemplates/RequisitionEmailToDepartments.cshtml"));
+                string template = System.IO.File.ReadAllText(viewsPath);
+
+                string uniqueNumber = Guid.NewGuid().ToString();
+                string body = Engine.Razor.RunCompile(template, string.Format("RequisitionEmail_{0}", uniqueNumber), typeof(RequisitionVM), req);
+                var role = RoleManager.Roles.Where(x => x.Name.Equals(UserRoles.Manager)).FirstOrDefault();
+
+                if (req.UserAllocations != null && req.UserAllocations.Count() > 0)
+                {
+                    foreach (var allocation in req.UserAllocations)
+                    {
+                        var departManagers = userManagement.GetAllUsersByRoleAndDepartment(role.Id, allocation.DepartmentID);
+
+                        if (departManagers != null && departManagers.Count() > 0)
+                        {
+                            foreach (var user in departManagers)
+                            {
+                                comManagement.Subject = string.Format("New Requisition Request #. {0} - {1} ", Utility.FormatedId("UR-", req.RequisitionID.ToString()), req.JobTitle);
+                                comManagement.Body = body;
+                                comManagement.Recipient = user.Email;
+                                comManagement.HeaderImage = Server.MapPath("~/Themes/finance-1/img/logo.png");
+                                Async.Do(() => comManagement.SendEmail());
+                                logger.DebugFormat("Email Successfully Send");
+                            }
+
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+            }
+        }
 
         private string ValidateUserDeparments(Requisition model)
         {
             try
             {
-                if (model.SelectedDepartment != null)
+                if (model.SelectedDepartment != null && model.SelectedDepartment.Count() > 0)
                 {
                     for (int i = 0; i < model.SelectedDepartmentPercentage.Length; i++)
                     {
@@ -504,8 +604,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     var isDuplicateDeptExist = model.SelectedDepartment.GroupBy(n => n).Any(g => g.Count() > 1);
                         if (isDuplicateDeptExist)
                         return "Duplicate department exist in list.";
-                }
-                return string.Empty;
+               
+                 }
+                else
+                {
+                return "Atlease one user allocation department must be selected.";
+             }
+            return string.Empty;
             }
             catch (Exception ex)
             {
@@ -541,7 +646,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         {
 
             var userAllocations = userAllocationManagement.GetUserAllocationsByRequisition(model.RequisitionID);
-            if(userAllocations != null && userAllocations.Count() > 0)
+        
+
+            if (userAllocations != null && userAllocations.Count() > 0)
             {
                 for (int i = 0; i < model.SelectedDepartment.Length; i++)
                 {
@@ -595,6 +702,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 userAllocate.RequestedDepartmentID = requestedDepartmentId;
                 userAllocate.Status = RequestStatus.Pending;
                 userAllocate.CreatedBy = new Guid(User.Identity.GetUserId());
+                userAllocate.UserDepartmentID = requestedDepartmentId;
+                userAllocate.GroupNumber = requisitionID;
                 userAllocate.IsActive = false;
                 userAllocationManagement.Add(userAllocate);
             }
@@ -659,61 +768,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         }
 
-        //private void SendUserTaskEmail(long taskId)
-        //{
-        //    try
-        //    {
-        //        logger.DebugFormat("Sending User Task Email with Task ID [{0}]", taskId);
-        //        UserTaskEmailVM taskDetail = userTaskManagement.GetUserTaskEmailDetails(taskId);
-
-        //        if (taskDetail == null)
-        //        {
-        //            logger.DebugFormat("No Task Found With ID [{0}]", taskId);
-        //            return;
-        //        }
-        //        string styleSheet = System.IO.File.ReadAllText(Server.MapPath("~/Themes/finance-1/css/emailstyle.css"));
-        //        taskDetail.StyleSheet = styleSheet;
-
-        //        var viewsPath = Path.GetFullPath(HostingEnvironment.MapPath(@"~/Views/EmailTemplates/UserTask.cshtml"));
-        //        string template = System.IO.File.ReadAllText(viewsPath);
-
-        //        string uniqueNumber = Guid.NewGuid().ToString();
-        //        string body = Engine.Razor.RunCompile(template, string.Format("UserTaskEmail_{0}", uniqueNumber), typeof(UserTaskEmailVM), taskDetail);
-
-        //        if (taskDetail != null && taskDetail.UserTaskDetails.Count > 0)
-        //        {
-        //            UserTaskDetailVM activeTaskDetail = taskDetail.UserTaskDetails.FirstOrDefault(x => x.IsActive == true);
-        //            comManagement.Recipient = activeTaskDetail.ToUserEmail;
-        //            comManagement.Subject = string.Format("Ticket {0} - {1} ", taskDetail.TicketNumber, taskDetail.Title);
-        //            comManagement.Body = body;
-
-        //            List<string> rcc = new List<string>();
-        //            rcc.Add(activeTaskDetail.FromUserEmail);
-        //            logger.DebugFormat("Getting user with roles [{0}]", UserRoles.FinanceManager);
-
-        //            var role = RoleManager.Roles.Where(x => x.Name.Equals(UserRoles.FinanceManager)).FirstOrDefault();
-        //            var users = UserManager.Users.Where(x => !x.IsDeleted && x.Roles.Select(y => y.RoleId).Contains(role.Id)).ToList();
-        //            logger.DebugFormat("Total [{0}] users found with roles [{1}]", UserRoles.FinanceManager, users.Count());
-
-        //            if (users.Count > 0)
-        //                foreach (var user in users)
-        //                {
-        //                    if (!user.Email.Equals(activeTaskDetail.FromUserEmail) && !user.Email.Equals(activeTaskDetail.ToUserEmail))
-        //                        rcc.Add(user.Email);
-        //                }
-
-        //            comManagement.RecipientCC = rcc;
-        //            comManagement.HeaderImage = Server.MapPath("~/Themes/finance-1/img/logo.png");
-
-        //            Async.Do(() => comManagement.SendEmail());
-        //            logger.DebugFormat("Email Successfully Send");
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
-        //    }
-        //}
+    
 
         public ActionResult Uploader()
         {

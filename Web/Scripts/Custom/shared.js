@@ -145,8 +145,14 @@ function ALIsIEBrowser() {
     return false;
 }
 
-
- 
+function GetPreviousMonth()
+{
+    var dt = new Date(); //Grab the current Date
+    dt.setDate(1);       //Set it to the first of the month
+    dt.setHours(-1);     //Subtract an hour to yield the previous date (Last date of previous month)
+    dt.setDate(1);
+    return dt;
+}
 
 var stTableToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'

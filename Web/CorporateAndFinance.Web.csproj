@@ -607,6 +607,7 @@
     <None Include="Properties\PublishProfiles\CF-Release-014.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-015.pubxml" />
     <None Include="Properties\PublishProfiles\CF-Release-016.pubxml" />
+    <None Include="Properties\PublishProfiles\CF-Release-017.pubxml" />
     <None Include="Properties\PublishProfiles\CoroirateFinanceRelease-005.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-001.pubxml" />
     <None Include="Properties\PublishProfiles\CorporateFinanceRelease-002.pubxml" />
@@ -773,6 +774,12 @@
     <Content Include="Views\Requisition\_AddEditRequisition.cshtml" />
     <Content Include="Views\Requisition\_UserAllocatedDepartment.cshtml" />
     <Content Include="Views\UserAllocation\Index.cshtml" />
+    <Content Include="Views\UserAllocation\_AddUpdateAllocation.cshtml" />
+    <Content Include="Views\UserAllocation\_UserAllocatedDepartments.cshtml" />
+    <Content Include="Views\EmailTemplates\RequisitionEmailToDepartments.cshtml" />
+    <Content Include="Views\EmailTemplates\RequisitionEmailToRequestCreator.cshtml" />
+    <Content Include="Views\EmailTemplates\UserAllocationEmailToRequestCreator.cshtml" />
+    <Content Include="Views\EmailTemplates\UserAllocationEmailToDepartments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

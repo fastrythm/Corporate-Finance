@@ -3,7 +3,7 @@
 IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_CategoryID' AND object_id = object_id(N'[dbo].[Gadgets]', N'U'))
     DROP INDEX [IX_CategoryID] ON [dbo].[Gadgets]
 CREATE TABLE [dbo].[UserExpenses] (
-    [UserExpenseID] [bigint] NOT NULL IDENTITY,
+    [UserExpenseID] [uniqueidentifier] NOT NULL,
     [UserID] [nvarchar](128),
     [DepartmentID] [bigint] NOT NULL,
     [ExpenseID] [bigint] NOT NULL,

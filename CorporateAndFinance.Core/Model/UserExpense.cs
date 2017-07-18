@@ -10,9 +10,8 @@ namespace CorporateAndFinance.Core.Model
 {
     public class UserExpense
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long UserExpenseID { get; set; }
-
+        public Guid UserExpenseID { get; set; }
+        public string SerialNumber { get; set; }
         public string UserID { get; set; }
         [ForeignKey("UserID")]
         public virtual ApplicationUser ExpenseUser { get; set; }
