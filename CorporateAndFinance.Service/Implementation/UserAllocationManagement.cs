@@ -54,7 +54,7 @@ namespace CorporateAndFinance.Service.Implementation
 
         public IEnumerable<UserAllocation> GetUserAllocationsByRequisition(long reqId)
         {
-            return userAllocationRepository.GetMany(x=>x.RequisitionID == reqId && !x.Status.Equals(RequestStatus.Deleted));
+            return userAllocationRepository.GetMany(x=>x.RequisitionID == reqId && !x.Status.Equals(RequestStatus.Deleted) && x.UserID == null);
         }
 
         public IEnumerable<UserAllocation> GetUserAllocationsByUserIdDepartmentId(string userID, long departmentID)
@@ -80,6 +80,16 @@ namespace CorporateAndFinance.Service.Implementation
         public IEnumerable<UserAllocation> GetActiveUserAllocationExceptGroupNumber(string userID, long groupNumber)
         {
             return userAllocationRepository.GetMany(x => x.IsActive && x.UserID ==  userID && x.GroupNumber != groupNumber && x.Status.Equals(RequestStatus.Approved));
+        }
+
+        public IEnumerable<UserAllocation> GetAllUsersActiveAllocations()
+        {
+            return userAllocationRepository.GetMany(x => x.IsActive && x.Status.Equals(RequestStatus.Approved) && x.UserID != null);
+        }
+
+        public List<UserAllocationVM> GetUserAllocationsByGroupNumber(long groupNumber)
+        {
+            return userAllocationRepository.GetUserAllocationByGroupNumber(groupNumber);
         }
     }
 }

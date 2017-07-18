@@ -11,7 +11,7 @@ namespace CorporateAndFinance.Service.Interface
     public interface IUserExpenseManagement
     {
         IEnumerable<UserExpenseVM> GetAllUserExpensesByParam(UserExpenseVM param, DateTime fromDate,DateTime toDate);
-        UserExpense GetUserExpense(long id);
+        UserExpense GetUserExpense(string id);
         void SaveUserExpense();
         bool Delete(UserExpense model);
         bool Add(UserExpense model);

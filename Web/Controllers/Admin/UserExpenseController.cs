@@ -29,6 +29,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private readonly IUserExpenseManagement userExpenseManagement;
         private readonly IDepartmentManagement departmentManagement;
         private readonly ICompanyManagement companyManagement;
+        private readonly IUserAllocationManagement userAllocationManagement;
+        private readonly IUserAllocationBillingManagement userAllocationBillingManagement;
 
         private static readonly List<string> ColumnList = new List<string>() { UserExpenseMandatoryColumn.Department, UserExpenseMandatoryColumn.Department_Type, UserExpenseMandatoryColumn.Employee_Number, UserExpenseMandatoryColumn.Employee_Name, UserExpenseType.Monthly_Salary, UserExpenseType.Monthly_Salary2,
         UserExpenseType.EOBI_Employer , UserExpenseType.PF_Employer,UserExpenseType.Mobile_Allowance,
@@ -45,11 +47,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         #endregion
 
-        public UserExpenseController(IUserExpenseManagement userExpenseManagement, IDepartmentManagement departmentManagement, ICompanyManagement companyManagement)
+        public UserExpenseController(IUserExpenseManagement userExpenseManagement, IDepartmentManagement departmentManagement, ICompanyManagement companyManagement, IUserAllocationManagement userAllocationManagement, IUserAllocationBillingManagement userAllocationBillingManagement)
         {
             this.userExpenseManagement = userExpenseManagement;
             this.departmentManagement = departmentManagement;
             this.companyManagement = companyManagement;
+            this.userAllocationManagement = userAllocationManagement;
+            this.userAllocationBillingManagement = userAllocationBillingManagement;
         }
 
         public UserExpenseController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
@@ -130,7 +134,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
         [Route("Delete")]
         [HttpPost]
-        public JsonResult Delete(long id)
+        public JsonResult Delete(string id)
         {
             try
             {
@@ -270,14 +274,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             logger.DebugFormat("Processing User Expense Sheet Name [{0}]", fileName);
 
             DataSet ds = ExcelFileReader.Read(path);
-            if (ds.Tables.Count == 0)
+            DataTable table = ds.Tables[0];
+            table = table.Rows.Cast<DataRow>().Where(row => !row.ItemArray.All(field => field is System.DBNull || string.Compare((Convert.ToString(field)).Trim(), string.Empty) == 0)).CopyToDataTable();
+            if (table.Rows.Count  == 0)
             {
                 logger.DebugFormat("No rows found in file [{0}]", fileName);
 
                 return new ExcelFileProcess { Message = "No rows to insert.", Response = false, MessageType = MessageClass.Error };
             }
 
-            string missingcolumn = ExcelFileReader.CheckAllColumnExist(ds.Tables[0], ColumnList);
+            string missingcolumn = ExcelFileReader.CheckAllColumnExist(table, ColumnList);
             if (!string.IsNullOrWhiteSpace(missingcolumn))
             {
                 logger.Debug(string.Format(Resources.Messages.MSG_GENERIC_COLUMN_MISSING, missingcolumn));
@@ -285,7 +291,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_COLUMN_MISSING, missingcolumn), Response = false, MessageType = MessageClass.Error };
             }
 
-            string info = ExcelFileReader.ValidateData(ds.Tables[0], MandatoryColumnList);
+            string info = ExcelFileReader.ValidateData(table, MandatoryColumnList);
 
             if (!string.IsNullOrWhiteSpace(info))
             {
@@ -293,7 +299,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return new ExcelFileProcess { Message = info, Response = false, MessageType = MessageClass.Error };
             }
 
-            string errors = ExcelFileReader.ValidateAmount(ds.Tables[0], ValidateColumnList);
+            string errors = ExcelFileReader.ValidateAmount(table, ValidateColumnList);
             if (!string.IsNullOrWhiteSpace(errors))
             {
                 logger.Debug(errors);
@@ -301,31 +307,39 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             }
 
             var department = departmentManagement.GetAllDepartments();
+            var allocation = userAllocationManagement.GetAllUsersActiveAllocations();
             var users = UserManager.Users.Where(x => !x.IsDeleted).ToList();
-            errors = ExcelFileReader.ValidateDepartmentAndUsers(ds.Tables[0], department, users);
+            errors = ExcelFileReader.ValidateDepartmentAndUsersAndAllocation(table, department, users, allocation);
             if (!string.IsNullOrWhiteSpace(errors))
             {
                 logger.Debug(errors);
                 return new ExcelFileProcess { Message = errors, Response = false, MessageType = MessageClass.Error };
             }
 
-            ExcelFileProcess process = InsertData(ds.Tables[0], fileName, users, expenseDate);
+            ExcelFileProcess process = InsertData(table, fileName, users, expenseDate, allocation);
 
             return process;
         }
 
-        private ExcelFileProcess InsertData(DataTable dt, string fileName, List<ApplicationUser> users, DateTime expenseDate)
+        private ExcelFileProcess InsertData(DataTable dt, string fileName, List<ApplicationUser> users, DateTime expenseDate, IEnumerable<UserAllocation> userAllocation)
         {
             try
             {
                 logger.DebugFormat("Checking existing expense date record exist");
                 var expenses = userExpenseManagement.GetAllExpenseByDate(expenseDate);
                 logger.DebugFormat("Successfully retrieve user expenses [{0}] record  regarding date [{1}]", expenses.Count(), expenseDate.ToShortDateString());
-                if(expenses.Count()>0)
+                if(expenses.Count() > 0)
                 {
-                    logger.DebugFormat("Deleting existing expense date [{0}] records ", expenseDate.ToShortDateString());
+                    logger.DebugFormat("Deleting existing user allocation billing by date [{0}] records ", expenseDate.ToShortDateString());
+                    userAllocationBillingManagement.DeleteAllByDate(expenseDate);
+                    userAllocationBillingManagement.SaveUserAllocationBilling();
+                    logger.DebugFormat("Successfully deleted user allocation billing by expense date [{0}] records ", expenseDate.ToShortDateString());
+
+                    logger.DebugFormat("Deleting existing expense by date [{0}] records ", expenseDate.ToShortDateString());
                     userExpenseManagement.DeleteAllByDate(expenseDate);
-                    logger.DebugFormat("Successfully deleted existing expense date [{0}] records ", expenseDate.ToShortDateString());
+                    userExpenseManagement.SaveUserExpense();
+                    logger.DebugFormat("Successfully deleted existing expense by date [{0}] records ", expenseDate.ToShortDateString());
+                  
                 }
 
 
@@ -348,6 +362,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         user = CreateNewUser(Convert.ToString(row[UserExpenseMandatoryColumn.Employee_Number]), Convert.ToString(row[UserExpenseMandatoryColumn.Employee_Name]), department.DepartmentID);
                     }
 
+                    var expenseId = Guid.NewGuid();
+                    userExp.UserExpenseID = expenseId;
                     userExp.DepartmentID = department.DepartmentID;
                     userExp.UserID = user.Id;
                     userExp.ExpenseDate = expenseDate;
@@ -368,12 +384,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     userExp.Medical_OPD = string.IsNullOrEmpty(Convert.ToString(row[UserExpenseType.Medical_OPD])) ? 0 : Convert.ToDecimal(row[UserExpenseType.Medical_OPD]);
                     userExp.Billable_Salary_PKR = string.IsNullOrEmpty(Convert.ToString(row[UserExpenseType.Billable_Salary_PKR])) ? 0 : Convert.ToDecimal(row[UserExpenseType.Billable_Salary_PKR]);
                     userExp.Billable_Salary_USD = string.IsNullOrEmpty(Convert.ToString(row[UserExpenseType.Billable_Salary_USD])) ? 0 : Convert.ToDecimal(row[UserExpenseType.Billable_Salary_USD]);
+                    userExp.SerialNumber = DateTime.Now.Ticks.ToString();
 
-
+                   
                     userExpenseManagement.Add(userExp);
+                    userExpenseManagement.SaveUserExpense();
+
+                    AddUserAlloctionBilling(expenseId, user.Id, userAllocation, userExp.Billable_Salary_PKR, userExp.Billable_Salary_USD, expenseDate);
 
                 }
-                userExpenseManagement.SaveUserExpense();
+               
 
                 logger.DebugFormat("Successfully Inserted User Expense Sheet Data from File [{0}]", fileName);
                 return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_UPLOAD_SUCCESS, fileName), Response = true, MessageType = MessageClass.Success };
@@ -384,6 +404,53 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 return new ExcelFileProcess { Message = string.Format(Resources.Messages.MSG_GENERIC_UPDATE_FAILED, fileName), Response = false, MessageType = MessageClass.Error };
             }
         }
+
+        private bool AddUserAlloctionBilling(Guid userExpenseID,string userId, IEnumerable<UserAllocation> userAllocation, decimal billable_Salary_PKR, decimal billable_Salary_USD,DateTime expenseDate)
+        {
+            try
+            {
+           
+            logger.DebugFormat("Adding user allocation billing by UserExpenseId[{0}], UserID[{1}], SalaryInPKR[{2], SalaryInUSD[{3}] , ExpenseDate[{4}]",  userExpenseID,  userId,  billable_Salary_PKR,  billable_Salary_USD,  expenseDate.ToShortDateString());
+
+                if (userAllocation != null && userAllocation.Count() > 0)
+                {
+                    var allocation = userAllocation.Where(x => x.UserID == userId && x.IsActive && x.Status.Equals(RequestStatus.Approved)).ToList();
+                    if (allocation != null)
+                    {
+                        foreach (var allocate in allocation)
+                        {
+                            UserAllocationBilling userBilling = new UserAllocationBilling();
+                            userBilling.DepartmentID = allocate.DepartmentID;
+                            userBilling.UserID = userId;
+                            userBilling.BillingDate = expenseDate;
+                            userBilling.UserExpenseID = userExpenseID;
+                            userBilling.Percentage = allocate.Percentage;
+                            userBilling.UserID = (User.Identity.GetUserId());
+                            if (billable_Salary_PKR > 0)
+                            {
+                                userBilling.AmountPKR = (billable_Salary_PKR / 100) * allocate.Percentage;
+                            }
+
+                            if (billable_Salary_USD > 0)
+                            {
+                                userBilling.AmountUSD = (billable_Salary_USD / 100) * allocate.Percentage;
+                            }
+
+                            userAllocationBillingManagement.Add(userBilling);
+                        }
+                        userAllocationBillingManagement.SaveUserAllocationBilling();
+                        logger.DebugFormat("User Allocation Billing Successfully Saved");
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorFormat("Exception Raised : Message[{0}] Stack Trace [{1}] ", ex.Message, ex.StackTrace);
+                return false;
+            }
+        }
+ 
 
         private ApplicationUser CreateNewUser(string employeeNumber, string employeeName, long departmentID)
         {

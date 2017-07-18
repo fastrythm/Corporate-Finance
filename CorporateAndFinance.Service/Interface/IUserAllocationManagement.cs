@@ -23,5 +23,8 @@ namespace CorporateAndFinance.Service.Interface
         IEnumerable<UserAllocation> GetUserPendingAllocationsByUserId(string userId);
         IEnumerable<UserAllocation> GetUserAllocationByGroupNumber(long groupNumber);
         IEnumerable<UserAllocation> GetActiveUserAllocationExceptGroupNumber(string userID, long groupNumber);
+        IEnumerable<UserAllocation> GetAllUsersActiveAllocations();
+
+        List<UserAllocationVM> GetUserAllocationsByGroupNumber(long groupNumber);
     }
 }

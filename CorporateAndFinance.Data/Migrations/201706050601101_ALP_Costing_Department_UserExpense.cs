@@ -9,28 +9,28 @@ namespace CorporateAndFinance.Data.Migrations
         {
             DropForeignKey("dbo.Gadgets", "CategoryID", "dbo.Categories");
             DropIndex("dbo.Gadgets", new[] { "CategoryID" });
-            CreateTable(
-                "dbo.UserExpenses",
-                c => new
-                    {
-                        UserExpenseID = c.Long(nullable: false, identity: true),
-                        UserID = c.String(maxLength: 128),
-                        DepartmentID = c.Long(nullable: false),
-                        ExpenseID = c.Long(nullable: false),
-                        ExpenseDate = c.DateTime(nullable: false),
-                        Amount = c.Decimal(nullable: false, precision: 18, scale: 6),
-                        IsActive = c.Boolean(nullable: false),
-                        CreatedBy = c.Guid(nullable: false),
-                        CreatedOn = c.DateTime(nullable: false),
-                        LastModified = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.UserExpenseID)
-                .ForeignKey("dbo.Department", t => t.DepartmentID)
-                .ForeignKey("dbo.Expenses", t => t.ExpenseID)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserID)
-                .Index(t => t.UserID)
-                .Index(t => t.DepartmentID)
-                .Index(t => t.ExpenseID);
+            //CreateTable(
+            //    "dbo.UserExpenses",
+            //    c => new
+            //        {
+            //            UserExpenseID = c.Long(nullable: false, identity: true),
+            //            UserID = c.String(maxLength: 128),
+            //            DepartmentID = c.Long(nullable: false),
+            //            ExpenseID = c.Long(nullable: false),
+            //            ExpenseDate = c.DateTime(nullable: false),
+            //            Amount = c.Decimal(nullable: false, precision: 18, scale: 6),
+            //            IsActive = c.Boolean(nullable: false),
+            //            CreatedBy = c.Guid(nullable: false),
+            //            CreatedOn = c.DateTime(nullable: false),
+            //            LastModified = c.DateTime(nullable: false),
+            //        })
+            //    .PrimaryKey(t => t.UserExpenseID)
+            //    .ForeignKey("dbo.Department", t => t.DepartmentID)
+            //    .ForeignKey("dbo.Expenses", t => t.ExpenseID)
+            //    .ForeignKey("dbo.AspNetUsers", t => t.UserID)
+            //    .Index(t => t.UserID)
+            //    .Index(t => t.DepartmentID)
+            //    .Index(t => t.ExpenseID);
             
             CreateTable(
                 "dbo.Department",

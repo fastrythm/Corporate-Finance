@@ -112,6 +112,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
     {
         public static string Pending = "Pending";
         public static string Approved = "Approved";
+        public static string PartialApproved = "PartialApproved";
         public static string Rejected = "Rejected";
         public static string Deleted = "Deleted";
         public static string My_Request = "My_Request";
@@ -178,6 +179,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
         ALP_Costing_Add = 34,
         ALP_Costing_Delete = 35,
 
+        Requisition_Approve_Reject = 44,
         Requisition_View = 36,
         Requisition_Delete = 37,
         Requisition_Add = 38,
@@ -188,7 +190,7 @@ namespace CorporateAndFinance.Core.Helper.Structure
         UserAllocation_Edit = 42,
         UserAllocation_Approve_Reject = 43,
 
-        Requisition_Approve_Reject = 44,
+       
     }
 
     public class ChartOfAccount

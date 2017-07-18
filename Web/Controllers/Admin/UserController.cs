@@ -249,6 +249,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 if (model.Id != null && model.Id != "0")
                     ModelState.Remove("Password");
+
+                if (model.SelectedDepartment == null)
+                {
+                    return Json(new { Message = "Atlease one user department must be selected.", MessageClass = MessageClass.Error, Response = false });
+                }
+                else if (model.SelectedDepartment.Count() == 0)
+                {
+                    return Json(new { Message = "Atlease one user department must be selected.", MessageClass = MessageClass.Error, Response = false });
+                }
+
                 if (ModelState.IsValid)
                 {
                     ApplicationUser user = null;
@@ -257,7 +267,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         logger.DebugFormat("Update  User with FirstName [{0}],  LastName [{1}],  SelectedRoles [{2}],  Designation [{3}] UserID [{4}] ",
                model.FirstName, model.LastName, model.SelectedRoles, model.Designation, model.Id);
 
-                        if (!PermissionControl.CheckPermission(UserAppPermissions.User_Edit))
+                       
+
+                            if (!PermissionControl.CheckPermission(UserAppPermissions.User_Edit))
                         {
                             logger.Info("Don't have rights to update  User ");
                             return Json(new { Message = Resources.Messages.MSG_RESTRICTED_ACCESS, MessageClass = MessageClass.Error, Response = false });

@@ -18,5 +18,6 @@ namespace CorporateAndFinance.Service.Interface
         bool Update(Requisition model);
         bool DeAttach(Requisition model);
         IEnumerable<Requisition> GetAllApprovedRequisition();
+        RequisitionVM GetRequisitionCompleteInfoById(long requisitionId);
     }
 }

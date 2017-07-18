@@ -34,9 +34,10 @@ namespace CorporateAndFinance.Service.Implementation
         }
 
 
-        public UserExpense GetUserExpense(long id)
+        public UserExpense GetUserExpense(string id)
         {
-            return userExpenseRepository.GetById(id);
+            var expenseId = new Guid(id);
+            return userExpenseRepository.Get(x=>x.UserExpenseID == expenseId);
         }
 
         public bool Delete(UserExpense model)

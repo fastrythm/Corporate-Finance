@@ -54,6 +54,11 @@ namespace CorporateAndFinance.Service.Implementation
            return requisitionRepository.GetById(id);
         }
 
+        public RequisitionVM GetRequisitionCompleteInfoById(long requisitionId)
+        {
+            return requisitionRepository.GetRequisitionCompleteInfoById(requisitionId);
+        }
+
         public void SaveRequisition()
         {
             unitOfWork.Commit();

@@ -394,7 +394,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User Employee number {0}  and Name {1} not found  at row number {2} . &lt;br /&gt;.
+        ///   Looks up a localized string similar to User with Employee number {0}  and Name {1}  billing allocation not found not at row number {2} . &lt;br /&gt;.
+        /// </summary>
+        internal static string MSG_UPLOAD_USER_ALLOCATION_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("MSG_UPLOAD_USER_ALLOCATION_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with Employee number {0}  and Name {1} not found  at row number {2} . &lt;br /&gt;.
         /// </summary>
         internal static string MSG_UPLOAD_USER_NOT_FOUND {
             get {

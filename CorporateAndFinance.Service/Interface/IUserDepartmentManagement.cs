@@ -16,7 +16,6 @@ namespace CorporateAndFinance.Service.Interface
         IEnumerable<UserDepartment> GetAllUserDepartmentById(string userId);
         IEnumerable<UserDepartmentVM> GetAllUserDepartmentByUserId(string userId,bool isAdmin);
         UserDepartment GetUserPrimaryDepartmentById(string userId);
-
-
+ 
     }
 }

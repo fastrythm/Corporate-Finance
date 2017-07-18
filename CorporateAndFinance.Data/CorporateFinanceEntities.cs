@@ -52,6 +52,8 @@ namespace CorporateAndFinance.Data
         public virtual DbSet<UserAllocation> UserAllocations { get; set; }
         public virtual DbSet<RequisitionApproval> RequisitionApprovals { get; set; }
         public virtual DbSet<SLAApproval> SLAApprovals { get; set; }
+
+        public virtual DbSet<UserAllocationBilling> UserAllocationBillings { get; set; }
         
         public virtual void Commit()
         {
@@ -263,6 +265,13 @@ namespace CorporateAndFinance.Data
                 .WillCascadeOnDelete(false);
 
 
+            modelBuilder.Entity<UserAllocationBilling>()
+               .Property(e => e.AmountPKR)
+               .HasPrecision(18, 6);
+
+            modelBuilder.Entity<UserAllocationBilling>()
+               .Property(e => e.AmountUSD)
+               .HasPrecision(18, 6);
 
             modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers").Property(p => p.Id).HasColumnName("Id");
             modelBuilder.Entity<IdentityUserRole>().ToTable("AspNetUserRoles");

@@ -17,8 +17,15 @@ namespace CorporateAndFinance.Core.ViewModel
         public string Status { get; set; }
         public int NoOfPosition { get; set; }
         public DateTime RequisitionDate { get; set; }
-      
+        public string DepartmentName { get; set; }
+
+        public string FormatedRequisitionId { get; set; }
+        public string Comments { get; set; }
+        public IEnumerable<UserAllocationVM> UserAllocations { get; set; }
         public DataTablesViewModel DTObject { get; set; }
+
+        public string StyleSheet { get; set; }
+        public Guid CreatedBy { get; set; }
 
         public RequisitionVM()
         {

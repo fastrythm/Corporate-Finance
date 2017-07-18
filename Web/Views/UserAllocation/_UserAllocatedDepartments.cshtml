@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CorporateAndFinance.Core.Model.UserAllocation>
+<style>
+    .delRow {
+    text-align:center;
+    cursor:pointer;
+   
+    font-weight:bold;
+}
+</style>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@foreach (var item in Model)
+{
+ <div class="row">
+    <div>
+        @Html.LabelFor(model => item.DepartmentID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.DropDownListFor(model => item.DepartmentID, item.Departments.Count() == 0 ? Enumerable.Empty<SelectListItem>() : item.Departments.Select(
+               x => new SelectListItem()
+               {
+                   Value = x.DepartmentID.ToString(),
+                   Text = x.Name,
+                   Selected = x.DepartmentID == item.DepartmentID
+               }), new { @class = "form-control", @placeholder = "Select Departments", Name = "SelectedDepartment" })
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-down"></i></span>
+            </div>
+            @Html.ValidationMessageFor(model => item.DepartmentID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => item.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            <div class="input-group">
+                @Html.EditorFor(model => item.Percentage, new { htmlAttributes = new { @class = "form-control", Name = "SelectedDepartmentPercentage" } })
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-dollar"></i></span>
+            </div>
+            @Html.ValidationMessageFor(model => item.Percentage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+     
+    <div class="delRow">&times;</div>
+     <br />  
+</div>
+}
+ 
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#divUserDepartment").on('click', '.delRow', function () {
+            $(this).parent().remove();
+        })
+
+        $("input[name='SelectedDepartmentPercentage']").keyup(function() {
+            var $this = $(this);
+            $this.val($this.val().replace(/[^\d.]/g, ''));        
+        })
+    });
+
+
+ 
+
+
+</script>
+
+ 
+

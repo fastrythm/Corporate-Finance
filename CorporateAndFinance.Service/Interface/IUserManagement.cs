@@ -13,6 +13,6 @@ namespace CorporateAndFinance.Service.Interface
 
         IEnumerable<ApplicationUser> GetAllUsersByDepartments(IEnumerable<UserDepartment> departments);
 
-        IEnumerable<ApplicationUser> GetAllUsersByRoleAndDepartment(string roleName , long departmentName);
+        IEnumerable<ApplicationUser> GetAllUsersByRoleAndDepartment(string roleId , long departmentId);
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="Implementation\RequisitionManagement.cs" />
     <Compile Include="Implementation\UserDepartmentManagement.cs" />
     <Compile Include="Implementation\DepartmentManagement.cs" />
+    <Compile Include="Implementation\UserAllocationBillingManagement.cs" />
     <Compile Include="Implementation\UserExpenseManagement.cs" />
     <Compile Include="Implementation\UserCardManagement.cs" />
     <Compile Include="Implementation\UserCardExpenseManagement.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Interface\IRequisitionManagement.cs" />
     <Compile Include="Interface\IUserDepartmentManagement.cs" />
     <Compile Include="Interface\IDepartmentManagement.cs" />
+    <Compile Include="Interface\IUserAllocationBillingManagement.cs" />
     <Compile Include="Interface\IUserExpenseManagement.cs" />
     <Compile Include="Interface\IUserCardManagement.cs" />
     <Compile Include="Interface\IUserCardExpenseManagement.cs" />

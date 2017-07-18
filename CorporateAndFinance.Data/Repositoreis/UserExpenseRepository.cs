@@ -29,6 +29,7 @@ namespace CorporateAndFinance.Data.Repositories
                                                        select new UserExpenseVM
                                                        {
                                                            UserExpenseID = ue.UserExpenseID,
+                                                           SerialNumber = ue.SerialNumber,
                                                            UserName = user.FirstName +" "+user.LastName,
                                                            UserNumber = user.EmployeeNumber,
                                                            DepartmentName = dept.Name,
@@ -57,6 +58,7 @@ namespace CorporateAndFinance.Data.Repositories
                 var userExpenseVM = query.Skip(param.DTObject.start).Take(param.DTObject.length).ToList().Select(index => new UserExpenseVM
                 {
                     UserExpenseID = index.UserExpenseID,
+                    SerialNumber = index.SerialNumber,
                     UserName = index.UserName,
                     UserNumber = index.UserNumber,
                     DepartmentName = index.DepartmentName,
@@ -115,7 +117,7 @@ namespace CorporateAndFinance.Data.Repositories
 
                 }
 
-                string id = Utility.CovertID(param.DTObject.search.value, "UE-");
+               // string id = Utility.CovertID(param.DTObject.search.value, "UE-");
 
                 if (param.DTObject.search.value != null && !string.IsNullOrEmpty(param.DTObject.search.value))
                     query = query.Where(col => (
@@ -123,8 +125,8 @@ namespace CorporateAndFinance.Data.Repositories
                         col.UserName.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                         col.UserNumber.ToUpper().Contains(param.DTObject.search.value.ToUpper()) ||
                         col.Billable_Salary_PKR.ToString().Contains(param.DTObject.search.value.ToUpper()) ||
-                         col.Billable_Salary_USD.ToString().Contains(param.DTObject.search.value.ToUpper()) ||
-                        col.UserExpenseID.ToString().Equals(id)));
+                         col.Billable_Salary_USD.ToString().Contains(param.DTObject.search.value.ToUpper())
+                         ));
                 return query;
             }
             catch (Exception ex)
