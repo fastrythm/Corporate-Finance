@@ -65,7 +65,9 @@ namespace CorporateAndFinance.Service.Implementation
             userAllocationBillingRepository.Delete(x => x.BillingDate.Month == expenseDate.Month && x.BillingDate.Year == expenseDate.Year);
         }
 
-       
-     
+        public UserAllocationBilling GetUserAllocationBillingByExpenseId(Guid id)
+        {
+            return userAllocationBillingRepository.Get(x => x.UserExpenseID == id);
+        }
     }
 }
