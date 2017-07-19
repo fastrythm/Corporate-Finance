@@ -154,6 +154,13 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 {
                     userExpenseManagement.SaveUserExpense();
                     logger.Info("User Expense record Successfully Deleted");
+                    var billing = userAllocationBillingManagement.GetUserAllocationBillingByExpenseId(userExpense.UserExpenseID);
+                    if(billing != null )
+                    {
+                        billing.IsDeleted = true;
+                        userAllocationBillingManagement.Update(billing);
+                    }
+                    userAllocationBillingManagement.SaveUserAllocationBilling();
                     return Json(new { Message = Resources.Messages.MSG_GENERIC_DELETE_SUCCESS, MessageClass = MessageClass.Success, Response = true });
                 }
                 else
@@ -425,7 +432,8 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                             userBilling.BillingDate = expenseDate;
                             userBilling.UserExpenseID = userExpenseID;
                             userBilling.Percentage = allocate.Percentage;
-                            userBilling.UserID = (User.Identity.GetUserId());
+                            userBilling.CreatedBy = new Guid(User.Identity.GetUserId());
+                            
                             if (billable_Salary_PKR > 0)
                             {
                                 userBilling.AmountPKR = (billable_Salary_PKR / 100) * allocate.Percentage;

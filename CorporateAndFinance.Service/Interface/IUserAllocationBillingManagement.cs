@@ -18,5 +18,6 @@ namespace CorporateAndFinance.Service.Interface
         bool Update(UserAllocationBilling model);
         IEnumerable<UserAllocationBilling> GetAllUserAllocationBillingByDate(DateTime expenseDate);
         void DeleteAllByDate(DateTime expenseDate);
+        UserAllocationBilling GetUserAllocationBillingByExpenseId(Guid id);
     }
 }

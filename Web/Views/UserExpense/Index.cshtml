@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input id="datepicker_to" class="datepicker form-control" placeholder="Filter By To Date" type="datetime">
+                                <input id="datepicker_to" class="datepicker2 form-control" placeholder="Filter By To Date" type="datetime">
                                 <span class="input-group-addon" id="basic-addon1"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
@@ -69,16 +69,26 @@
 
 
             InitializeDialogConfirmation();
-            InitializeUserExpenseList('', '');
+          
 
             $('.datepicker').datepicker({
                 changeMonth: true,
                 changeYear: true,
-                yearRange: '1900:+10',
-                setDate: new Date()
+                yearRange: '1900:+10'
+
             })
 
-            $(".datepicker").datepicker().datepicker("setDate", new Date());
+            $('.datepicker2').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1900:+10'
+
+            })
+
+
+            $(".datepicker").datepicker().datepicker("setDate", GetPreviousMonth());
+            $(".datepicker2").datepicker().datepicker("setDate", new Date());
+
 
             $("#btnSearch").click(function () {
 
@@ -88,6 +98,7 @@
 
             });
 
+            InitializeUserExpenseList($("#datepicker_from").val(), $("#datepicker_to").val());
 
         });
 
@@ -201,7 +212,7 @@
                           "sWidth": "100px",
                           "sTitle": 'Action',
                           "render": function (data, type, full, meta) {
-                              return '<a onClick="javascript:DeleteRecord(' + data + ');" data-toggle="tooltip" title="Delete"><button type="button" class="btn btn-action btn-danger"><i class="glyphicon glyphicon-trash"></i></button></a>';
+                              return "<a onClick=\"javascript:DeleteRecord('" + data + "');\" data-toggle='tooltip' title='Delete'><button type='button' class='btn btn-action btn-danger'><i class='glyphicon glyphicon-trash'></i></button></a>";
                           }
                       }
             ], '/UserExpense/UserExpenseList?fromDate=' + fromDate + '&toDate=' + toDate, {
