@@ -56,19 +56,27 @@ namespace Web
             }
 
             // creating Creating Manager role     
-            if (!roleManager.RoleExists("FinanceManager"))
+            if (!roleManager.RoleExists("Manager"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "FinanceManager";
+                var role = new IdentityRole();
+                role.Name = "Manager";
                 roleManager.Create(role);
 
             }
 
             // creating Creating Employee role     
-            if (!roleManager.RoleExists("FinanceUser"))
+            if (!roleManager.RoleExists("User"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "FinanceUser";
+                var role = new IdentityRole();
+                role.Name = "User";
+                roleManager.Create(role);
+
+            }
+            // creating Creating Employee role     
+            if (!roleManager.RoleExists("Employee"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Employee";
                 roleManager.Create(role);
 
             }

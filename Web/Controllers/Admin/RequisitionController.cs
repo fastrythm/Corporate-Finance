@@ -248,7 +248,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
             {
                 var reqApp = requisitionApprovalManagement.GetAllRequisitionApprovalByRequisition(Convert.ToInt64(req.RequisitionID));
                 var rejectedList = reqApp.Where(x => x.IsActive && x.Status.Equals(RequestStatus.Rejected)).ToList();
-                if (rejectedList != null && rejectedList.Count == reqApp.Count())
+                if (rejectedList != null && rejectedList.Count > 0)
                 {
                     requisition.Status = RequisitionStatus.Level2_Rejected;
                     requisitionManagement.Update(requisition);
@@ -497,9 +497,9 @@ namespace CorporateAndFinance.Web.Controllers.Admin
 
                         model.RequisitionDate = req.RequisitionDate;
 
-                        if (req.Status == RequisitionStatus.Level2_Rejected)
-                             model.Status = RequisitionStatus.Level2_Pending;
-                        else
+                       // if (req.Status == RequisitionStatus.Level2_Rejected)
+                       //      model.Status = RequisitionStatus.Level2_Pending;
+                       // else
                             model.Status = RequisitionStatus.Level1_Pending;
 
 
@@ -655,7 +655,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                    var allocate =  userAllocations.Where(x => x.DepartmentID == model.SelectedDepartment[i]).FirstOrDefault();
                     if (allocate != null)
                     {
-                        if (allocate.DepartmentID == model.SelectedDepartment[i] && allocate.Percentage != model.SelectedDepartmentPercentage[i])
+                       // if (allocate.DepartmentID == model.SelectedDepartment[i] && allocate.Percentage != model.SelectedDepartmentPercentage[i])
                         {
                             AllocateUserInDepartment(model.RequisitionID, model.SelectedDepartment[i], model.SelectedDepartmentPercentage[i], allocate,0);
                         }

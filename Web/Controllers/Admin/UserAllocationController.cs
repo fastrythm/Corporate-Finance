@@ -176,12 +176,18 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 string selectedType = Convert.ToInt32(values[1]) == 1 ? RequestStatus.Approved : RequestStatus.Rejected;
                 if (req.UserID != null && selectedType == RequestStatus.Rejected) // If user is not null and operation is rejected
                 {
+                    req.Comments = comments;
                     DeActiveUserGroupAllocation(req);
                 }
                 if (selectedType == RequestStatus.Approved)
                 {
                     req.IsActive = true;
                     req.Status = RequestStatus.PartialApproved;
+                }
+                else
+                {
+                    req.IsActive = true;
+                    req.Status = RequestStatus.Rejected;
                 }
               
                 req.ModifiedBy =new Guid( User.Identity.GetUserId());
@@ -290,6 +296,16 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 requisition.Status = RequisitionStatus.Level1_Rejected;
                 requisitionManagement.Update(requisition);
                 requisitionManagement.SaveRequisition();
+
+                var allocation = userAllocationManagement.GetUserAllocationsByRequisition(Convert.ToInt64(req.RequisitionID));
+                foreach (var allocate in allocation)
+                {
+                    allocate.IsActive = false;
+                    allocate.Status = RequestStatus.Rejected;
+                    allocate.ModifiedBy = new Guid(User.Identity.GetUserId());
+                    userAllocationManagement.Update(allocate);
+                }
+                userAllocationManagement.SaveUserAllocation();
 
                 RequisitionStatusEmailToUser(Convert.ToInt64(req.RequisitionID), RequisitionStatus.Level1_Rejected, req.Comments);
             }
@@ -479,7 +495,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 emailVM.Status = status;
                 emailVM.Comments = comments;
 
-                var viewsPath = Path.GetFullPath(HostingEnvironment.MapPath(@"~/Views/EmailTemplates/UserAllocationEmailToDepartments.cshtml"));
+                var viewsPath = Path.GetFullPath(HostingEnvironment.MapPath(@"~/Views/EmailTemplates/UserAllocationEmailToRequestCreator.cshtml"));
                 string template = System.IO.File.ReadAllText(viewsPath);
 
                 string uniqueNumber = Guid.NewGuid().ToString();
@@ -488,7 +504,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 var user = UserManager.FindById(userAllocation[0].CreatedBy.ToString());
                 if (user != null)
                 {
-                    comManagement.Subject = string.Format("User Re Allocation Request Status");
+                    comManagement.Subject = string.Format("User Re-Allocation Request Status");
                     comManagement.Body = body;
                     comManagement.Recipient = user.Email;
                     comManagement.HeaderImage = Server.MapPath("~/Themes/finance-1/img/logo.png");
@@ -511,6 +527,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 allocate.IsActive = false;
                 allocate.ModifiedBy = new Guid(User.Identity.GetUserId());
                 allocate.Status = RequestStatus.Rejected;
+                allocate.Comments = req.Comments;
                 userAllocationManagement.Update(allocate);
             }
 
@@ -607,8 +624,21 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                     }
 
                     var user = UserManager.FindById(User.Identity.GetUserId());
-                    var userDepartment = userdepartmentManagement.GetUserPrimaryDepartmentById(User.Identity.GetUserId());
+                    var userDepartment = userdepartmentManagement.GetUserPrimaryDepartmentById(model.UserId);
+
+                    if(userDepartment == null)
+                    {
+                        logger.InfoFormat("Selected User with ID [{0}] has no department assigned yet", model.UserId);
+                        return Json(new { Message = "Selected User have no department assigned. first add his department to perform user allocation opertion.", MessageClass = MessageClass.Error, Response = false });
+                    }
+
                     var requesteduserDepartment = userdepartmentManagement.GetUserPrimaryDepartmentById(User.Identity.GetUserId());
+
+                    if (requesteduserDepartment == null)
+                    {
+                        logger.InfoFormat("User Allocation requested User with ID [{0}] has no department assigned him", model.UserId);
+                        return Json(new { Message = "User Allocation requested User has no department assigned. first add his department to perform user allocation opertion.", MessageClass = MessageClass.Error, Response = false });
+                    }
 
                     long groupNumber = DateTime.Now.Ticks;
                     for (int i=0; i< model.SelectedDepartment.Length;i++)
