@@ -42,14 +42,13 @@ namespace CorporateAndFinance.Service.Implementation
         {
             try
             {
-             
-                var message = new MailMessage();
+
+                MailMessage message = new MailMessage();
                 message.From = !string.IsNullOrEmpty(Sender) ? new MailAddress(Sender) : new MailAddress("finance.portal@arthurlawrence.net", "Consulting And Finance");
-                message.To.Add(new MailAddress(Recipient));
                 message.Subject = Subject;
                 message.Body = Body;
                 message.IsBodyHtml = true;
-
+                message.To.Add(new MailAddress(Recipient));
               
 
                 if (Body != null && Body.Trim() != "")
