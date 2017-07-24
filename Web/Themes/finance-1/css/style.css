@@ -856,3 +856,14 @@ input[type="checkbox"] {
     display: inline-block;
     float: right;
 }
+
+#tblUserExpenses td.sorting_1{
+    word-break: break-word;
+}
+#divOperations #basic-addon1{
+	top:0 !important;
+	right:15px;
+}
+#divOperation .control-label {
+	text-align:left !important;
+}

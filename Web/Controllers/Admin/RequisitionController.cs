@@ -18,6 +18,7 @@ using System.Web.Hosting;
 using RazorEngine.Templating;
 using RazorEngine;
 using CorporateAndFinance.Service.Helper;
+using CorporateAndFinance.Service.Implementation;
 
 namespace CorporateAndFinance.Web.Controllers.Admin
 {
@@ -33,18 +34,18 @@ namespace CorporateAndFinance.Web.Controllers.Admin
         private readonly IUserAllocationManagement userAllocationManagement;
         private readonly IRequisitionApprovalManagement requisitionApprovalManagement;
         private readonly IUserManagement userManagement;
-        private readonly ICommunicationManagement comManagement;
+       
         private readonly IUserDepartmentManagement userdepartmentManagement;
         private readonly IDepartmentManagement departmentManagement;
         private readonly ISLAApprovalManagement slaApprovalManagement;
 
-        public RequisitionController(IRequisitionManagement requisitionManagement, IUserAllocationManagement userAllocationManagement, IRequisitionApprovalManagement requisitionApprovalManagement, IUserManagement userManagement, ICommunicationManagement comManagement, IUserDepartmentManagement userdepartmentManagement, IDepartmentManagement departmentManagement, ISLAApprovalManagement slaApprovalManagement)
+        public RequisitionController(IRequisitionManagement requisitionManagement, IUserAllocationManagement userAllocationManagement, IRequisitionApprovalManagement requisitionApprovalManagement, IUserManagement userManagement, IUserDepartmentManagement userdepartmentManagement, IDepartmentManagement departmentManagement, ISLAApprovalManagement slaApprovalManagement)
         {
             this.requisitionManagement = requisitionManagement;
             this.userAllocationManagement = userAllocationManagement;
             this.requisitionApprovalManagement = requisitionApprovalManagement;
             this.userManagement = userManagement;
-            this.comManagement = comManagement;
+            
             this.userdepartmentManagement = userdepartmentManagement;
             this.departmentManagement = departmentManagement;
             this.slaApprovalManagement = slaApprovalManagement;
@@ -285,6 +286,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                 var user = UserManager.FindById(req.CreatedBy.ToString());
                 if (user != null)
                 {
+                    ICommunicationManagement comManagement = new CommunicationManagement();
                     comManagement.Subject = string.Format("Requisition Request #. {0}  Status - {1} ", Utility.FormatedId("UR-", req.RequisitionID.ToString()), req.Status);
                     comManagement.Body = body;
                     comManagement.Recipient = user.Email;
@@ -570,6 +572,7 @@ namespace CorporateAndFinance.Web.Controllers.Admin
                         {
                             foreach (var user in departManagers)
                             {
+                                ICommunicationManagement comManagement = new CommunicationManagement();
                                 comManagement.Subject = string.Format("New Requisition Request #. {0} - {1} ", Utility.FormatedId("UR-", req.RequisitionID.ToString()), req.JobTitle);
                                 comManagement.Body = body;
                                 comManagement.Recipient = user.Email;

@@ -122,7 +122,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6">
-                    @Html.LabelFor(model => model.IsTravelling, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.IsTravelling, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-1">
                         <div class="checkbox">
                             @Html.CheckBoxFor(model => model.IsTravelling, new { @style = "-webkit-appearance: checkbox; !important" })
@@ -289,7 +289,7 @@
                         </div>
                     </div>
 
-                    @Html.LabelFor(model => model.HasHeadset, htmlAttributes: new { @class = "control-label col-md-1" })
+                    @Html.LabelFor(model => model.HasHeadset, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-2">
                         <div class="checkbox">
                             @Html.CheckBoxFor(model => model.HasHeadset, new { @style = "-webkit-appearance: checkbox; !important" })
@@ -297,7 +297,7 @@
                         </div>
                     </div>
 
-                    @Html.LabelFor(model => model.HasMouse, htmlAttributes: new { @class = "control-label col-md-1" })
+                    @Html.LabelFor(model => model.HasMouse, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-2">
                         <div class="checkbox">
                             @Html.CheckBoxFor(model => model.HasMouse, new { @style = "-webkit-appearance: checkbox; !important" })
@@ -320,10 +320,10 @@
             <h4>Software:</h4>
             <hr />
             <div class="form-group">
-                <div class="col-md-6">
+                <div class="col-md-6" style="padding-left:0 !important">
                     <div class="col-md-12">
-                        @Html.LabelFor(model => model.HasEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(model => model.HasEmail, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
                             <div class="checkbox">
                                 @Html.CheckBoxFor(model => model.HasEmail, new { @style = "-webkit-appearance: checkbox; !important" })
                                 @Html.ValidationMessageFor(model => model.HasEmail, "", new { @class = "text-danger" })
