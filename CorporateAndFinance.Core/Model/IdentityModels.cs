@@ -30,6 +30,7 @@ namespace CorporateAndFinance.Core.Model
         public string LastName { get; set; }
 
         [StringLength(50)]
+        [Required]
         public string EmployeeNumber { get; set; }
 
         [StringLength(50)]

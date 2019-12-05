@@ -1,4 +1,3 @@
-D:\tutorials\CorporateAndFinance\Web\obj\Debug\CorporateAndFinance.Web.csprojResolveAssemblyReference.cache
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\ApplicationInsights.config
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\roslyn\csc.exe
 D:\SohailWorkspace\CorporateAndFinanceProject\Solution\CorporateAndFinance\Web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll

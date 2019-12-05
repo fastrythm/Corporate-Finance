@@ -35,14 +35,17 @@ namespace Web
                 var role = new IdentityRole();
                 role.Name = "Admin";
                 roleManager.Create(role);
+            }
+            //Here we create a Admin super user who will maintain the website                   
 
-                //Here we create a Admin super user who will maintain the website                   
-
+            if(UserManager.FindByEmail("sohail.ahmed@arthurlawrence.net") == null)
+            { 
                 var user = new ApplicationUser();
                 user.UserName = "sohail.ahmed@arthurlawrence.net";
                 user.Email = "sohail.ahmed@arthurlawrence.net";
                 user.FirstName = "sohail";
                 user.LastName = "shaikh";
+                user.EmployeeNumber = "355";
                 string userPWD = "admin12";
 
                 var chkUser = UserManager.Create(user, userPWD);

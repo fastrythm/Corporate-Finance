@@ -9,6 +9,8 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+ 
+using UserTask = CorporateAndFinance.Core.Model.UserTask;
 
 namespace CorporateAndFinance.Data
 {
@@ -62,6 +64,7 @@ namespace CorporateAndFinance.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+          
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             //   modelBuilder.Configurations.Add(new GadgetConfiguration());
